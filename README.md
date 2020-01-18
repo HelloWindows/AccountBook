@@ -1,2 +1,0 @@
-# AccountBook-
-It is useless!
