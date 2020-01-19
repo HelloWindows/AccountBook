@@ -8,7 +8,7 @@ namespace JTween {
     /// <summary>
     /// 音效混合器
     /// </summary>
-    public enum JTweenAudioMixer {
+    public enum JTweenAudioMixer : int {
         None = 0,
         /// <summary>
         /// 值动画
@@ -19,7 +19,7 @@ namespace JTween {
     /// <summary>
     /// 音源
     /// </summary>
-    public enum JTweenAudioSource {
+    public enum JTweenAudioSource : int {
         None = 0,
         /// <summary>
         /// 渐变
@@ -34,7 +34,7 @@ namespace JTween {
     /// <summary>
     /// 相机
     /// </summary>
-    public enum JTweenCamera {
+    public enum JTweenCamera : int {
         None = 0,
         /// <summary>
         /// 方位
@@ -81,7 +81,7 @@ namespace JTween {
     /// <summary>
     /// 灯光
     /// </summary>
-    public enum JTweenLight {
+    public enum JTweenLight : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -104,7 +104,7 @@ namespace JTween {
     /// <summary>
     /// 线条渲染
     /// </summary>
-    public enum JTweenLineRenderer {
+    public enum JTweenLineRenderer : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -115,7 +115,7 @@ namespace JTween {
     /// <summary>
     /// 材质
     /// </summary>
-    public enum JTweenMaterial {
+    public enum JTweenMaterial : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -154,7 +154,7 @@ namespace JTween {
     /// <summary>
     /// 刚体
     /// </summary>
-    public enum JTweenRigidbody {
+    public enum JTweenRigidbody : int {
         Node = 0,
         /// <summary>
         /// 移动
@@ -181,7 +181,7 @@ namespace JTween {
     /// <summary>
     /// 刚体2D
     /// </summary>
-    public enum JTweenRigidbody2D {
+    public enum JTweenRigidbody2D : int {
         Node = 0,
         /// <summary>
         /// 移动
@@ -200,7 +200,7 @@ namespace JTween {
     /// <summary>
     /// 精灵渲染
     /// </summary>
-    public enum JTweenSpriteRenderer {
+    public enum JTweenSpriteRenderer : int {
         Node = 0,
         /// <summary>
         /// 颜色
@@ -223,7 +223,7 @@ namespace JTween {
     /// <summary>
     /// 拖尾渲染
     /// </summary>
-    public enum JTweenTrailRenderer {
+    public enum JTweenTrailRenderer : int {
         Node = 0,
         /// <summary>
         /// 尺寸
@@ -238,7 +238,7 @@ namespace JTween {
     /// <summary>
     /// 3D基础组件
     /// </summary>
-    public enum JTweenTransform {
+    public enum JTweenTransform : int {
         Node = 0,
         /// <summary>
         /// 时间坐标移动
@@ -341,7 +341,7 @@ namespace JTween {
     /// <summary>
     /// 画布组
     /// </summary>
-    public enum JTweenCanvasGroup {
+    public enum JTweenCanvasGroup : int {
         None = 0,
         /// <summary>
         /// 渐变
@@ -352,7 +352,7 @@ namespace JTween {
     /// <summary>
     /// 图像
     /// </summary>
-    public enum JTweenGraphic {
+    public enum JTweenGraphic : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -371,7 +371,7 @@ namespace JTween {
     /// <summary>
     /// 图片
     /// </summary>
-    public enum JTweenImage {
+    public enum JTweenImage : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -398,7 +398,7 @@ namespace JTween {
     /// <summary>
     /// 层级元素
     /// </summary>
-    public enum JTweenLayoutElement {
+    public enum JTweenLayoutElement : int {
         None = 0,
         /// <summary>
         /// 固定尺寸
@@ -417,7 +417,7 @@ namespace JTween {
     /// <summary>
     /// 轮廓
     /// </summary>
-    public enum JTweenOutline {
+    public enum JTweenOutline : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -432,7 +432,7 @@ namespace JTween {
     /// <summary>
     /// UGUI基础组件
     /// </summary>
-    public enum JTweenRectTransform {
+    public enum JTweenRectTransform : int {
         None = 0,
         /// <summary>
         /// 最大锚点
@@ -475,7 +475,7 @@ namespace JTween {
     /// <summary>
     /// 滑动组件
     /// </summary>
-    public enum JTweenScrollRect {
+    public enum JTweenScrollRect : int {
         None = 0,
         /// <summary>
         /// 归一化坐标
@@ -494,7 +494,7 @@ namespace JTween {
     /// <summary>
     /// 进度条
     /// </summary>
-    public enum JTweenSlider {
+    public enum JTweenSlider : int {
         None = 0,
         /// <summary>
         /// 插值
@@ -502,7 +502,7 @@ namespace JTween {
         Value = 1,
     } // end enum JTweenSlider
 
-    public enum JTweenText {
+    public enum JTweenText : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -522,7 +522,7 @@ namespace JTween {
         BlendableColor = 4
     } // end enum JTweenText
 
-    public enum JTweentk2dBaseSprite {
+    public enum JTweentk2dBaseSprite : int {
         None = 0,
         /// <summary>
         /// 缩放
@@ -538,7 +538,7 @@ namespace JTween {
         Fade = 3,
     } // end enum JTweentk2dBaseSprite
 
-    public enum JTweentk2dSlicedSprite {
+    public enum JTweentk2dSlicedSprite : int {
         None = 0,
         /// <summary>
         /// 缩放
@@ -546,7 +546,7 @@ namespace JTween {
         Scale = 1,
     } // end enum JTweentk2dSlicedSprite
 
-    public enum JTweentk2dTextMesh {
+    public enum JTweentk2dTextMesh : int {
         None = 0,
         /// <summary>
         /// 颜色
@@ -562,7 +562,7 @@ namespace JTween {
         Text = 3,
     } // end enum JTweentk2dTextMesh
 
-    public enum JTweenTextMeshPro {
+    public enum JTweenTextMeshPro : int {
         None = 0,
         /// <summary>
         /// 缩放

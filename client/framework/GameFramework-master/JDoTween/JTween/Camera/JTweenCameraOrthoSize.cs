@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DG.Tweening;
+using LitJson;
+using UnityEngine;
+
+namespace JTween.Camera {
+    public class JTweenCameraOrthoSize : JTweenBase {
+        private float m_beginOrthoSize = 0;
+        private float m_toOrthoSize = 0;
+        private UnityEngine.Camera m_Camera;
+
+        public float ToOrthoSize {
+            get {
+                return m_toOrthoSize;
+            }
+            set {
+                m_toOrthoSize = value;
+            }
+        }
+
+        public override void Init() {
+            if (null == m_Target) return;
+            // end if
+            m_Camera = m_Target.GetComponent<UnityEngine.Camera>();
+            if (null == m_Camera) return;
+            // end if
+            m_beginOrthoSize = m_Camera.orthographicSize;
+        }
+
+        protected override Tween DOPlay() {
+            if (null == m_Camera) return null;
+            // end if
+            return m_Camera.DOOrthoSize(m_toOrthoSize, m_Duration);
+        }
+
+        protected override void Restore() {
+            if (null == m_Camera) return;
+            // end if
+            m_Camera.farClipPlane = m_beginOrthoSize;
+        }
+
+        protected override void JsonTo(JsonData json) {
+            if (json.Contains("orthoSize")) m_toOrthoSize = (float)json["orthoSize"];
+            // end if
+        }
+
+        protected override void ToJson(ref JsonData json) {
+            json["orthoSize"] = m_toOrthoSize;
+        }
+
+        protected override bool CheckValid(out string errorInfo) {
+            if (null == m_Camera) {
+                errorInfo = GetType().FullName + " GetComponent<Camera> is null";
+                return false;
+            } // end if
+            errorInfo = string.Empty;
+            return true;
+        }
+    }
+}
