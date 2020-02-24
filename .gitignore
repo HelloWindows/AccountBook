@@ -2,28 +2,16 @@
 # Unity generated #
 # =============== #
 
-Client/main/Temp/
-Client/main/Library/
+client/game/Temp/
+client/game/Library/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
-Client/main/.vs/
-*.csproj
-*.sln
+client/game/.vs/
+client/game/*.csproj
+client/game/*.sln
 
-ExportedObj/
-obj/
-*.svd
-*.userprefs
-/*.csproj
-
-*.pidb
-*.suo
-/*.sln
-*.user
-*.unityproj
-*.booproj
 
 # ============ #
 # OS generated #

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F24181E1-6792-4CC3-80DC-93D142865580}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JTween</RootNamespace>
+    <AssemblyName>JTween</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DOTween">
+      <HintPath>..\Libs\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="MLitJson">
+      <HintPath>..\Libs\MLitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\Libs\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\Libs\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>..\Libs\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\Libs\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>..\Libs\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>..\Libs\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\Libs\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\Libs\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>..\Libs\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Utility">
+      <HintPath>..\Libs\Utility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JTween\AudioSource\JTweenAudioSourcePitch.cs" />
+    <Compile Include="JTween\AudioSource\JTweenAudioSourceFade.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraShakeRotation.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraShakePosition.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraRect.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraPixelRect.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraOrthoSize.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraNCP.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraFOV.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraFCP.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraColor.cs" />
+    <Compile Include="JTween\Camera\JTweenCameraAspect.cs" />
+    <Compile Include="JTween\JTweenBase.cs" />
+    <Compile Include="JTween\JTweenElement.cs" />
+    <Compile Include="JTween\JTweenType.cs" />
+    <Compile Include="JTween\Light\JTweenLightBlendableColor.cs" />
+    <Compile Include="JTween\Light\JTweenLightShadowStrength.cs" />
+    <Compile Include="JTween\Light\JTweenLightIntensity.cs" />
+    <Compile Include="JTween\Light\JTweenLightColor.cs" />
+    <Compile Include="JTween\LineRenderer\JTweenLineRendererColor.cs" />
+    <Compile Include="JTween\Material\JTweenMaterialBlendableColor.cs" />
+    <Compile Include="JTween\Material\JTweenMaterialVector.cs" />
+    <Compile Include="JTween\Material\JTweenMaterialTiling.cs" />
+    <Compile Include="JTween\Material\JTweenMaterialOffset.cs" />
+    <Compile Include="JTween\Material\JTweenMaterialFloat.cs" />
+    <Compile Include="JTween\Material\JTweenMaterialFade.cs" />
+    <Compile Include="JTween\Material\JTweenMaterialColor.cs" />
+    <Compile Include="JTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="JTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="JTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="JTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="JTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="JTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="JTween\Modules\DOTweenModuleUtils.cs" />
+    <Compile Include="JTween\Rigidbody\JTweenRigidbodyJump.cs" />
+    <Compile Include="JTween\Rigidbody\JTweenRigidbodyLookAt.cs" />
+    <Compile Include="JTween\Rigidbody\JTweenRigidbodyMove.cs" />
+    <Compile Include="JTween\Rigidbody\JTweenRigidbodyRotate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
