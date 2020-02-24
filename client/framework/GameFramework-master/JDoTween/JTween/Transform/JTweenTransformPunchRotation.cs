@@ -8,7 +8,7 @@ using LitJson;
 using UnityEngine;
 
 namespace JTween.Transform {
-    public class JTweenTransformPunchRatation : JTweenBase {
+    public class JTweenTransformPunchRotation : JTweenBase {
         private Vector3 m_beginRatation = Vector3.zero;
         private Vector3 m_toPunch = Vector3.zero;
         private int m_vibrate = 0;

@@ -19,7 +19,7 @@ namespace JTween {
         protected AnimationCurve m_AnimCurve = null;
         protected int m_LoopCount = 0;
         protected LoopType m_LoopType = LoopType.Restart;
-        protected Transform m_Target = null;
+        protected UnityEngine.Transform m_Target = null;
         protected int m_TweenType = 0;
         protected JTweenElement m_TweenElement = JTweenElement.None;
         private Tween m_LastPlayTween = null;
@@ -123,7 +123,7 @@ namespace JTween {
         /// <summary>
         /// 动效实体
         /// </summary>
-        public Transform Target {
+        public UnityEngine.Transform Target {
             get {
                 return m_Target;
             }
@@ -154,7 +154,7 @@ namespace JTween {
         /// 绑定实体
         /// </summary>
         /// <param name="tran"></param>
-        public void Bind(Transform tran) {
+        public void Bind(UnityEngine.Transform tran) {
             m_Target = tran;
             Init();
         }
