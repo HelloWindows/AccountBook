@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DG.Tweening;
+using LitJson;
+using UnityEngine;
+
+namespace JTween.RectTransform {
+    public class JTweenRectTransformAnchorMin : JTweenBase {
+        private Vector2 m_beginAnchorMin = Vector2.zero;
+        private Vector2 m_toAnchorMin = Vector2.zero;
+        private UnityEngine.RectTransform m_RectTransform;
+
+        public Vector2 ToAnchorMin {
+            get {
+                return m_toAnchorMin;
+            }
+            set {
+                m_toAnchorMin = value;
+            }
+        }
+
+        public override void Init() {
+            if (null == m_target) return;
+            // end if
+            m_RectTransform = m_target.GetComponent<UnityEngine.RectTransform>();
+            if (null == m_RectTransform) return;
+            // end if
+            m_beginAnchorMin = m_RectTransform.anchorMax;
+        }
+
+        protected override Tween DOPlay() {
+            if (null == m_RectTransform) return null;
+            // end if
+            return m_RectTransform.DOAnchorMax(m_toAnchorMin, m_duration, m_isSnapping);
+        }
+
+        protected override void Restore() {
+            if (null == m_RectTransform) return;
+            // end if
+            m_RectTransform.anchorMax = m_beginAnchorMin;
+        }
+
+        protected override void JsonTo(JsonData json) {
+            if (json.Contains("anchorMin")) m_toAnchorMin = Utility.Utils.JsonToVector2(json["anchorMin"]);
+            // end if
+        }
+
+        protected override void ToJson(ref JsonData json) {
+            json["anchorMin"] = Utility.Utils.Vector2Json(m_toAnchorMin);
+        }
+
+        protected override bool CheckValid(out string errorInfo) {
+            if (null == m_RectTransform) {
+                errorInfo = GetType().FullName + " GetComponent<RectTransform> is null";
+                return false;
+            } // end if
+            errorInfo = string.Empty;
+            return true;
+        }
+    }
+}

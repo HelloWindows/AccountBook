@@ -63,27 +63,27 @@ namespace JTween.Camera {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Camera = m_Target.GetComponent<UnityEngine.Camera>();
+            m_Camera = m_target.GetComponent<UnityEngine.Camera>();
             if (null == m_Camera) return;
             // end if
-            m_begainRotation = m_Target.eulerAngles;
+            m_begainRotation = m_target.eulerAngles;
         }
 
         protected override Tween DOPlay() {
             if (null == m_Camera) return null;
             // end if
             if (m_strengthVec == null || m_strengthVec == Vector3.zero) {
-                return m_Camera.DOShakeRotation(m_Duration, m_strength, m_vibrato, m_randomness, m_fadeOut);
+                return m_Camera.DOShakeRotation(m_duration, m_strength, m_vibrato, m_randomness, m_fadeOut);
             } // end if
-            return m_Camera.DOShakeRotation(m_Duration, m_strengthVec, m_vibrato, m_randomness, m_fadeOut);
+            return m_Camera.DOShakeRotation(m_duration, m_strengthVec, m_vibrato, m_randomness, m_fadeOut);
         }
 
         protected override void Restore() {
             if (null == m_Camera) return;
             // end if
-            m_Target.eulerAngles = m_begainRotation;
+            m_target.eulerAngles = m_begainRotation;
         }
 
         protected override void JsonTo(JsonData json) {

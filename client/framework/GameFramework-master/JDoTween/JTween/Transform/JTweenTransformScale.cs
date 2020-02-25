@@ -75,9 +75,9 @@ namespace JTween.Transform {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Transform = m_Target.GetComponent<UnityEngine.Transform>();
+            m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
             m_beginScale = m_Transform.localScale;
@@ -88,15 +88,15 @@ namespace JTween.Transform {
             // end if
             switch (m_ScaleType) {
                 case ScaleType.Scale:
-                    return m_Transform.DOScale(m_toScale, m_Duration);
+                    return m_Transform.DOScale(m_toScale, m_duration);
                 case ScaleType.ScaleV:
-                    return m_Transform.DOScale(m_toScaleV, m_Duration);
+                    return m_Transform.DOScale(m_toScaleV, m_duration);
                 case ScaleType.ScaleX:
-                    return m_Transform.DOScaleX(m_toScaleX, m_Duration);
+                    return m_Transform.DOScaleX(m_toScaleX, m_duration);
                 case ScaleType.ScaleY:
-                    return m_Transform.DOScaleY(m_toScaleY, m_Duration);
+                    return m_Transform.DOScaleY(m_toScaleY, m_duration);
                 case ScaleType.ScaleZ:
-                    return m_Transform.DOScaleZ(m_toScaleZ, m_Duration);
+                    return m_Transform.DOScaleZ(m_toScaleZ, m_duration);
                 default: return null;
             } // end switch
         }

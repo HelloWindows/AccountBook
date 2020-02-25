@@ -43,9 +43,9 @@ namespace JTween.Rigidbody2D {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Rigidbody = m_Target.GetComponent<UnityEngine.Rigidbody2D>();
+            m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody2D>();
             if (null == m_Rigidbody) return;
             // end if
             m_beginPosition = m_Rigidbody.position;
@@ -54,7 +54,7 @@ namespace JTween.Rigidbody2D {
         protected override Tween DOPlay() {
             if (null == m_Rigidbody) return null;
             // end if
-            return m_Rigidbody.DOJump(m_toPosition, m_jumpPower, m_numJumps, m_Duration, m_IsSnapping);
+            return m_Rigidbody.DOJump(m_toPosition, m_jumpPower, m_numJumps, m_duration, m_isSnapping);
         }
 
         protected override void Restore() {

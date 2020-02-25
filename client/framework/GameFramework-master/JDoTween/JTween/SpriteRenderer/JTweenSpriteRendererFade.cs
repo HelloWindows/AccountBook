@@ -23,9 +23,9 @@ namespace JTween.SpriteRenderer {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_SpriteRenderer = m_Target.GetComponent<UnityEngine.SpriteRenderer>();
+            m_SpriteRenderer = m_target.GetComponent<UnityEngine.SpriteRenderer>();
             if (null == m_SpriteRenderer) return;
             // end if
             m_beginColor = m_SpriteRenderer.color;
@@ -34,7 +34,7 @@ namespace JTween.SpriteRenderer {
         protected override Tween DOPlay() {
             if (null == m_SpriteRenderer) return null;
             // end if
-            return m_SpriteRenderer.DOFade(m_toAlpha, m_Duration);
+            return m_SpriteRenderer.DOFade(m_toAlpha, m_duration);
         }
 
         protected override void Restore() {

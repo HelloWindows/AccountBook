@@ -63,9 +63,9 @@ namespace JTween.Transform {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Transform = m_Target.GetComponent<UnityEngine.Transform>();
+            m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
             m_begainRotation = m_Transform.eulerAngles;
@@ -75,9 +75,9 @@ namespace JTween.Transform {
             if (null == m_Transform) return null;
             // end if
             if (m_strengthVec == null || m_strengthVec == Vector3.zero) {
-                return m_Transform.DOShakeRotation(m_Duration, m_strength, m_vibrato, m_randomness, m_fadeOut);
+                return m_Transform.DOShakeRotation(m_duration, m_strength, m_vibrato, m_randomness, m_fadeOut);
             } // end if
-            return m_Transform.DOShakeRotation(m_Duration, m_strengthVec, m_vibrato, m_randomness, m_fadeOut);
+            return m_Transform.DOShakeRotation(m_duration, m_strengthVec, m_vibrato, m_randomness, m_fadeOut);
         }
 
         protected override void Restore() {

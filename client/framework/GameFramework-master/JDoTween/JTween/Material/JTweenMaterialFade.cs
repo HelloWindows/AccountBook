@@ -43,9 +43,9 @@ namespace JTween.Material {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            var renderer = m_Target.GetComponent<Renderer>();
+            var renderer = m_target.GetComponent<Renderer>();
             if (null != renderer) m_Material = renderer.material;
             // end if
             if (null == m_Material) return;
@@ -57,11 +57,11 @@ namespace JTween.Material {
             if (null == m_Material) return null;
             // end if
             if (!string.IsNullOrEmpty(m_property)) {
-                return m_Material.DOFade(m_toAlpha, m_property, m_Duration);
+                return m_Material.DOFade(m_toAlpha, m_property, m_duration);
             } else if (m_propertyID != -1) {
-                return m_Material.DOFade(m_toAlpha, m_propertyID, m_Duration);
+                return m_Material.DOFade(m_toAlpha, m_propertyID, m_duration);
             }
-            return m_Material.DOFade(m_toAlpha, m_Duration);
+            return m_Material.DOFade(m_toAlpha, m_duration);
         }
 
         protected override void Restore() {

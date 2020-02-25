@@ -44,9 +44,9 @@ namespace JTween.Transform {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Transform = m_Target.GetComponent<UnityEngine.Transform>();
+            m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
             m_beginPosition = m_Transform.position;
@@ -55,7 +55,7 @@ namespace JTween.Transform {
         protected override Tween DOPlay() {
             if (null == m_Transform) return null;
             // end if
-            return m_Transform.DOPunchPosition(m_toPunch, m_Duration, m_vibrate, m_elasticity, m_IsSnapping);
+            return m_Transform.DOPunchPosition(m_toPunch, m_duration, m_vibrate, m_elasticity, m_isSnapping);
         }
 
         protected override void Restore() {

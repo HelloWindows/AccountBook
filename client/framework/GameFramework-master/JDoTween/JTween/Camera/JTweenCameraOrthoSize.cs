@@ -23,9 +23,9 @@ namespace JTween.Camera {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Camera = m_Target.GetComponent<UnityEngine.Camera>();
+            m_Camera = m_target.GetComponent<UnityEngine.Camera>();
             if (null == m_Camera) return;
             // end if
             m_beginOrthoSize = m_Camera.orthographicSize;
@@ -34,7 +34,7 @@ namespace JTween.Camera {
         protected override Tween DOPlay() {
             if (null == m_Camera) return null;
             // end if
-            return m_Camera.DOOrthoSize(m_toOrthoSize, m_Duration);
+            return m_Camera.DOOrthoSize(m_toOrthoSize, m_duration);
         }
 
         protected override void Restore() {

@@ -54,9 +54,9 @@ namespace JTween.LineRenderer {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_LineRenderer = m_Target.GetComponent<UnityEngine.LineRenderer>();
+            m_LineRenderer = m_target.GetComponent<UnityEngine.LineRenderer>();
             if (null == m_LineRenderer) return;
             // end if
             m_beginStartColor = m_LineRenderer.startColor;
@@ -66,7 +66,7 @@ namespace JTween.LineRenderer {
         protected override Tween DOPlay() {
             if (null == m_LineRenderer) return null;
             // end if
-            return m_LineRenderer.DOColor(new Color2(m_startColor, m_toStartColor), new Color2(m_endColor, m_toEndColor), m_Duration);
+            return m_LineRenderer.DOColor(new Color2(m_startColor, m_toStartColor), new Color2(m_endColor, m_toEndColor), m_duration);
         }
 
         protected override void Restore() {

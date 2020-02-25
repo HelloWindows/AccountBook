@@ -64,9 +64,9 @@ namespace JTween.Transform {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Transform = m_Target.GetComponent<UnityEngine.Transform>();
+            m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
             m_beginPosition = m_Transform.position;
@@ -77,13 +77,13 @@ namespace JTween.Transform {
             // end if
             switch (m_MoveType) {
                 case MoveType.Move:
-                    return m_Transform.DOMove(m_toPosition, m_Duration, m_IsSnapping);
+                    return m_Transform.DOMove(m_toPosition, m_duration, m_isSnapping);
                 case MoveType.MoveX:
-                    return m_Transform.DOMoveX(m_toMoveX, m_Duration, m_IsSnapping);
+                    return m_Transform.DOMoveX(m_toMoveX, m_duration, m_isSnapping);
                 case MoveType.MoveY:
-                    return m_Transform.DOMoveY(m_toMoveY, m_Duration, m_IsSnapping);
+                    return m_Transform.DOMoveY(m_toMoveY, m_duration, m_isSnapping);
                 case MoveType.MoveZ:
-                    return m_Transform.DOMoveZ(m_toMoveZ, m_Duration, m_IsSnapping);
+                    return m_Transform.DOMoveZ(m_toMoveZ, m_duration, m_isSnapping);
                 default: return null;
             } // end switch
         }

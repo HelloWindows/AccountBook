@@ -22,9 +22,9 @@ namespace JTween.Transform {
         public int Resolution { get { return m_resolution; } set { m_resolution = value; } }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Transform = m_Target.GetComponent<UnityEngine.Transform>();
+            m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
             m_beginPosition = m_Transform.position;
@@ -35,7 +35,7 @@ namespace JTween.Transform {
             // end if
             if (m_toPath == null || m_toPath.Length <= 0) return null;
             // end if
-            return ShortcutExtensions.DOLocalPath(m_Target, m_toPath, m_Duration, m_pathType, m_pathMode, m_resolution);
+            return ShortcutExtensions.DOLocalPath(m_target, m_toPath, m_duration, m_pathType, m_pathMode, m_resolution);
         }
 
         protected override void Restore() {

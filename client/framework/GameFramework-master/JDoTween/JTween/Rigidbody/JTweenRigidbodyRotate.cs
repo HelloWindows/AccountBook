@@ -33,9 +33,9 @@ namespace JTween.Rigidbody {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Rigidbody = m_Target.GetComponent<UnityEngine.Rigidbody>();
+            m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody>();
             if (null == m_Rigidbody) return;
             // end if
             m_beginRotate = m_Rigidbody.rotation.eulerAngles;
@@ -44,7 +44,7 @@ namespace JTween.Rigidbody {
         protected override Tween DOPlay() {
             if (null == m_Rigidbody) return null;
             // end if
-            return m_Rigidbody.DORotate(m_toRotate, m_Duration, m_RotateMode);
+            return m_Rigidbody.DORotate(m_toRotate, m_duration, m_RotateMode);
         }
 
         protected override void Restore() {

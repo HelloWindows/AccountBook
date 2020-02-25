@@ -23,9 +23,9 @@ namespace JTween.TrailRenderer {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_TrailRenderer = m_Target.GetComponent<UnityEngine.TrailRenderer>();
+            m_TrailRenderer = m_target.GetComponent<UnityEngine.TrailRenderer>();
             if (null == m_TrailRenderer) return;
             // end if
             m_beginTime = m_TrailRenderer.time;
@@ -34,7 +34,7 @@ namespace JTween.TrailRenderer {
         protected override Tween DOPlay() {
             if (null == m_TrailRenderer) return null;
             // end if
-            return m_TrailRenderer.DOTime(m_toTime, m_Duration);
+            return m_TrailRenderer.DOTime(m_toTime, m_duration);
         }
 
         protected override void Restore() {

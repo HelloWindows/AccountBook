@@ -23,9 +23,9 @@ namespace JTween.CanvasGroup {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_CanvasGroup = m_Target.GetComponent<UnityEngine.CanvasGroup>();
+            m_CanvasGroup = m_target.GetComponent<UnityEngine.CanvasGroup>();
             if (null == m_CanvasGroup) return;
             // end if
             m_beginAlpha = m_CanvasGroup.alpha;
@@ -34,7 +34,7 @@ namespace JTween.CanvasGroup {
         protected override Tween DOPlay() {
             if (null == m_CanvasGroup) return null;
             // end if
-            return m_CanvasGroup.DOFade(m_toAlpha, m_Duration);
+            return m_CanvasGroup.DOFade(m_toAlpha, m_duration);
         }
 
         protected override void Restore() {

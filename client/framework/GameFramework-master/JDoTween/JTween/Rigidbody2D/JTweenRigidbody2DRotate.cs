@@ -23,9 +23,9 @@ namespace JTween.Rigidbody2D {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Rigidbody = m_Target.GetComponent<UnityEngine.Rigidbody2D>();
+            m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody2D>();
             if (null == m_Rigidbody) return;
             // end if
             m_beginRotation = m_Rigidbody.rotation;
@@ -34,7 +34,7 @@ namespace JTween.Rigidbody2D {
         protected override Tween DOPlay() {
             if (null == m_Rigidbody) return null;
             // end if
-            return m_Rigidbody.DORotate(m_toAngle, m_Duration);
+            return m_Rigidbody.DORotate(m_toAngle, m_duration);
         }
 
         protected override void Restore() {

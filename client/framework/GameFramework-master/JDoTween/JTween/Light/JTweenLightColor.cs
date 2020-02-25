@@ -23,9 +23,9 @@ namespace JTween.Light {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Light = m_Target.GetComponent<UnityEngine.Light>();
+            m_Light = m_target.GetComponent<UnityEngine.Light>();
             if (null == m_Light) return;
             // end if
             m_beginColor = m_Light.color;
@@ -34,7 +34,7 @@ namespace JTween.Light {
         protected override Tween DOPlay() {
             if (null == m_Light) return null;
             // end if
-            return m_Light.DOColor(m_toColor, m_Duration);
+            return m_Light.DOColor(m_toColor, m_duration);
         }
 
         protected override void Restore() {

@@ -33,9 +33,9 @@ namespace JTween.Transform {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Transform = m_Target.GetComponent<UnityEngine.Transform>();
+            m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
             m_beginRotation = m_Transform.eulerAngles;
@@ -44,7 +44,7 @@ namespace JTween.Transform {
         protected override Tween DOPlay() {
             if (null == m_Transform) return null;
             // end if
-            return m_Transform.DORotate(m_toRotate, m_Duration, m_RotateMode);
+            return m_Transform.DORotate(m_toRotate, m_duration, m_RotateMode);
         }
 
         protected override void Restore() {

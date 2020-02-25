@@ -64,9 +64,9 @@ namespace JTween.Rigidbody {
         }
 
         public override void Init() {
-            if (null == m_Target) return;
+            if (null == m_target) return;
             // end if
-            m_Rigidbody = m_Target.GetComponent<UnityEngine.Rigidbody>();
+            m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody>();
             if (null == m_Rigidbody) return;
             // end if
             m_beginPosition = m_Rigidbody.position;
@@ -77,13 +77,13 @@ namespace JTween.Rigidbody {
             // end if
             switch (m_MoveType) {
                 case MoveType.Move:
-                    return m_Rigidbody.DOMove(m_toPosition, m_Duration, m_IsSnapping);
+                    return m_Rigidbody.DOMove(m_toPosition, m_duration, m_isSnapping);
                 case MoveType.MoveX:
-                    return m_Rigidbody.DOMoveX(m_toMoveX, m_Duration, m_IsSnapping);
+                    return m_Rigidbody.DOMoveX(m_toMoveX, m_duration, m_isSnapping);
                 case MoveType.MoveY:
-                    return m_Rigidbody.DOMoveY(m_toMoveY, m_Duration, m_IsSnapping);
+                    return m_Rigidbody.DOMoveY(m_toMoveY, m_duration, m_isSnapping);
                 case MoveType.MoveZ:
-                    return m_Rigidbody.DOMoveZ(m_toMoveZ, m_Duration, m_IsSnapping);
+                    return m_Rigidbody.DOMoveZ(m_toMoveZ, m_duration, m_isSnapping);
                 default: return null;
             } // end switch
         }
