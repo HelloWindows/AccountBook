@@ -13,8 +13,12 @@ namespace JTween.Transform {
         private Vector3 m_toPunch = Vector3.zero;
         private int m_vibrate = 0;
         private float m_elasticity = 0; // [0 - 1]
-
         private UnityEngine.Transform m_Transform;
+
+        public JTweenTransformPunchScale() {
+            m_tweenType = (int)JTweenTransform.PunchScale;
+            m_tweenElement = JTweenElement.Transform;
+        }
 
         public Vector3 ToPunch {
             get {
@@ -43,7 +47,7 @@ namespace JTween.Transform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
@@ -58,7 +62,7 @@ namespace JTween.Transform {
             return m_Transform.DOPunchScale(m_toPunch, m_duration, m_vibrate, m_elasticity);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Transform) return;
             // end if
             m_Transform.eulerAngles = m_beginScale;

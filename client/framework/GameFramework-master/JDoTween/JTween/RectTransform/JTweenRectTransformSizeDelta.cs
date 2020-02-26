@@ -13,6 +13,11 @@ namespace JTween.RectTransform {
         private Vector2 m_toSizeDelta = Vector2.zero;
         private UnityEngine.RectTransform m_rectTransform;
 
+        public JTweenRectTransformSizeDelta() {
+            m_tweenType = (int)JTweenRectTransform.SizeDelta;
+            m_tweenElement = JTweenElement.RectTransform;
+        }
+
         public Vector2 ToSizeDelta {
             get {
                 return m_toSizeDelta;
@@ -22,7 +27,7 @@ namespace JTween.RectTransform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_rectTransform = m_target.GetComponent<UnityEngine.RectTransform>();
@@ -37,7 +42,7 @@ namespace JTween.RectTransform {
             return m_rectTransform.DOSizeDelta(m_toSizeDelta, m_duration, m_isSnapping);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_rectTransform) return;
             // end if
             m_rectTransform.sizeDelta = m_beginSizeDelta;

@@ -13,6 +13,11 @@ namespace JTween.Camera {
         private Color m_toColor = Color.white;
         private UnityEngine.Camera m_Camera;
 
+        public JTweenCameraColor() {
+            m_tweenType = (int)JTweenCamera.Color;
+            m_tweenElement = JTweenElement.Camera;
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -22,7 +27,7 @@ namespace JTween.Camera {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Camera = m_target.GetComponent<UnityEngine.Camera>();
@@ -37,7 +42,7 @@ namespace JTween.Camera {
             return m_Camera.DOColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Camera) return;
             // end if
             m_Camera.backgroundColor = m_beginColor;

@@ -14,6 +14,11 @@ namespace JTween.Rigidbody {
         private RotateMode m_RotateMode = RotateMode.Fast;
         private UnityEngine.Rigidbody m_Rigidbody;
 
+        public JTweenRigidbodyRotate() {
+            m_tweenType = (int)JTweenRigidbody.Rotate;
+            m_tweenElement = JTweenElement.Rigidbody;
+        }
+
         public Vector3 ToRotate {
             get {
                 return m_toRotate;
@@ -32,7 +37,7 @@ namespace JTween.Rigidbody {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody>();
@@ -47,7 +52,7 @@ namespace JTween.Rigidbody {
             return m_Rigidbody.DORotate(m_toRotate, m_duration, m_RotateMode);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Rigidbody) return;
             // end if
             m_Rigidbody.rotation = Quaternion.Euler(m_beginRotate);

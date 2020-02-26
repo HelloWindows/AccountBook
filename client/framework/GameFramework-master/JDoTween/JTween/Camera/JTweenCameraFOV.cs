@@ -13,6 +13,11 @@ namespace JTween.Camera {
         private float m_toFOV = 0;
         private UnityEngine.Camera m_Camera;
 
+        public JTweenCameraFOV() {
+            m_tweenType = (int)JTweenCamera.FOV;
+            m_tweenElement = JTweenElement.Camera;
+        }
+
         public float ToFOV {
             get {
                 return m_toFOV;
@@ -22,7 +27,7 @@ namespace JTween.Camera {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Camera = m_target.GetComponent<UnityEngine.Camera>();
@@ -37,7 +42,7 @@ namespace JTween.Camera {
             return m_Camera.DOFieldOfView(m_toFOV, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Camera) return;
             // end if
             m_Camera.fieldOfView = m_beginFOV;

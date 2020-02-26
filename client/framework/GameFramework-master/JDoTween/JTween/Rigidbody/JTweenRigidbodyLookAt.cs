@@ -15,6 +15,11 @@ namespace JTween.Rigidbody {
         private Vector3 m_up = Vector3.up;
         private UnityEngine.Rigidbody m_Rigidbody;
 
+        public JTweenRigidbodyLookAt() {
+            m_tweenType = (int)JTweenRigidbody.LookAt;
+            m_tweenElement = JTweenElement.Rigidbody;
+        }
+
         public Vector3 Towards {
             get {
                 return m_towards;
@@ -41,7 +46,7 @@ namespace JTween.Rigidbody {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody>();
@@ -56,7 +61,7 @@ namespace JTween.Rigidbody {
             return m_Rigidbody.DOLookAt(m_towards, m_duration, m_axisConstraint, m_up);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Rigidbody) return;
             // end if
             m_Rigidbody.rotation = Quaternion.Euler(m_beginRotate);

@@ -13,6 +13,11 @@ namespace JTween.Transform {
         private Vector3 m_toRotate = Vector3.zero;
         private UnityEngine.Transform m_Transform;
 
+        public JTweenTransformBlendableRotate() {
+            m_tweenType = (int)JTweenTransform.BlendableRotate;
+            m_tweenElement = JTweenElement.Transform;
+        }
+
         public Vector3 ToRotate {
             get {
                 return m_toRotate;
@@ -22,7 +27,7 @@ namespace JTween.Transform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
@@ -37,7 +42,7 @@ namespace JTween.Transform {
             return m_Transform.DOBlendableRotateBy(m_toRotate, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Transform) return;
             // end if
             m_Transform.eulerAngles = m_beginRotation;

@@ -13,6 +13,11 @@ namespace JTween.Light {
         private Color m_toColor = Color.white;
         private UnityEngine.Light m_Light;
 
+        public JTweenLightColor() {
+            m_tweenType = (int)JTweenLight.Color;
+            m_tweenElement = JTweenElement.Light;
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -22,7 +27,7 @@ namespace JTween.Light {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Light = m_target.GetComponent<UnityEngine.Light>();
@@ -37,7 +42,7 @@ namespace JTween.Light {
             return m_Light.DOColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Light) return;
             // end if
             m_Light.color = m_beginColor;

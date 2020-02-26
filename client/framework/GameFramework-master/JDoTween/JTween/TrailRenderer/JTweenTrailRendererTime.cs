@@ -13,6 +13,11 @@ namespace JTween.TrailRenderer {
         private float m_toTime = 0;
         private UnityEngine.TrailRenderer m_TrailRenderer;
 
+        public JTweenTrailRendererTime() {
+            m_tweenType = (int)JTweenTrailRenderer.Time;
+            m_tweenElement = JTweenElement.TrailRenderer;
+        }
+
         public float ToTime {
             get {
                 return m_toTime;
@@ -22,7 +27,7 @@ namespace JTween.TrailRenderer {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_TrailRenderer = m_target.GetComponent<UnityEngine.TrailRenderer>();
@@ -37,7 +42,7 @@ namespace JTween.TrailRenderer {
             return m_TrailRenderer.DOTime(m_toTime, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_TrailRenderer) return;
             // end if
             m_TrailRenderer.time = m_beginTime;

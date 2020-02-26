@@ -13,6 +13,11 @@ namespace JTween.Light {
         private float m_toIntensity = 0;
         private UnityEngine.Light m_Light;
 
+        public JTweenLightIntensity() {
+            m_tweenType = (int)JTweenLight.Intensity;
+            m_tweenElement = JTweenElement.Light;
+        }
+
         public float ToIntensity {
             get {
                 return m_toIntensity;
@@ -22,7 +27,7 @@ namespace JTween.Light {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Light = m_target.GetComponent<UnityEngine.Light>();
@@ -37,7 +42,7 @@ namespace JTween.Light {
             return m_Light.DOIntensity(m_toIntensity, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Light) return;
             // end if
             m_Light.intensity = m_beginIntensity;

@@ -228,7 +228,7 @@ namespace JTween {
         /// <summary>
         /// 尺寸
         /// </summary>
-        Reseize = 1,
+        Resize = 1,
         /// <summary>
         /// 持续时间
         /// </summary>

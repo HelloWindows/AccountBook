@@ -15,6 +15,11 @@ namespace JTween.Material {
         private int m_propertyID = -1;
         private UnityEngine.Material m_Material;
 
+        public JTweenMaterialTiling() {
+            m_tweenType = (int)JTweenMaterial.Tiling;
+            m_tweenElement = JTweenElement.Material;
+        }
+
         public Vector2 ToTiling {
             get {
                 return m_toTiling;
@@ -42,7 +47,7 @@ namespace JTween.Material {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             var renderer = m_target.GetComponent<Renderer>();
@@ -66,7 +71,7 @@ namespace JTween.Material {
             return m_Material.DOTiling(m_toTiling, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Material) return;
             // end if
             if (!string.IsNullOrEmpty(m_property)) {

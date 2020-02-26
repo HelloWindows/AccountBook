@@ -23,6 +23,11 @@ namespace JTween.RectTransform {
         private float m_toAnchorPosZ = 0;
         private UnityEngine.RectTransform m_RectTransform;
 
+        public JTweenRectTransformAnchorPos3D() {
+            m_tweenType = (int)JTweenRectTransform.AnchorPos3D;
+            m_tweenElement = JTweenElement.RectTransform;
+        }
+
         public Vector3 ToAnchorPos {
             get {
                 return m_toAnchorPos;
@@ -63,7 +68,7 @@ namespace JTween.RectTransform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_RectTransform = m_target.GetComponent<UnityEngine.RectTransform>();
@@ -88,7 +93,7 @@ namespace JTween.RectTransform {
             } // end switch
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_RectTransform) return;
             // end if
             m_RectTransform.anchoredPosition = m_beginAnchorPos;

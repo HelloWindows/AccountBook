@@ -13,6 +13,11 @@ namespace JTween.SpriteRenderer {
         private Color m_toColor = Color.white;
         private UnityEngine.SpriteRenderer m_SpriteRenderer;
 
+        public JTweenSpriteRendererBlendableColor() {
+            m_tweenType = (int)JTweenSpriteRenderer.BlendableColor;
+            m_tweenElement = JTweenElement.SpriteRenderer;
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -22,7 +27,7 @@ namespace JTween.SpriteRenderer {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_SpriteRenderer = m_target.GetComponent<UnityEngine.SpriteRenderer>();
@@ -37,7 +42,7 @@ namespace JTween.SpriteRenderer {
             return m_SpriteRenderer.DOBlendableColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_SpriteRenderer) return;
             // end if
             m_SpriteRenderer.color = m_beginColor;

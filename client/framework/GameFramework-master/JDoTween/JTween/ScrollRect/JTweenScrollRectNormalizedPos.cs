@@ -13,6 +13,11 @@ namespace JTween.ScrollRect {
         private Vector2 m_toNormalizedPos = Vector2.zero;
         private UnityEngine.UI.ScrollRect m_scrollRect;
 
+        public JTweenScrollRectNormalizedPos() {
+            m_tweenType = (int)JTweenScrollRect.NormalizedPos;
+            m_tweenElement = JTweenElement.ScrollRect;
+        }
+
         public Vector2 ToNormalizedPos {
             get {
                 return m_toNormalizedPos;
@@ -22,7 +27,7 @@ namespace JTween.ScrollRect {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_scrollRect = m_target.GetComponent<UnityEngine.UI.ScrollRect>();
@@ -37,7 +42,7 @@ namespace JTween.ScrollRect {
             return m_scrollRect.DONormalizedPos(m_toNormalizedPos, m_duration, m_isSnapping);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_scrollRect) return;
             // end if
             m_scrollRect.normalizedPosition = m_beginNormalizedPos;

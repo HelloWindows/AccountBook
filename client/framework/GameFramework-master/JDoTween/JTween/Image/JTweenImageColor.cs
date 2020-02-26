@@ -13,6 +13,11 @@ namespace JTween.Image {
         private Color m_toColor = Color.white;
         private UnityEngine.UI.Image m_Image;
 
+        public JTweenImageColor() {
+            m_tweenType = (int)JTweenImage.Color;
+            m_tweenElement = JTweenElement.Image;
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -22,7 +27,7 @@ namespace JTween.Image {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Image = m_target.GetComponent<UnityEngine.UI.Image>();
@@ -37,7 +42,7 @@ namespace JTween.Image {
             return m_Image.DOColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Image) return;
             // end if
             m_Image.color = m_beginColor;

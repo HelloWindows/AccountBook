@@ -13,6 +13,11 @@ namespace JTween.Image {
         private float m_toAlpha = 0;
         private UnityEngine.UI.Image m_Image;
 
+        public JTweenImageFade() {
+            m_tweenType = (int)JTweenImage.Fade;
+            m_tweenElement = JTweenElement.Image;
+        }
+
         public float ToAlpha {
             get {
                 return m_toAlpha;
@@ -22,7 +27,7 @@ namespace JTween.Image {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Image = m_target.GetComponent<UnityEngine.UI.Image>();
@@ -37,7 +42,7 @@ namespace JTween.Image {
             return m_Image.DOFade(m_toAlpha, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Image) return;
             // end if
             m_Image.color = m_beginColor;

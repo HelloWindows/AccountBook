@@ -13,6 +13,11 @@ namespace JTween.Graphic {
         private Color m_toColor = Color.white;
         private UnityEngine.UI.Graphic m_Graphic;
 
+        public JTweenGraphicBlendableColor() {
+            m_tweenType = (int)JTweenGraphic.BlendableColor;
+            m_tweenElement = JTweenElement.Graphic;
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -22,7 +27,7 @@ namespace JTween.Graphic {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Graphic = m_target.GetComponent<UnityEngine.UI.Graphic>();
@@ -37,7 +42,7 @@ namespace JTween.Graphic {
             return m_Graphic.DOBlendableColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Graphic) return;
             // end if
             m_Graphic.color = m_beginColor;

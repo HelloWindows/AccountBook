@@ -16,6 +16,11 @@ namespace JTween.Text {
         private string m_scrambleChars = string.Empty;
         private UnityEngine.UI.Text m_text;
 
+        public JTweenTextText() {
+            m_tweenType = (int)JTweenText.Text;
+            m_tweenElement = JTweenElement.Text;
+        }
+
         public string ToStr {
             get {
                 return m_toStr;
@@ -65,7 +70,7 @@ namespace JTween.Text {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_text = m_target.GetComponent<UnityEngine.UI.Text>();
@@ -80,7 +85,7 @@ namespace JTween.Text {
             return m_text.DOText(m_toStr, m_duration, m_richTextEnabled, m_scrambleMode, m_scrambleChars);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_text) return;
             // end if
             m_text.text = m_beginStr;

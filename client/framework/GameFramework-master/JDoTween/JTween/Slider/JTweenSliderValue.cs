@@ -13,6 +13,11 @@ namespace JTween.Slider {
         private float m_toValue = 0;
         private UnityEngine.UI.Slider m_slider;
 
+        public JTweenSliderValue() {
+            m_tweenType = (int)JTweenSlider.Value;
+            m_tweenElement = JTweenElement.Slider;
+        }
+
         public float ToValue {
             get {
                 return m_toValue;
@@ -22,7 +27,7 @@ namespace JTween.Slider {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_slider = m_target.GetComponent<UnityEngine.UI.Slider>();
@@ -37,7 +42,7 @@ namespace JTween.Slider {
             return m_slider.DOValue(m_toValue, m_duration, m_isSnapping);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_slider) return;
             // end if
             m_slider.value = m_beginValue;

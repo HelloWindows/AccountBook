@@ -8,10 +8,15 @@ using LitJson;
 using UnityEngine;
 
 namespace JTween.Graphic {
-    public class JTweenSpriteRendererColor : JTweenBase {
+    public class JTweenGraphicColor : JTweenBase {
         private Color m_beginColor = Color.white;
         private Color m_toColor = Color.white;
         private UnityEngine.UI.Graphic m_Graphic;
+
+        public JTweenGraphicColor() {
+            m_tweenType = (int)JTweenGraphic.Color;
+            m_tweenElement = JTweenElement.Graphic;
+        }
 
         public Color ToColor {
             get {
@@ -22,7 +27,7 @@ namespace JTween.Graphic {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Graphic = m_target.GetComponent<UnityEngine.UI.Graphic>();
@@ -37,7 +42,7 @@ namespace JTween.Graphic {
             return m_Graphic.DOColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Graphic) return;
             // end if
             m_Graphic.color = m_beginColor;

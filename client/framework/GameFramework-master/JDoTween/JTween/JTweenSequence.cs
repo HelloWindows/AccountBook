@@ -15,7 +15,11 @@ namespace JTween {
 
         public void Init(bool complete = false) {
             KillAll(complete);
-
+            if (complete) return;
+            // end if
+            foreach (var tween in m_tweens) {
+                tween.Restore();
+            } // end foreach
         } // end Init
 
         public bool IsValid(out string errorInfo) {
@@ -84,13 +88,13 @@ namespace JTween {
             m_onComplete = null;
         }
 
-        public JsonData ToJson() {
+        public JsonData DoJson() {
             JsonData json = new JsonData();
             if (m_tweens != null && m_tweens.Length > 0) {
                 JsonData node;
                 foreach (var tween in m_tweens) {
                     node = tween.DoJson();
-                    string curPath = Utility.Utils.GetTranPath(transform);
+                    string curPath = Utility.Utils.GetTranPath(transform) + "/";
                     if (tween.Target != transform) {
                         node["_PATH"] = Utility.Utils.GetTranPath(tween.Target).Replace(curPath, "");
                     } // end if
@@ -100,13 +104,36 @@ namespace JTween {
             return json;
         }
 
-        public void JsonTo(JsonData json) {
+        public void JsonDo(JsonData json) {
             Clear();
             KillAll();
             if (json == null || json.Count <= 0) return;
             // end if
             int count = json.Count;
             m_tweens = new JTweenBase[count];
+            JsonData node;
+            JTweenBase tween;
+            string path;
+            UnityEngine.Transform trans;
+            Dictionary<string, UnityEngine.Transform> pathToTrans = new Dictionary<string, UnityEngine.Transform>();
+            for (int i = 0; i < count; ++i) {
+                node = json[i];
+                tween = JTweenFactory.CreateTween(node);
+                m_tweens[i] = tween;
+                if (node.Contains("_PATH")) {
+                    path = node["_PATH"].ToString();
+                    if (!pathToTrans.TryGetValue(path, out trans)) {
+                        trans = transform.Find(path);
+                        if (null != trans)
+                            pathToTrans.Add(path, trans);
+                        else
+                            Debug.LogErrorFormat("JTweenSequence con't find, Name:{0}, Path:{1}", gameObject.name, path);
+                    } // end if
+                    tween.Bind(trans);
+                } else {
+                    tween.Bind(transform);
+                } // end if
+            } // end for
         }
     }
 }

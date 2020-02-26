@@ -13,6 +13,11 @@ namespace JTween.SpriteRenderer {
         private float m_toAlpha = 0;
         private UnityEngine.SpriteRenderer m_SpriteRenderer;
 
+        public JTweenSpriteRendererFade() {
+            m_tweenType = (int)JTweenSpriteRenderer.Fade;
+            m_tweenElement = JTweenElement.SpriteRenderer;
+        }
+
         public float ToAlpha {
             get {
                 return m_toAlpha;
@@ -22,7 +27,7 @@ namespace JTween.SpriteRenderer {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_SpriteRenderer = m_target.GetComponent<UnityEngine.SpriteRenderer>();
@@ -37,7 +42,7 @@ namespace JTween.SpriteRenderer {
             return m_SpriteRenderer.DOFade(m_toAlpha, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_SpriteRenderer) return;
             // end if
             m_SpriteRenderer.color = m_beginColor;

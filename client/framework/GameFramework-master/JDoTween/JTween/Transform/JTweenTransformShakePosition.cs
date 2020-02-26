@@ -17,6 +17,11 @@ namespace JTween.Transform {
         private Vector3 m_begainPosition = Vector3.zero;
         private UnityEngine.Transform m_Transform;
 
+        public JTweenTransformShakePosition() {
+            m_tweenType = (int)JTweenTransform.ShakePosition;
+            m_tweenElement = JTweenElement.Transform;
+        }
+
         public float Strength {
             get {
                 return m_strength;
@@ -62,7 +67,7 @@ namespace JTween.Transform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
@@ -80,7 +85,7 @@ namespace JTween.Transform {
             return m_Transform.DOShakePosition(m_duration, m_strengthVec, m_vibrato, m_randomness, m_fadeOut);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Transform) return;
             // end if
             m_target.position = m_begainPosition;

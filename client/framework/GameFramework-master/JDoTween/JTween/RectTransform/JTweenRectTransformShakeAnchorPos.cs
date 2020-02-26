@@ -21,6 +21,12 @@ namespace JTween.RectTransform {
         private float m_randomness = 0;
         private bool m_fadeOut = true;
         private UnityEngine.RectTransform m_rectTransform;
+
+        public JTweenRectTransformShakeAnchorPos() {
+            m_tweenType = (int)JTweenRectTransform.ShakeAnchorPos;
+            m_tweenElement = JTweenElement.RectTransform;
+        }
+
         /// <summary>
         /// The shake strength
         /// </summary>
@@ -81,7 +87,7 @@ namespace JTween.RectTransform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_rectTransform = m_target.GetComponent<UnityEngine.RectTransform>();
@@ -102,7 +108,7 @@ namespace JTween.RectTransform {
             } // end switch
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_rectTransform) return;
             // end if
             m_rectTransform.anchoredPosition = m_beginAnchorPos;

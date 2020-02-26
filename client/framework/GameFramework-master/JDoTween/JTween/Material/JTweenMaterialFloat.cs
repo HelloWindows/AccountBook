@@ -15,6 +15,11 @@ namespace JTween.Material {
         private int m_propertyID = -1;
         private UnityEngine.Material m_Material;
 
+        public JTweenMaterialFloat() {
+            m_tweenType = (int)JTweenMaterial.Float;
+            m_tweenElement = JTweenElement.Material;
+        }
+
         public float ToFloat {
             get {
                 return m_toFloat;
@@ -42,7 +47,7 @@ namespace JTween.Material {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             var renderer = m_target.GetComponent<Renderer>();
@@ -68,7 +73,7 @@ namespace JTween.Material {
             return null;
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Material) return;
             // end if
             if (!string.IsNullOrEmpty(m_property)) {

@@ -13,6 +13,11 @@ namespace JTween.Light {
         private float m_toStrength = 0;
         private UnityEngine.Light m_Light;
 
+        public JTweenLightShadowStrength() {
+            m_tweenType = (int)JTweenLight.ShadowStrength;
+            m_tweenElement = JTweenElement.Light;
+        }
+
         public float ToStrength {
             get {
                 return m_toStrength;
@@ -22,7 +27,7 @@ namespace JTween.Light {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Light = m_target.GetComponent<UnityEngine.Light>();
@@ -37,7 +42,7 @@ namespace JTween.Light {
             return m_Light.DOShadowStrength(m_toStrength, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Light) return;
             // end if
             m_Light.shadowStrength = m_beginStrength;

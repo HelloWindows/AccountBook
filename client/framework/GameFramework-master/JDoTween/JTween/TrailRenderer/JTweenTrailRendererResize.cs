@@ -15,6 +15,11 @@ namespace JTween.TrailRenderer {
         private float m_endWidth = 0;
         private UnityEngine.TrailRenderer m_TrailRenderer;
 
+        public JTweenTrailRendererResize() {
+            m_tweenType = (int)JTweenTrailRenderer.Resize;
+            m_tweenElement = JTweenElement.TrailRenderer;
+        }
+
         public float StartWidth {
             get {
                 return m_startWidth;
@@ -33,7 +38,7 @@ namespace JTween.TrailRenderer {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_TrailRenderer = m_target.GetComponent<UnityEngine.TrailRenderer>();
@@ -49,7 +54,7 @@ namespace JTween.TrailRenderer {
             return m_TrailRenderer.DOResize(m_startWidth, m_endWidth, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_TrailRenderer) return;
             // end if
             m_TrailRenderer.startWidth = m_beginStartWidth;

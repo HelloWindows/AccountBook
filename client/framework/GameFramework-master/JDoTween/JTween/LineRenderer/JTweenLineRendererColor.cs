@@ -17,6 +17,11 @@ namespace JTween.LineRenderer {
         private Color m_toEndColor = Color.white;
         private UnityEngine.LineRenderer m_LineRenderer;
 
+        public JTweenLineRendererColor() {
+            m_tweenType = (int)JTweenLineRenderer.Color;
+            m_tweenElement = JTweenElement.LineRenderer;
+        }
+
         public Color StartColor {
             get {
                 return m_startColor;
@@ -53,7 +58,7 @@ namespace JTween.LineRenderer {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_LineRenderer = m_target.GetComponent<UnityEngine.LineRenderer>();
@@ -69,7 +74,7 @@ namespace JTween.LineRenderer {
             return m_LineRenderer.DOColor(new Color2(m_startColor, m_toStartColor), new Color2(m_endColor, m_toEndColor), m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_LineRenderer) return;
             // end if
             m_LineRenderer.startColor = m_beginStartColor;

@@ -27,7 +27,7 @@ namespace JTween.AudioSource {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_AudioSource = m_target.GetComponent<UnityEngine.AudioSource>();
@@ -47,7 +47,7 @@ namespace JTween.AudioSource {
             return m_AudioSource.DOFade(m_toVolume, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_AudioSource) return;
             // end if
             m_AudioSource.volume = m_beginVolume;

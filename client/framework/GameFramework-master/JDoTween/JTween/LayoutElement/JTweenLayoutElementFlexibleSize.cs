@@ -15,6 +15,11 @@ namespace JTween.LayoutElement {
         private float m_beginHeight = 0;
         private UnityEngine.UI.LayoutElement m_LayoutElement;
 
+        public JTweenLayoutElementFlexibleSize() {
+            m_tweenType = (int)JTweenLayoutElement.FlexibleSize;
+            m_tweenElement = JTweenElement.LayoutElement;
+        }
+
         public float Width {
             get {
                 return m_width;
@@ -33,7 +38,7 @@ namespace JTween.LayoutElement {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_LayoutElement = m_target.GetComponent<UnityEngine.UI.LayoutElement>();
@@ -49,7 +54,7 @@ namespace JTween.LayoutElement {
             return m_LayoutElement.DOFlexibleSize(new Vector2(m_width, m_height), m_duration, m_isSnapping);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_LayoutElement) return;
             // end if
             m_LayoutElement.flexibleWidth = m_beginWidth;

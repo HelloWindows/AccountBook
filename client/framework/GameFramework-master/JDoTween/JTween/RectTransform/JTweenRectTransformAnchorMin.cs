@@ -13,6 +13,11 @@ namespace JTween.RectTransform {
         private Vector2 m_toAnchorMin = Vector2.zero;
         private UnityEngine.RectTransform m_RectTransform;
 
+        public JTweenRectTransformAnchorMin() {
+            m_tweenType = (int)JTweenRectTransform.AnchorMin;
+            m_tweenElement = JTweenElement.RectTransform;
+        }
+
         public Vector2 ToAnchorMin {
             get {
                 return m_toAnchorMin;
@@ -22,7 +27,7 @@ namespace JTween.RectTransform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_RectTransform = m_target.GetComponent<UnityEngine.RectTransform>();
@@ -37,7 +42,7 @@ namespace JTween.RectTransform {
             return m_RectTransform.DOAnchorMax(m_toAnchorMin, m_duration, m_isSnapping);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_RectTransform) return;
             // end if
             m_RectTransform.anchorMax = m_beginAnchorMin;

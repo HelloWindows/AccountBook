@@ -13,6 +13,11 @@ namespace JTween.CanvasGroup {
         private float m_toAlpha = 0;
         private UnityEngine.CanvasGroup m_CanvasGroup;
 
+        public JTweenCanvasGroupFade() {
+            m_tweenType = (int)JTweenCanvasGroup.Fade;
+            m_tweenElement = JTweenElement.CanvasGroup;
+        }
+
         public float ToAlpha {
             get {
                 return m_toAlpha;
@@ -22,7 +27,7 @@ namespace JTween.CanvasGroup {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_CanvasGroup = m_target.GetComponent<UnityEngine.CanvasGroup>();
@@ -37,7 +42,7 @@ namespace JTween.CanvasGroup {
             return m_CanvasGroup.DOFade(m_toAlpha, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_CanvasGroup) return;
             // end if
             m_CanvasGroup.alpha = m_beginAlpha;

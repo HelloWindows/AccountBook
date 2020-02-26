@@ -15,6 +15,11 @@ namespace JTween.Rigidbody2D {
         private float m_jumpPower = 0;
         private UnityEngine.Rigidbody2D m_Rigidbody;
 
+        public JTweenRigidbody2DJump() {
+            m_tweenType = (int)JTweenRigidbody2D.Jump;
+            m_tweenElement = JTweenElement.Rigidbody2D;
+        }
+
         public Vector3 ToPosition {
             get {
                 return m_toPosition;
@@ -42,7 +47,7 @@ namespace JTween.Rigidbody2D {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody2D>();
@@ -57,7 +62,7 @@ namespace JTween.Rigidbody2D {
             return m_Rigidbody.DOJump(m_toPosition, m_jumpPower, m_numJumps, m_duration, m_isSnapping);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Rigidbody) return;
             // end if
             m_Rigidbody.position = m_beginPosition;

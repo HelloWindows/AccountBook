@@ -271,11 +271,11 @@ namespace JTween {
         /// <summary>
         /// 初始化
         /// </summary>
-        public abstract void Init();
+        protected abstract void Init();
         /// <summary>
         /// 还原
         /// </summary>
-        protected abstract void Restore();
+        public abstract void Restore();
         /// <summary>
         /// 播放
         /// </summary>

@@ -13,6 +13,11 @@ namespace JTween.Camera {
         private float m_toFCP = 0;
         private UnityEngine.Camera m_Camera;
 
+        public JTweenCameraFCP() {
+            m_tweenType = (int)JTweenCamera.FCP;
+            m_tweenElement = JTweenElement.Camera;
+        }
+
         public float ToFCP {
             get {
                 return m_toFCP;
@@ -22,7 +27,7 @@ namespace JTween.Camera {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Camera = m_target.GetComponent<UnityEngine.Camera>();
@@ -37,7 +42,7 @@ namespace JTween.Camera {
             return m_Camera.DOFarClipPlane(m_toFCP, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Camera) return;
             // end if
             m_Camera.farClipPlane = m_beginFCP;

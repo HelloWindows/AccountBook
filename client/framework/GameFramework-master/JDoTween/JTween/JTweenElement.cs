@@ -59,36 +59,40 @@ namespace JTween {
         /// </summary>
         CanvasGroup = 12,
         /// <summary>
+        /// 图像
+        /// </summary>
+        Graphic = 13,
+        /// <summary>
         /// 图片
         /// </summary>
-        Image = 13,
+        Image = 14,
         /// <summary>
         /// 层级元素
         /// </summary>
-        LayoutElement = 14,
+        LayoutElement = 15,
         /// <summary>
         /// 轮廓
         /// </summary>
-        Outline = 15,
+        Outline = 16,
         /// <summary>
         /// UGUI基础组件
         /// </summary>
-        RectTransform = 16,
+        RectTransform = 17,
         /// <summary>
         /// 滑动组件
         /// </summary>
-        ScrollRect = 17,
+        ScrollRect = 18,
         /// <summary>
         /// 进度条组件
         /// </summary>
-        Slider = 18,
+        Slider = 19,
         /// <summary>
         /// 文本
         /// </summary>
-        Text = 19,
-        tk2dBaseSprite = 20,
-        tk2dSlicedSprite = 21,
-        tk2dTextMesh = 22,
-        TextMeshPro = 23,
+        Text = 20,
+        tk2dBaseSprite = 21,
+        tk2dSlicedSprite = 22,
+        tk2dTextMesh = 23,
+        TextMeshPro = 24,
     } // end enum JTweenElement
 } // end namespace JTween

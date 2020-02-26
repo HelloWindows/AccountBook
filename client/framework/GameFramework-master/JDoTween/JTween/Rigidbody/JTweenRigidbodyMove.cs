@@ -23,6 +23,11 @@ namespace JTween.Rigidbody {
         private float m_toMoveZ = 0;
         private UnityEngine.Rigidbody m_Rigidbody;
 
+        public JTweenRigidbodyMove() {
+            m_tweenType = (int)JTweenRigidbody.Move;
+            m_tweenElement = JTweenElement.Rigidbody;
+        }
+
         public Vector3 ToPosition {
             get {
                 return m_toPosition;
@@ -63,7 +68,7 @@ namespace JTween.Rigidbody {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody>();
@@ -88,7 +93,7 @@ namespace JTween.Rigidbody {
             } // end switch
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Rigidbody) return;
             // end if
             m_Rigidbody.position = m_beginPosition;

@@ -14,6 +14,12 @@ namespace JTween.RectTransform {
         private int m_vibrato = 0;
         private float m_elasticity = 0;
         private UnityEngine.RectTransform m_rectTransform;
+
+        public JTweenRectTransformPunchAnchorPos() {
+            m_tweenType = (int)JTweenRectTransform.PunchAnchorPos;
+            m_tweenElement = JTweenElement.RectTransform;
+        }
+
         /// <summary>
         /// The direction and strength of the punch (added to the RectTransform's current position). 
         /// </summary>
@@ -50,7 +56,7 @@ namespace JTween.RectTransform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_rectTransform = m_target.GetComponent<UnityEngine.RectTransform>();
@@ -65,7 +71,7 @@ namespace JTween.RectTransform {
             return m_rectTransform.DOPunchAnchorPos(m_punch, m_duration, m_vibrato, m_elasticity, m_isSnapping);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_rectTransform) return;
             // end if
             m_rectTransform.anchoredPosition = m_beginAnchorPos;

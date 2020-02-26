@@ -13,6 +13,11 @@ namespace JTween.Text {
         private Color m_toColor = Color.white;
         private UnityEngine.UI.Text m_text;
 
+        public JTweenTextColor() {
+            m_tweenType = (int)JTweenText.Color;
+            m_tweenElement = JTweenElement.Text;
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -22,7 +27,7 @@ namespace JTween.Text {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_text = m_target.GetComponent<UnityEngine.UI.Text>();
@@ -37,7 +42,7 @@ namespace JTween.Text {
             return m_text.DOColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_text) return;
             // end if
             m_text.color = m_beginColor;

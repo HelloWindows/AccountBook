@@ -16,12 +16,17 @@ namespace JTween.Transform {
         private int m_resolution = 10;
         private UnityEngine.Transform m_Transform;
 
+        public JTweenTransformLocalPath() {
+            m_tweenType = (int)JTweenTransform.LocalPath;
+            m_tweenElement = JTweenElement.Transform;
+        }
+
         public Vector3[] ToPath { get { return m_toPath; } set { m_toPath = value; } }
         public PathType PathType { get { return m_pathType; } set { m_pathType = value; } }
         public PathMode PathMode { get { return m_pathMode; } set { m_pathMode = value; } }
         public int Resolution { get { return m_resolution; } set { m_resolution = value; } }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
@@ -38,7 +43,7 @@ namespace JTween.Transform {
             return ShortcutExtensions.DOLocalPath(m_target, m_toPath, m_duration, m_pathType, m_pathMode, m_resolution);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Transform) return;
             // end if
             m_Transform.position = m_beginPosition;

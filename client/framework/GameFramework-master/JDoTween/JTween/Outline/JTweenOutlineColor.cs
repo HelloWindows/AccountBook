@@ -13,6 +13,11 @@ namespace JTween.Outline {
         private Color m_toColor = Color.white;
         private UnityEngine.UI.Outline m_Outline;
 
+        public JTweenOutlineColor() {
+            m_tweenType = (int)JTweenOutline.Color;
+            m_tweenElement = JTweenElement.Outline;
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -22,7 +27,7 @@ namespace JTween.Outline {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Outline = m_target.GetComponent<UnityEngine.UI.Outline>();
@@ -37,7 +42,7 @@ namespace JTween.Outline {
             return m_Outline.DOColor(m_toColor, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Outline) return;
             // end if
             m_Outline.effectColor = m_beginColor;

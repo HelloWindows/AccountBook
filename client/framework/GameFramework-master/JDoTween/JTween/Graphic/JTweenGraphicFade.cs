@@ -13,6 +13,11 @@ namespace JTween.Graphic {
         private float m_toAlpha = 0;
         private UnityEngine.UI.Graphic m_Graphic;
 
+        public JTweenGraphicFade() {
+            m_tweenType = (int)JTweenGraphic.Fade;
+            m_tweenElement = JTweenElement.Graphic;
+        }
+
         public float ToAlpha {
             get {
                 return m_toAlpha;
@@ -22,7 +27,7 @@ namespace JTween.Graphic {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Graphic = m_target.GetComponent<UnityEngine.UI.Graphic>();
@@ -37,7 +42,7 @@ namespace JTween.Graphic {
             return m_Graphic.DOFade(m_toAlpha, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Graphic) return;
             // end if
             m_Graphic.color = m_beginColor;

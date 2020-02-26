@@ -13,6 +13,11 @@ namespace JTween.Outline {
         private float m_toAlpha = 0;
         private UnityEngine.UI.Outline m_Outline;
 
+        public JTweenOutlineFade() {
+            m_tweenType = (int)JTweenOutline.Fade;
+            m_tweenElement = JTweenElement.Outline;
+        }
+
         public float ToAlpha {
             get {
                 return m_toAlpha;
@@ -22,7 +27,7 @@ namespace JTween.Outline {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Outline = m_target.GetComponent<UnityEngine.UI.Outline>();
@@ -37,7 +42,7 @@ namespace JTween.Outline {
             return m_Outline.DOFade(m_toAlpha, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Outline) return;
             // end if
             m_Outline.effectColor = m_beginColor;

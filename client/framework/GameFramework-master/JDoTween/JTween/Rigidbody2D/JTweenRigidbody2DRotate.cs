@@ -13,6 +13,11 @@ namespace JTween.Rigidbody2D {
         private float m_toAngle = 0;
         private UnityEngine.Rigidbody2D m_Rigidbody;
 
+        public JTweenRigidbody2DRotate() {
+            m_tweenType = (int)JTweenRigidbody2D.Rotate;
+            m_tweenElement = JTweenElement.Rigidbody2D;
+        }
+
         public float ToAngle {
             get {
                 return m_toAngle;
@@ -22,7 +27,7 @@ namespace JTween.Rigidbody2D {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Rigidbody = m_target.GetComponent<UnityEngine.Rigidbody2D>();
@@ -37,7 +42,7 @@ namespace JTween.Rigidbody2D {
             return m_Rigidbody.DORotate(m_toAngle, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Rigidbody) return;
             // end if
             m_Rigidbody.rotation = m_beginRotation;

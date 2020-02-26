@@ -17,6 +17,11 @@ namespace JTween.Camera {
         private Vector3 m_begainPosition = Vector3.zero;
         private UnityEngine.Camera m_Camera;
 
+        public JTweenCameraShakePosition() {
+            m_tweenType = (int)JTweenCamera.ShakePosition;
+            m_tweenElement = JTweenElement.Camera;
+        }
+
         public float Strength {
             get {
                 return m_strength;
@@ -62,7 +67,7 @@ namespace JTween.Camera {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Camera = m_target.GetComponent<UnityEngine.Camera>();
@@ -80,7 +85,7 @@ namespace JTween.Camera {
             return m_Camera.DOShakePosition(m_duration, m_strengthVec, m_vibrato, m_randomness, m_fadeOut);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Camera) return;
             // end if
             m_target.position = m_begainPosition;

@@ -15,6 +15,11 @@ namespace JTween.Transform {
         private Vector3 m_up = Vector3.up;
         private UnityEngine.Transform m_Transform;
 
+        public JTweenTransformLookAt() {
+            m_tweenType = (int)JTweenTransform.LookAt;
+            m_tweenElement = JTweenElement.Transform;
+        }
+
         public Vector3 Towards {
             get {
                 return m_towards;
@@ -41,7 +46,7 @@ namespace JTween.Transform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
@@ -56,7 +61,7 @@ namespace JTween.Transform {
             return m_Transform.DOLookAt(m_towards, m_duration, m_axisConstraint, m_up);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Transform) return;
             // end if
             m_Transform.rotation = Quaternion.Euler(m_beginRotate);

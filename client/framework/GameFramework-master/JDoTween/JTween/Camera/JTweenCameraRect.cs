@@ -13,6 +13,11 @@ namespace JTween.Camera {
         private Rect m_toRect = Rect.zero;
         private UnityEngine.Camera m_Camera;
 
+        public JTweenCameraRect() {
+            m_tweenType = (int)JTweenCamera.Rect;
+            m_tweenElement = JTweenElement.Camera;
+        }
+
         public Rect ToRect {
             get {
                 return m_toRect;
@@ -22,7 +27,7 @@ namespace JTween.Camera {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Camera = m_target.GetComponent<UnityEngine.Camera>();
@@ -37,7 +42,7 @@ namespace JTween.Camera {
             return m_Camera.DORect(m_toRect, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Camera) return;
             // end if
             m_Camera.rect = m_beginRect;

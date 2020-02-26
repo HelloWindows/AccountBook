@@ -13,6 +13,11 @@ namespace JTween.AudioSource {
         private float m_toPitch = 0;
         private UnityEngine.AudioSource m_AudioSource;
 
+        public JTweenAudioSourcePitch() {
+            m_tweenType = (int)JTweenAudioSource.Pitch;
+            m_tweenElement = JTweenElement.AudioSource;
+        }
+
         public float ToPitch {
             get {
                 return m_toPitch;
@@ -22,7 +27,7 @@ namespace JTween.AudioSource {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_AudioSource = m_target.GetComponent<UnityEngine.AudioSource>();
@@ -42,7 +47,7 @@ namespace JTween.AudioSource {
             return m_AudioSource.DOPitch(m_toPitch, m_duration);
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_AudioSource) return;
             // end if
             m_AudioSource.volume = m_beginPitch;

@@ -23,6 +23,11 @@ namespace JTween.Transform {
         private float m_toMoveZ = 0;
         private UnityEngine.Transform m_Transform;
 
+        public JTweenTransformLocalMove() {
+            m_tweenType = (int)JTweenTransform.LocalMove;
+            m_tweenElement = JTweenElement.Transform;
+        }
+
         public Vector3 ToPosition {
             get {
                 return m_toPosition;
@@ -63,7 +68,7 @@ namespace JTween.Transform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
@@ -88,7 +93,7 @@ namespace JTween.Transform {
             } // end switch
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_Transform) return;
             // end if
             m_Transform.localPosition = m_beginPosition;

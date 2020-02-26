@@ -21,6 +21,11 @@ namespace JTween.RectTransform {
         private float m_toPivotY = 0;
         private UnityEngine.RectTransform m_RectTransform;
 
+        public JTweenRectTransformPivot() {
+            m_tweenType = (int)JTweenRectTransform.Pivot;
+            m_tweenElement = JTweenElement.RectTransform;
+        }
+
         public Vector2 ToPivot {
             get {
                 return m_toPivot;
@@ -51,7 +56,7 @@ namespace JTween.RectTransform {
             }
         }
 
-        public override void Init() {
+        protected override void Init() {
             if (null == m_target) return;
             // end if
             m_RectTransform = m_target.GetComponent<UnityEngine.RectTransform>();
@@ -74,7 +79,7 @@ namespace JTween.RectTransform {
             } // end switch
         }
 
-        protected override void Restore() {
+        public override void Restore() {
             if (null == m_RectTransform) return;
             // end if
             m_RectTransform.pivot = m_beginPivot;
