@@ -32,14 +32,13 @@ public class PopupExample : PopupWindowContent {
         return new Vector2(200, 150);
     }
     Vector2 scrollPos;
-    int selGridInt = 0;
+    int selGridInt = -1;
     string[] selStrings = { "radio1", "radio2", "radio3" };
 
     public override void OnGUI(Rect rect) {
         EditorGUILayout.BeginVertical();
         GUILayout.Label("Popup Options Example", EditorStyles.boldLabel);
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
-        //GUILayout.Label(t);
         selGridInt = GUILayout.SelectionGrid(selGridInt, selStrings, 1);
         EditorGUILayout.EndScrollView();
         EditorGUILayout.EndVertical();
