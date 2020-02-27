@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "GameFramework\GameFramework.csproj", "{109D7F39-79AB-4862-9F73-0B8C638930C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JTween", "JDoTween\JTween.csproj", "{F24181E1-6792-4CC3-80DC-93D142865580}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JTween", "JTween\JTween.csproj", "{F24181E1-6792-4CC3-80DC-93D142865580}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
