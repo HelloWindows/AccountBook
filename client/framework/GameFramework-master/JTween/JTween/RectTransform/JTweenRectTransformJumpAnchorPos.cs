@@ -69,7 +69,7 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("anchorPos")) m_toAnchorPos = Utility.Utils.JsonToVector2(json["anchorPos"]);
+            if (json.Contains("anchorPos")) m_toAnchorPos = JTweenUtils.JsonToVector2(json["anchorPos"]);
             // end if
             if (json.Contains("jumpPower")) m_jumpPower = json["jumpPower"].ToFloat();
             // end if
@@ -78,7 +78,7 @@ namespace JTween.RectTransform {
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["anchorPos"] = Utility.Utils.Vector2Json(m_toAnchorPos);
+            json["anchorPos"] = JTweenUtils.Vector2Json(m_toAnchorPos);
             json["jumpPower"] = m_jumpPower;
             json["numJumps"] = m_jumpPower;
         }

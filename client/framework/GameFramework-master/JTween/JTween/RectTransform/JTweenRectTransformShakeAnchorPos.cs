@@ -120,7 +120,7 @@ namespace JTween.RectTransform {
                 m_strength = json["strength"].ToFloat();
             } else if (json.Contains("strengthAxis")) {
                 m_shakeType = ShakeType.Axis;
-                m_strengthAxis = Utility.Utils.JsonToVector2(json["strengthAxis"]);
+                m_strengthAxis = JTweenUtils.JsonToVector2(json["strengthAxis"]);
             } // end if
             if (json.Contains("vibrato")) m_vibrato = json["vibrato"].ToInt32();
             // end if
@@ -136,7 +136,7 @@ namespace JTween.RectTransform {
                     json["strength"] = m_strength;
                     break;
                 case ShakeType.Axis:
-                    json["strengthAxis"] = Utility.Utils.Vector2Json(m_strengthAxis);
+                    json["strengthAxis"] = JTweenUtils.Vector2Json(m_strengthAxis);
                     break;
                 default:
                     Debug.LogError(GetType().FullName + " ToJson ShakeType is null");

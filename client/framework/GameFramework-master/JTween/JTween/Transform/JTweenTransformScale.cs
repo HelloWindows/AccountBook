@@ -115,7 +115,7 @@ namespace JTween.Transform {
         protected override void JsonTo(JsonData json) {
             if (json.Contains("scale")) {
                 m_ScaleType = ScaleType.Scale;
-                m_toScale = Utility.Utils.JsonToVector3(json["scale"]);
+                m_toScale = JTweenUtils.JsonToVector3(json["scale"]);
             } else if (json.Contains("scaleV")) {
                 m_ScaleType = ScaleType.ScaleV;
                 m_toScaleV = (float)json["scaleV"];
@@ -136,7 +136,7 @@ namespace JTween.Transform {
         protected override void ToJson(ref JsonData json) {
             switch (m_ScaleType) {
                 case ScaleType.Scale:
-                    json["scale"] = Utility.Utils.Vector3Json(m_toScale);
+                    json["scale"] = JTweenUtils.Vector3Json(m_toScale);
                     break;
                 case ScaleType.ScaleV:
                     json["scaleV"] = m_toScaleV;

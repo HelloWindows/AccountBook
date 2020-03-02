@@ -69,7 +69,7 @@ namespace JTween.Rigidbody {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("endValue")) m_toPosition = Utility.Utils.JsonToVector3(json["endValue"]);
+            if (json.Contains("endValue")) m_toPosition = JTweenUtils.JsonToVector3(json["endValue"]);
             // end if
             if (json.Contains("jumpPower")) m_jumpPower = (float)json["jumpPower"];
             // end if
@@ -78,7 +78,7 @@ namespace JTween.Rigidbody {
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["endValue"] = Utility.Utils.Vector3Json(m_toPosition);
+            json["endValue"] = JTweenUtils.Vector3Json(m_toPosition);
             json["jumpPower"] = m_jumpPower;
             json["numJumps"] = m_numJumps;
         }

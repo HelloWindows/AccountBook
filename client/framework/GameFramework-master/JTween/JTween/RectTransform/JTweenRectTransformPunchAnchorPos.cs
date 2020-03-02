@@ -78,7 +78,7 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("punch")) m_punch = Utility.Utils.JsonToVector2(json["punch"]);
+            if (json.Contains("punch")) m_punch = JTweenUtils.JsonToVector2(json["punch"]);
             // end if
             if (json.Contains("vibrato")) m_vibrato = json["vibrato"].ToInt32();
             // end if
@@ -87,7 +87,7 @@ namespace JTween.RectTransform {
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["punch"] = Utility.Utils.Vector2Json(m_punch);
+            json["punch"] = JTweenUtils.Vector2Json(m_punch);
             json["vibrato"] = m_vibrato;
             json["elasticity"] = m_elasticity;
         }

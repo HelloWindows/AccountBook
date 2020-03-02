@@ -49,12 +49,12 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("move")) m_toPosition = Utility.Utils.JsonToVector3(json["move"]);
+            if (json.Contains("move")) m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
 
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["move"] = Utility.Utils.Vector3Json(m_toPosition);
+            json["move"] = JTweenUtils.Vector3Json(m_toPosition);
         }
 
         protected override bool CheckValid(out string errorInfo) {

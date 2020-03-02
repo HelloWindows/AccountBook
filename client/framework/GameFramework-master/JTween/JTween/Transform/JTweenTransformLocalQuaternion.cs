@@ -50,14 +50,14 @@ namespace JTween.Transform {
 
         protected override void JsonTo(JsonData json) {
             if (json.Contains("quaternion")) {
-                Vector4 quaternion = Utility.Utils.JsonToVector4(json["quaternion"]);
+                Vector4 quaternion = JTweenUtils.JsonToVector4(json["quaternion"]);
                 m_toRotate = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
             } // end if
         }
 
         protected override void ToJson(ref JsonData json) {
             Vector4 quaternion = new Vector4(m_toRotate.x, m_toRotate.y, m_toRotate.z, m_toRotate.w);
-            json["quaternion"] = Utility.Utils.Vector4Json(quaternion);
+            json["quaternion"] = JTweenUtils.Vector4Json(quaternion);
         }
 
         protected override bool CheckValid(out string errorInfo) {

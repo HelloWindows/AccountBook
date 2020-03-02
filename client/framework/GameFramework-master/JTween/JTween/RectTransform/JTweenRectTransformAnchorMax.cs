@@ -49,12 +49,12 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("anchorMax")) m_toAnchorMax = Utility.Utils.JsonToVector2(json["anchorMax"]);
+            if (json.Contains("anchorMax")) m_toAnchorMax = JTweenUtils.JsonToVector2(json["anchorMax"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["anchorMax"] = Utility.Utils.Vector2Json(m_toAnchorMax);
+            json["anchorMax"] = JTweenUtils.Vector2Json(m_toAnchorMax);
         }
 
         protected override bool CheckValid(out string errorInfo) {

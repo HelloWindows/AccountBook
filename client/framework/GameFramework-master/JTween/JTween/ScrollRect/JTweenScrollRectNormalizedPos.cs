@@ -49,12 +49,12 @@ namespace JTween.ScrollRect {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("pos")) m_toNormalizedPos = Utility.Utils.JsonToVector2(json["pos"]);
+            if (json.Contains("pos")) m_toNormalizedPos = JTweenUtils.JsonToVector2(json["pos"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["pos"] = Utility.Utils.Vector2Json(m_toNormalizedPos);
+            json["pos"] = JTweenUtils.Vector2Json(m_toNormalizedPos);
         }
 
         protected override bool CheckValid(out string errorInfo) {

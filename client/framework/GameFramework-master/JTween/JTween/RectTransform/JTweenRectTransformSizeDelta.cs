@@ -49,12 +49,12 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("size")) m_toSizeDelta = Utility.Utils.JsonToVector2(json["size"]);
+            if (json.Contains("size")) m_toSizeDelta = JTweenUtils.JsonToVector2(json["size"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["size"] = Utility.Utils.Vector2Json(m_toSizeDelta);
+            json["size"] = JTweenUtils.Vector2Json(m_toSizeDelta);
         }
 
         protected override bool CheckValid(out string errorInfo) {

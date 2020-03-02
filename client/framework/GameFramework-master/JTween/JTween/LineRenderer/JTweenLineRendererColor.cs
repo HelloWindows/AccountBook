@@ -82,21 +82,21 @@ namespace JTween.LineRenderer {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("startColor")) m_startColor = Utility.Utils.JsonToColor(json["startColor"]);
+            if (json.Contains("startColor")) m_startColor = JTweenUtils.JsonToColor(json["startColor"]);
             // end if
-            if (json.Contains("toStartColor")) m_toStartColor = Utility.Utils.JsonToColor(json["toStartColor"]);
+            if (json.Contains("toStartColor")) m_toStartColor = JTweenUtils.JsonToColor(json["toStartColor"]);
             // end if
-            if (json.Contains("endColor")) m_endColor = Utility.Utils.JsonToColor(json["endColor"]);
+            if (json.Contains("endColor")) m_endColor = JTweenUtils.JsonToColor(json["endColor"]);
             // end if
-            if (json.Contains("toEndColor")) m_toEndColor = Utility.Utils.JsonToColor(json["toEndColor"]);
+            if (json.Contains("toEndColor")) m_toEndColor = JTweenUtils.JsonToColor(json["toEndColor"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["startColor"] = Utility.Utils.ColorJson(m_startColor);
-            json["toStartColor"] = Utility.Utils.ColorJson(m_toStartColor);
-            json["endColor"] = Utility.Utils.ColorJson(m_endColor);
-            json["toEndColor"] = Utility.Utils.ColorJson(m_toEndColor);
+            json["startColor"] = JTweenUtils.ColorJson(m_startColor);
+            json["toStartColor"] = JTweenUtils.ColorJson(m_toStartColor);
+            json["endColor"] = JTweenUtils.ColorJson(m_endColor);
+            json["toEndColor"] = JTweenUtils.ColorJson(m_toEndColor);
         }
 
         protected override bool CheckValid(out string errorInfo) {

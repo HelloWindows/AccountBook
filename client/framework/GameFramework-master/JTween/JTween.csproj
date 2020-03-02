@@ -72,9 +72,6 @@
     <Reference Include="UnityEngine.UIModule">
       <HintPath>..\Libs\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="Utility">
-      <HintPath>..\Libs\Utility.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JTween\AudioSource\JTweenAudioSourcePitch.cs" />
@@ -178,6 +175,7 @@
     <Compile Include="JTween\Transform\JTweenTransformShakePosition.cs" />
     <Compile Include="JTween\Transform\JTweenTransformShakeRotation.cs" />
     <Compile Include="JTween\Transform\JTweenTransformShakeScale.cs" />
+    <Compile Include="JTween\JTweenUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

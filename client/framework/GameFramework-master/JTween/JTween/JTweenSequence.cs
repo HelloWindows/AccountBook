@@ -8,6 +8,7 @@ using LitJson;
 using UnityEngine;
 
 namespace JTween {
+    [AddComponentMenu("JTween/JTweenSequence")]
     public class JTweenSequence : MonoBehaviour {
 
         private JTweenBase[] m_tweens;
@@ -94,9 +95,14 @@ namespace JTween {
                 JsonData node;
                 foreach (var tween in m_tweens) {
                     node = tween.DoJson();
-                    string curPath = Utility.Utils.GetTranPath(transform) + "/";
+                    string curPath = JTweenUtils.GetTranPath(transform) + "/";
                     if (tween.Target != transform) {
-                        node["_PATH"] = Utility.Utils.GetTranPath(tween.Target).Replace(curPath, "");
+                        string targetPath = JTweenUtils.GetTranPath(tween.Target);
+                        if (!targetPath.StartsWith(curPath)) {
+                            Debug.LogErrorFormat("JTweenSequence DoJson target is not child! Path:{0}", targetPath);
+                            continue;
+                        } // end if
+                        node["_PATH"] = JTweenUtils.GetTranPath(tween.Target).Replace(curPath, "");
                     } // end if
                     json.Add(node);
                 }

@@ -94,7 +94,7 @@ namespace JTween.Transform {
         protected override void JsonTo(JsonData json) {
             if (json.Contains("strength")) m_strength = (float)json["strength"];
             // end if
-            if (json.Contains("strengthVec")) m_strengthVec = Utility.Utils.JsonToVector3(json["strengthVec"]);
+            if (json.Contains("strengthVec")) m_strengthVec = JTweenUtils.JsonToVector3(json["strengthVec"]);
             // end if
             if (json.Contains("vibrato")) m_vibrato = (int)json["vibrato"];
             // end if
@@ -109,7 +109,7 @@ namespace JTween.Transform {
         protected override void ToJson(ref JsonData json) {
             json["strength"] = m_strength;
             if (m_strengthVec != null && m_strengthVec != Vector3.zero) {
-                json["strengthVec"] = Utility.Utils.Vector3Json(m_strengthVec);
+                json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);
             } // end if
             json["vibrato"] = m_vibrato;
             json["randomness"] = m_randomness;

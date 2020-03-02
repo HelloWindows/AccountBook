@@ -59,14 +59,14 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("rotate")) m_toRotate = Utility.Utils.JsonToVector3(json["rotate"]);
+            if (json.Contains("rotate")) m_toRotate = JTweenUtils.JsonToVector3(json["rotate"]);
             // end if
             if (json.Contains("mode")) m_RotateMode = (RotateMode)(int)json["mode"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["rotate"] = Utility.Utils.Vector3Json(m_toRotate);
+            json["rotate"] = JTweenUtils.Vector3Json(m_toRotate);
             json["mode"] = (int)m_RotateMode;
         }
 

@@ -82,7 +82,7 @@ namespace JTween.Material {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("offset")) m_toOffset = Utility.Utils.JsonToVector2(json["offset"]);
+            if (json.Contains("offset")) m_toOffset = JTweenUtils.JsonToVector2(json["offset"]);
             // end if
             if (json.Contains("property")) m_property = (string)json["property"];
             // end if
@@ -91,7 +91,7 @@ namespace JTween.Material {
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["offset"] = Utility.Utils.Vector2Json(m_toOffset);
+            json["offset"] = JTweenUtils.Vector2Json(m_toOffset);
             if (!string.IsNullOrEmpty(m_property)) {
                 json["property"] = m_property;
             } // end if

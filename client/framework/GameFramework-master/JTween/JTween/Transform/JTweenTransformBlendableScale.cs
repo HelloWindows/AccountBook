@@ -49,12 +49,12 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("scale")) m_toScale = Utility.Utils.JsonToVector3(json["scale"]);
+            if (json.Contains("scale")) m_toScale = JTweenUtils.JsonToVector3(json["scale"]);
 
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["scale"] = Utility.Utils.Vector3Json(m_toScale);
+            json["scale"] = JTweenUtils.Vector3Json(m_toScale);
         }
 
         protected override bool CheckValid(out string errorInfo) {

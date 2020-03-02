@@ -54,7 +54,7 @@ namespace JTween.Transform {
                 JsonData pathJson = json["path"];
                 m_toPath = new Vector3[pathJson.Count];
                 for (int i = 0, imax = pathJson.Count; i < imax; ++i) {
-                    m_toPath[i] = Utility.Utils.JsonToVector3(pathJson[i]);
+                    m_toPath[i] = JTweenUtils.JsonToVector3(pathJson[i]);
                 } // end for
             } // end if
             if (json.Contains("type")) m_pathType = (PathType)json["type"].ToInt32();
@@ -69,7 +69,7 @@ namespace JTween.Transform {
             if (m_toPath == null || m_toPath.Length <= 0) return;
             JsonData pathJson = new JsonData();
             for (int i = 0; i < m_toPath.Length; ++i) {
-                pathJson.Add(Utility.Utils.Vector3Json(m_toPath[i]));
+                pathJson.Add(JTweenUtils.Vector3Json(m_toPath[i]));
             } // end for
             json["path"] = pathJson;
             json["type"] = (int)m_pathType;

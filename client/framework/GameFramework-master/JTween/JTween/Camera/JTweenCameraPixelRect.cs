@@ -50,14 +50,14 @@ namespace JTween.Camera {
 
         protected override void JsonTo(JsonData json) {
             if (json.Contains("pixelRect")) {
-                Vector4 rect = Utility.Utils.JsonToVector4(json["pixelRect"]);
+                Vector4 rect = JTweenUtils.JsonToVector4(json["pixelRect"]);
                 m_toPixelRect = new Rect(rect.x, rect.y, rect.z, rect.w);
             } // end if
         }
 
         protected override void ToJson(ref JsonData json) {
             Vector4 rect = new Vector4(m_toPixelRect.x, m_toPixelRect.y, m_toPixelRect.width, m_toPixelRect.height);
-            json["pixelRect"] = Utility.Utils.Vector4Json(rect);
+            json["pixelRect"] = JTweenUtils.Vector4Json(rect);
         }
 
         protected override bool CheckValid(out string errorInfo) {

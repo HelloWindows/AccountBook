@@ -69,7 +69,7 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("punch")) m_toPunch = Utility.Utils.JsonToVector3(json["punch"]);
+            if (json.Contains("punch")) m_toPunch = JTweenUtils.JsonToVector3(json["punch"]);
             // end if
             if (json.Contains("vibrate")) m_vibrate = (int)json["vibrate"];
             // end if
@@ -78,7 +78,7 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["punch"] = Utility.Utils.Vector3Json(m_toPunch);
+            json["punch"] = JTweenUtils.Vector3Json(m_toPunch);
             json["vibrate"] = m_vibrate;
             json["elasticity"] = m_elasticity;
         }

@@ -102,7 +102,7 @@ namespace JTween.Rigidbody {
         protected override void JsonTo(JsonData json) {
             if (json.Contains("move")) {
                 m_MoveType = MoveType.Move;
-                m_toPosition = Utility.Utils.JsonToVector3(json["move"]);
+                m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
             } else if (json.Contains("moveX")) {
                 m_MoveType = MoveType.MoveX;
                 m_toMoveX = (float)json["moveX"];
@@ -120,7 +120,7 @@ namespace JTween.Rigidbody {
         protected override void ToJson(ref JsonData json) {
             switch (m_MoveType) {
                 case MoveType.Move:
-                    json["move"] = Utility.Utils.Vector3Json(m_toPosition);
+                    json["move"] = JTweenUtils.Vector3Json(m_toPosition);
                     break;
                 case MoveType.MoveX:
                     json["moveX"] = m_toMoveX;

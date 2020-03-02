@@ -88,7 +88,7 @@ namespace JTween.RectTransform {
         protected override void JsonTo(JsonData json) {
             if (json.Contains("pivot")) {
                 m_pivotType = PivotType.Pivot;
-                m_toPivot = Utility.Utils.JsonToVector2(json["pivot"]);
+                m_toPivot = JTweenUtils.JsonToVector2(json["pivot"]);
             } else if (json.Contains("pivotX")) {
                 m_pivotType = PivotType.PivotX;
                 m_toPivotX = (float)json["pivotX"];
@@ -103,7 +103,7 @@ namespace JTween.RectTransform {
         protected override void ToJson(ref JsonData json) {
             switch (m_pivotType) {
                 case PivotType.Pivot:
-                    json["pivot"] = Utility.Utils.Vector2Json(m_toPivot);
+                    json["pivot"] = JTweenUtils.Vector2Json(m_toPivot);
                     break;
                 case PivotType.PivotX:
                     json["pivotX"] = m_toPivotX;

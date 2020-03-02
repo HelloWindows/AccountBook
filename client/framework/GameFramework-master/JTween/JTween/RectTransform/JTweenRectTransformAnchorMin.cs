@@ -49,12 +49,12 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("anchorMin")) m_toAnchorMin = Utility.Utils.JsonToVector2(json["anchorMin"]);
+            if (json.Contains("anchorMin")) m_toAnchorMin = JTweenUtils.JsonToVector2(json["anchorMin"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["anchorMin"] = Utility.Utils.Vector2Json(m_toAnchorMin);
+            json["anchorMin"] = JTweenUtils.Vector2Json(m_toAnchorMin);
         }
 
         protected override bool CheckValid(out string errorInfo) {

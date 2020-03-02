@@ -68,18 +68,18 @@ namespace JTween.Rigidbody {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("towards")) m_towards = Utility.Utils.JsonToVector3(json["towards"]);
+            if (json.Contains("towards")) m_towards = JTweenUtils.JsonToVector3(json["towards"]);
             // end if
             if (json.Contains("axis")) m_axisConstraint = (AxisConstraint)(int)json["axis"];
             // end if
-            if (json.Contains("up")) m_up = Utility.Utils.JsonToVector3(json["up"]);
+            if (json.Contains("up")) m_up = JTweenUtils.JsonToVector3(json["up"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["towards"] = Utility.Utils.Vector3Json(m_towards);
+            json["towards"] = JTweenUtils.Vector3Json(m_towards);
             json["axis"] = (int)m_axisConstraint;
-            json["up"] = Utility.Utils.Vector3Json(m_up);
+            json["up"] = JTweenUtils.Vector3Json(m_up);
         }
 
         protected override bool CheckValid(out string errorInfo) {

@@ -76,7 +76,7 @@ namespace JTween.Material {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("color")) m_toColor = Utility.Utils.JsonToColor(json["color"]);
+            if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json["color"]);
             // end if
             if (json.Contains("property")) m_property = (string)json["property"];
             // end if
@@ -85,7 +85,7 @@ namespace JTween.Material {
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["color"] = Utility.Utils.ColorJson(m_toColor);
+            json["color"] = JTweenUtils.ColorJson(m_toColor);
             if (!string.IsNullOrEmpty(m_property)) {
                 json["property"] = m_property;
             } // end if

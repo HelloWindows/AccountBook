@@ -193,7 +193,7 @@ namespace JTween {
                 errorInfo = "target is Null!!";
                 return false;
             } // end if
-            if (Utility.Utils.IsEqual(m_duration, 0)) {
+            if (JTweenUtils.IsEqual(m_duration, 0)) {
                 errorInfo = "duration is zero!!";
                 return false;
             } // end if
@@ -223,7 +223,7 @@ namespace JTween {
             // end if
             json["snapping"] = m_isSnapping;
             if (m_animCurve != null && m_animCurve.keys != null && m_animCurve.keys.Length > 0) {
-                json["animCurve"] = Utility.Utils.AnimationCurveJson(m_animCurve);
+                json["animCurve"] = JTweenUtils.AnimationCurveJson(m_animCurve);
             } else {
                 json["animEase"] = (int)m_animEase;
             } // end if
@@ -249,7 +249,7 @@ namespace JTween {
             // end if
             if (json.Contains("snapping")) m_isSnapping = json["snapping"].ToBool();
             // end if
-            if (json.Contains("animCurve")) m_animCurve = Utility.Utils.JsonAnimationCurve(json["animCurve"]);
+            if (json.Contains("animCurve")) m_animCurve = JTweenUtils.JsonAnimationCurve(json["animCurve"]);
             // end if
             if (json.Contains("animEase")) m_animEase = (Ease)json["animEase"].ToInt32();
             // end if

@@ -49,12 +49,12 @@ namespace JTween.Outline {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("color")) m_toColor = Utility.Utils.JsonToColor(json["color"]);
+            if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json["color"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["color"] = Utility.Utils.ColorJson(m_toColor);
+            json["color"] = JTweenUtils.ColorJson(m_toColor);
         }
 
         protected override bool CheckValid(out string errorInfo) {

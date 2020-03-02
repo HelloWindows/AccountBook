@@ -88,7 +88,7 @@ namespace JTween.RectTransform {
         protected override void JsonTo(JsonData json) {
             if (json.Contains("pos")) {
                 m_posType = PosType.Pos;
-                m_toAnchorPos = Utility.Utils.JsonToVector2(json["pos"]);
+                m_toAnchorPos = JTweenUtils.JsonToVector2(json["pos"]);
             } else if (json.Contains("posX")) {
                 m_posType = PosType.PosX;
                 m_toAnchorPosX = (float)json["posX"];
@@ -103,7 +103,7 @@ namespace JTween.RectTransform {
         protected override void ToJson(ref JsonData json) {
             switch (m_posType) {
                 case PosType.Pos:
-                    json["pos"] = Utility.Utils.Vector2Json(m_toAnchorPos);
+                    json["pos"] = JTweenUtils.Vector2Json(m_toAnchorPos);
                     break;
                 case PosType.PosX:
                     json["posX"] = m_toAnchorPosX;
