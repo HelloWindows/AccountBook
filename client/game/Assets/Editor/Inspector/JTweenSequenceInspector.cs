@@ -12,7 +12,9 @@ namespace JTween.Editor {
     public class JTweenSequenceInspector : GameFrameworkInspector {
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
+            serializedObject.Update();
             GUILayout.BeginVertical("box"); {
+                EditorGUILayout.LabelField("Load Json", EditorStyles.boldLabel);
                 //DirectoryInfo info = new DirectoryInfo(EditorTool.TWEENER_PATH);
                 //if (info != null) {
                 //    FileInfo[] files = info.GetFiles("*.json");
