@@ -18,6 +18,18 @@ namespace JTween.CanvasGroup {
             m_tweenElement = JTweenElement.CanvasGroup;
         }
 
+        public float BeginAlpha {
+            get {
+                return m_beginAlpha;
+            }
+            set {
+                m_beginAlpha = value;
+                if (null != m_CanvasGroup) {
+                    m_CanvasGroup.alpha = m_beginAlpha;
+                } // end if
+            }
+        }
+
         public float ToAlpha {
             get {
                 return m_toAlpha;
@@ -49,11 +61,14 @@ namespace JTween.CanvasGroup {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginAlpha")) BeginAlpha = (float)json["beginAlpha"];
+            // end if
             if (json.Contains("alpha")) m_toAlpha = (float)json["alpha"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginAlpha"] = m_beginAlpha;
             json["alpha"] = m_toAlpha;
         }
 

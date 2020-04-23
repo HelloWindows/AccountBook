@@ -18,6 +18,18 @@ namespace JTween.Camera {
             m_tweenElement = JTweenElement.Camera;
         }
 
+        public float BeginAspect {
+            get {
+                return m_beginAspect;
+            }
+            set {
+                m_beginAspect = value;
+                if (m_Camera != null) {
+                    m_Camera.aspect = m_beginAspect;
+                } // end if
+            }
+        }
+
         public float ToAspect {
             get {
                 return m_toAspect;
@@ -49,11 +61,14 @@ namespace JTween.Camera {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginAspect")) BeginAspect = (float)json["beginAspect"];
+            // end if
             if (json.Contains("aspect")) m_toAspect = (float)json["aspect"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginAspect"] = m_beginAspect;
             json["aspect"] = m_toAspect;
         }
 

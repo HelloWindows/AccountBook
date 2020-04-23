@@ -18,6 +18,18 @@ namespace JTween.Camera {
             m_tweenElement = JTweenElement.Camera;
         }
 
+        public Rect BeginPixelRect {
+            get {
+                return m_beginPixelRect;
+            }
+            set {
+                m_beginPixelRect = value;
+                if (m_Camera != null) {
+                    m_Camera.pixelRect = m_beginPixelRect;
+                } // end if
+            }
+        }
+
         public Rect ToPixelRect {
             get {
                 return m_toPixelRect;
@@ -49,6 +61,10 @@ namespace JTween.Camera {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPixelRect")) {
+                Vector4 rect = JTweenUtils.JsonToVector4(json["beginPixelRect"]);
+                m_beginPixelRect = new Rect(rect.x, rect.y, rect.z, rect.w);
+            } // end if
             if (json.Contains("pixelRect")) {
                 Vector4 rect = JTweenUtils.JsonToVector4(json["pixelRect"]);
                 m_toPixelRect = new Rect(rect.x, rect.y, rect.z, rect.w);
@@ -56,7 +72,9 @@ namespace JTween.Camera {
         }
 
         protected override void ToJson(ref JsonData json) {
-            Vector4 rect = new Vector4(m_toPixelRect.x, m_toPixelRect.y, m_toPixelRect.width, m_toPixelRect.height);
+            Vector4 rect = new Vector4(m_beginPixelRect.x, m_beginPixelRect.y, m_beginPixelRect.width, m_beginPixelRect.height);
+            json["beginPixelRect"] = JTweenUtils.Vector4Json(rect);
+            rect = new Vector4(m_toPixelRect.x, m_toPixelRect.y, m_toPixelRect.width, m_toPixelRect.height);
             json["pixelRect"] = JTweenUtils.Vector4Json(rect);
         }
 

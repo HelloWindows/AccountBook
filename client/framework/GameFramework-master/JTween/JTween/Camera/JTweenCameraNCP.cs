@@ -18,6 +18,18 @@ namespace JTween.Camera {
             m_tweenElement = JTweenElement.Camera;
         }
 
+        public float BeginNCP {
+            get {
+                return m_beginNCP;
+            }
+            set {
+                m_beginNCP = value;
+                if (m_Camera != null) {
+                    m_Camera.nearClipPlane = m_beginNCP;
+                } // end if
+            }
+        }
+
         public float ToNCP {
             get {
                 return m_toNCP;
@@ -33,7 +45,7 @@ namespace JTween.Camera {
             m_Camera = m_target.GetComponent<UnityEngine.Camera>();
             if (null == m_Camera) return;
             // end if
-            m_beginNCP = m_Camera.farClipPlane;
+            m_beginNCP = m_Camera.nearClipPlane;
         }
 
         protected override Tween DOPlay() {
@@ -45,15 +57,18 @@ namespace JTween.Camera {
         public override void Restore() {
             if (null == m_Camera) return;
             // end if
-            m_Camera.farClipPlane = m_beginNCP;
+            m_Camera.nearClipPlane = m_beginNCP;
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginNCP")) m_beginNCP = (float)json["beginNCP"];
+            // end if
             if (json.Contains("NCP")) m_toNCP = (float)json["NCP"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginNCP"] = m_beginNCP;
             json["NCP"] = m_toNCP;
         }
 

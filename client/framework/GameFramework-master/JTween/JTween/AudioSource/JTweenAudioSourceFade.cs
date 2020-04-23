@@ -17,13 +17,33 @@ namespace JTween.AudioSource {
             m_tweenType = (int)JTweenAudioSource.Fade;
             m_tweenElement = JTweenElement.AudioSource;
         }
-
+        public float BeginVolume {
+            get {
+                return m_beginVolume;
+            }
+            set {
+                m_beginVolume = value;
+                if (m_beginVolume < 0) {
+                    m_beginVolume = 0;
+                } else if (m_beginVolume > 1) {
+                    m_beginVolume = 1;
+                } // end if
+                if (m_AudioSource != null) {
+                    m_AudioSource.volume = m_beginVolume;
+                } // end if
+            }
+        }
         public float ToVolume {
             get {
                 return m_toVolume;
             }
             set {
                 m_toVolume = value;
+                if (m_toVolume < 0) {
+                    m_toVolume = 0;
+                } else if (m_toVolume > 1) {
+                    m_toVolume = 1;
+                } // end if
             }
         }
 
@@ -39,11 +59,6 @@ namespace JTween.AudioSource {
         protected override Tween DOPlay() {
             if (null == m_AudioSource) return null;
             // end if
-            if (m_toVolume < 0) {
-                m_toVolume = 0;
-            } else if (m_toVolume > 1) {
-                m_toVolume = 1;
-            } // end if
             return m_AudioSource.DOFade(m_toVolume, m_duration);
         }
 
@@ -54,16 +69,14 @@ namespace JTween.AudioSource {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginVolume")) BeginVolume = (float)json["beginVolume"];
+            // end if
             if (json.Contains("volume")) m_toVolume = (float)json["volume"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            if (m_toVolume < 0) {
-                m_toVolume = 0;
-            } else if (m_toVolume > 1) {
-                m_toVolume = 1;
-            } // end if
+            json["beginVolume"] = m_beginVolume;
             json["volume"] = m_toVolume;
         }
 

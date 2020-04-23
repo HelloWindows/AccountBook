@@ -18,6 +18,18 @@ namespace JTween.Image {
             m_tweenElement = JTweenElement.Image;
         }
 
+        public Color BeginColor {
+            get {
+                return m_beginColor;
+            }
+            set {
+                m_beginColor = value;
+                if (m_Image != null) {
+                    m_Image.color = m_beginColor;
+                } // end if
+            }
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;

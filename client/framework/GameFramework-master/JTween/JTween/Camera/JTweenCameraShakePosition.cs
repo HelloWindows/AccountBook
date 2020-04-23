@@ -67,6 +67,18 @@ namespace JTween.Camera {
             }
         }
 
+        public Vector3 BegainPosition {
+            get {
+                return m_begainPosition;
+            }
+            set {
+                m_begainPosition = value;
+                if (m_target != null) {
+                    m_target.position = m_begainPosition;
+                } // end if
+            }
+        }
+
         protected override void Init() {
             if (null == m_target) return;
             // end if
@@ -104,16 +116,21 @@ namespace JTween.Camera {
                 int fadeOut = (int)json["fadeOut"];
                 m_fadeOut = fadeOut == 0 ? false : true;
             } // end if
+            if (json.Contains("begainPosition")) BegainPosition = JTweenUtils.JsonToVector3(json["begainPosition"]);
+            // end if
         }
 
         protected override void ToJson(ref JsonData json) {
             json["strength"] = m_strength;
-            if (m_strengthVec != null && m_strengthVec != Vector3.zero) {
+            if (m_strengthVec != null) {
                 json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);
             } // end if
             json["vibrato"] = m_vibrato;
             json["randomness"] = m_randomness;
             json["fadeOut"] = m_fadeOut ? 1 : 0;
+            if (m_begainPosition != null) {
+                json["begainPosition"] = JTweenUtils.Vector3Json(m_begainPosition);
+            } // end if
         }
 
         protected override bool CheckValid(out string errorInfo) {

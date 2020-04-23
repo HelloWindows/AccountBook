@@ -17,6 +17,22 @@ namespace JTween.AudioSource {
             m_tweenType = (int)JTweenAudioSource.Pitch;
             m_tweenElement = JTweenElement.AudioSource;
         }
+        public float BeginPitch {
+            get {
+                return m_beginPitch;
+            }
+            set {
+                m_beginPitch = value;
+                if (m_beginPitch < 0) {
+                    m_beginPitch = 0;
+                } else if (m_beginPitch > 1) {
+                    m_beginPitch = 1;
+                } // end if
+                if (m_AudioSource != null) {
+                    m_AudioSource.volume = m_beginPitch;
+                } // end if
+            }
+        }
 
         public float ToPitch {
             get {
@@ -24,6 +40,11 @@ namespace JTween.AudioSource {
             }
             set {
                 m_toPitch = value;
+                if (m_toPitch < 0) {
+                    m_toPitch = 0;
+                } else if (m_toPitch > 1) {
+                    m_toPitch = 1;
+                } // end if
             }
         }
 
@@ -39,11 +60,6 @@ namespace JTween.AudioSource {
         protected override Tween DOPlay() {
             if (null == m_AudioSource) return null;
             // end if
-            if (m_toPitch < 0) {
-                m_toPitch = 0;
-            } else if (m_toPitch > 1) {
-                m_toPitch = 1;
-            } // end if
             return m_AudioSource.DOPitch(m_toPitch, m_duration);
         }
 
@@ -54,16 +70,14 @@ namespace JTween.AudioSource {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPitch")) BeginPitch = (float)json["beginPitch"];
+            // end if
             if (json.Contains("pitch")) m_toPitch = (float)json["pitch"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
-            if (m_toPitch < 0) {
-                m_toPitch = 0;
-            } else if (m_toPitch > 1) {
-                m_toPitch = 1;
-            } // end if
+            json["beginPitch"] = m_beginPitch;
             json["pitch"] = m_toPitch;
         }
 

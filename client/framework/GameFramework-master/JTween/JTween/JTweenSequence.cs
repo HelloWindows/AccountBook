@@ -14,7 +14,16 @@ namespace JTween {
         private JTweenBase[] m_tweens;
         private TweenCallback m_onComplete;
 
+        public JTweenBase[] Tweens {
+            get { return m_tweens; }
+            set { m_tweens = value; }
+        }
+
         public void Init(bool complete = false) {
+            if (m_tweens == null) {
+                Debug.LogErrorFormat("JTweenSequence Init m_tweens is null, Name:{0}", gameObject.name);
+                return;
+            } // end if
             KillAll(complete);
             if (complete) return;
             // end if
@@ -130,10 +139,11 @@ namespace JTween {
                     path = node["_PATH"].ToString();
                     if (!pathToTrans.TryGetValue(path, out trans)) {
                         trans = transform.Find(path);
-                        if (null != trans)
+                        if (null != trans) {
                             pathToTrans.Add(path, trans);
-                        else
+                        } else {
                             Debug.LogErrorFormat("JTweenSequence con't find, Name:{0}, Path:{1}", gameObject.name, path);
+                        } // end if
                     } // end if
                     tween.Bind(trans);
                 } else {

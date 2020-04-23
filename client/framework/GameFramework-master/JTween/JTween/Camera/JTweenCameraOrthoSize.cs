@@ -18,6 +18,18 @@ namespace JTween.Camera {
             m_tweenElement = JTweenElement.Camera;
         }
 
+        public float BeginOrthoSize {
+            get {
+                return m_beginOrthoSize;
+            }
+            set {
+                m_beginOrthoSize = value;
+                if (m_Camera != null) {
+                    m_Camera.orthographicSize = m_beginOrthoSize;
+                } // end if
+            }
+        }
+
         public float ToOrthoSize {
             get {
                 return m_toOrthoSize;
@@ -49,11 +61,14 @@ namespace JTween.Camera {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginOrthoSize")) m_beginOrthoSize = (float)json["beginOrthoSize"];
+            // end if
             if (json.Contains("orthoSize")) m_toOrthoSize = (float)json["orthoSize"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginOrthoSize"] = m_beginOrthoSize;
             json["orthoSize"] = m_toOrthoSize;
         }
 

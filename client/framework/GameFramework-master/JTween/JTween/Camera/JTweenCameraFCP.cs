@@ -18,6 +18,18 @@ namespace JTween.Camera {
             m_tweenElement = JTweenElement.Camera;
         }
 
+        public float BeginFCP {
+            get {
+                return m_beginFCP;
+            }
+            set {
+                m_beginFCP = value;
+                if (m_Camera != null) {
+                    m_Camera.farClipPlane = m_beginFCP;
+                } // end if
+            }
+        }
+
         public float ToFCP {
             get {
                 return m_toFCP;
@@ -49,11 +61,14 @@ namespace JTween.Camera {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginFCP")) m_beginFCP = (float)json["beginFCP"];
+            // end if
             if (json.Contains("FCP")) m_toFCP = (float)json["FCP"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginFCP"] = m_beginFCP;
             json["FCP"] = m_toFCP;
         }
 
