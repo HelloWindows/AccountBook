@@ -18,6 +18,18 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
+        public Vector3 BeginRotation {
+            get {
+                return m_beginRotation;
+            }
+            set {
+                m_beginRotation = value;
+                if (m_Transform != null) {
+                    m_Transform.eulerAngles = m_beginRotation;
+                } // end if
+            }
+        }
+
         public Vector3 ToRotate {
             get {
                 return m_toRotate;
@@ -49,11 +61,14 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginRotation")) BeginRotation = JTweenUtils.JsonToVector3(json["beginRotation"]);
+            // end if
             if (json.Contains("rotate")) m_toRotate = JTweenUtils.JsonToVector3(json["rotate"]);
-
+            // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginRotation"] = JTweenUtils.Vector3Json(m_beginRotation);
             json["rotate"] = JTweenUtils.Vector3Json(m_toRotate);
         }
 

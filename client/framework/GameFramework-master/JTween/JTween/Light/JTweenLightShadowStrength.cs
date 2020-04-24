@@ -18,6 +18,18 @@ namespace JTween.Light {
             m_tweenElement = JTweenElement.Light;
         }
 
+        public float BeginStrength {
+            get {
+                return m_beginStrength;
+            }
+            set {
+                m_beginStrength = value;
+                if (m_Light != null) {
+                    m_Light.shadowStrength = m_beginStrength;
+                } // end if
+            }
+        }
+
         public float ToStrength {
             get {
                 return m_toStrength;
@@ -49,11 +61,14 @@ namespace JTween.Light {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginStrength")) BeginStrength = (float)json["beginStrength"];
+            // end if
             if (json.Contains("strength")) m_toStrength = (float)json["strength"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginStrength"] = m_beginStrength;
             json["strength"] = m_toStrength;
         }
 

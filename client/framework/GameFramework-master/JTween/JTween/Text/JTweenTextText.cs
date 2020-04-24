@@ -21,6 +21,18 @@ namespace JTween.Text {
             m_tweenElement = JTweenElement.Text;
         }
 
+        public string BeginStr {
+            get {
+                return m_beginStr;
+            }
+            set {
+                m_beginStr = value;
+                if (m_beginStr != null) {
+                    m_text.text = m_beginStr;
+                } // end if
+            }
+        }
+
         public string ToStr {
             get {
                 return m_toStr;
@@ -92,6 +104,8 @@ namespace JTween.Text {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginStr")) BeginStr = json["beginStr"].ToString();
+            // end if
             if (json.Contains("str")) m_toStr = json["str"].ToString();
             // end if
             if (json.Contains("rich")) m_richTextEnabled = json["rich"].ToBool();
@@ -103,6 +117,7 @@ namespace JTween.Text {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginStr"] = m_beginStr;
             json["str"] = m_toStr;
             json["rich"] = m_richTextEnabled;
             json["mode"] = (int)m_scrambleMode;

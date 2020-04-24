@@ -18,6 +18,15 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
+        public Vector3 BeginPosition {
+            get {
+                return m_beginPosition;
+            }
+            set {
+                m_beginPosition = value;
+            }
+        }
+
         public Vector3 ToPosition {
             get {
                 return m_toPosition;
@@ -49,11 +58,14 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+            // end if
             if (json.Contains("move")) m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
-
+            // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
             json["move"] = JTweenUtils.Vector3Json(m_toPosition);
         }
 

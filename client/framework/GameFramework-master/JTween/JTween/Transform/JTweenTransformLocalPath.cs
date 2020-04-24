@@ -21,6 +21,15 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
+        public Vector3 BeginPosition {
+            get { return m_beginPosition; }
+            set {
+                m_beginPosition = value;
+                if (m_Transform != null) {
+                    m_Transform.localPosition = m_beginPosition;
+                } // end if
+            }
+        }
         public Vector3[] ToPath { get { return m_toPath; } set { m_toPath = value; } }
         public PathType PathType { get { return m_pathType; } set { m_pathType = value; } }
         public PathMode PathMode { get { return m_pathMode; } set { m_pathMode = value; } }
@@ -50,6 +59,8 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+            // end if
             if (json.Contains("path")) {
                 JsonData pathJson = json["path"];
                 m_toPath = new Vector3[pathJson.Count];
@@ -66,6 +77,7 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
             if (m_toPath == null || m_toPath.Length <= 0) return;
             JsonData pathJson = new JsonData();
             for (int i = 0; i < m_toPath.Length; ++i) {

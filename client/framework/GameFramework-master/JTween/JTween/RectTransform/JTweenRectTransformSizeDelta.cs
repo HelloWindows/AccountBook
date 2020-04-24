@@ -18,6 +18,18 @@ namespace JTween.RectTransform {
             m_tweenElement = JTweenElement.RectTransform;
         }
 
+        public Vector2 BeginSizeDelta {
+            get {
+                return m_beginSizeDelta;
+            }
+            set {
+                m_beginSizeDelta = value;
+                if (m_rectTransform != null) {
+                    m_rectTransform.sizeDelta = m_beginSizeDelta;
+                } // end if
+            }
+        }
+
         public Vector2 ToSizeDelta {
             get {
                 return m_toSizeDelta;
@@ -49,11 +61,14 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginSizeDelta")) BeginSizeDelta = JTweenUtils.JsonToVector2(json["beginSizeDelta"]);
+            // end if
             if (json.Contains("size")) m_toSizeDelta = JTweenUtils.JsonToVector2(json["size"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginSizeDelta"] = JTweenUtils.Vector2Json(m_beginSizeDelta);
             json["size"] = JTweenUtils.Vector2Json(m_toSizeDelta);
         }
 

@@ -19,6 +19,18 @@ namespace JTween.Rigidbody {
             m_tweenElement = JTweenElement.Rigidbody;
         }
 
+        public Vector3 BeginRotate {
+            get {
+                return m_beginRotate;
+            }
+            set {
+                m_beginRotate = value;
+                if (m_Rigidbody != null) {
+                    m_Rigidbody.rotation = Quaternion.Euler(m_beginRotate);
+                } // end if
+            }
+        }
+
         public Vector3 ToRotate {
             get {
                 return m_toRotate;
@@ -59,6 +71,8 @@ namespace JTween.Rigidbody {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginRotate")) BeginRotate = JTweenUtils.JsonToVector3(json["beginRotate"]);
+            // end if
             if (json.Contains("rotate")) m_toRotate = JTweenUtils.JsonToVector3(json["rotate"]);
             // end if
             if (json.Contains("mode")) m_RotateMode = (RotateMode)(int)json["mode"];
@@ -66,6 +80,7 @@ namespace JTween.Rigidbody {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginRotate"] = JTweenUtils.Vector3Json(m_beginRotate);
             json["rotate"] = JTweenUtils.Vector3Json(m_toRotate);
             json["mode"] = (int)m_RotateMode;
         }

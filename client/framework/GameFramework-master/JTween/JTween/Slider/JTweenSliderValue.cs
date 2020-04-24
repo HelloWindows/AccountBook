@@ -18,6 +18,18 @@ namespace JTween.Slider {
             m_tweenElement = JTweenElement.Slider;
         }
 
+        public float BeginValue {
+            get {
+                return m_beginValue;
+            }
+            set {
+                m_beginValue = value;
+                if (m_slider != null) {
+                    m_slider.value = m_beginValue;
+                } // end if
+            }
+        }
+
         public float ToValue {
             get {
                 return m_toValue;
@@ -49,11 +61,14 @@ namespace JTween.Slider {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginValue")) BeginValue = json["beginValue"].ToFloat();
+            // end if
             if (json.Contains("value")) m_toValue = json["value"].ToFloat();
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginValue"] = m_beginValue;
             json["value"] = m_toValue;
         }
 

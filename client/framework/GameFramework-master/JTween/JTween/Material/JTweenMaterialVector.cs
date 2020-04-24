@@ -20,6 +20,22 @@ namespace JTween.Material {
             m_tweenElement = JTweenElement.Material;
         }
 
+        public Vector4 BeginVector {
+            get {
+                return m_beginVector;
+            }
+            set {
+                m_beginVector = value;
+                if (m_Material != null) {
+                    if (!string.IsNullOrEmpty(m_property)) {
+                        m_Material.SetVector(m_property, m_beginVector);
+                    } else if (-1 != m_propertyID) {
+                        m_Material.SetVector(m_propertyID, m_beginVector);
+                    } // end if
+                } // end if
+            }
+        }
+
         public Vector4 ToVector {
             get {
                 return m_toVector;

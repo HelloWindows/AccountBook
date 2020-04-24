@@ -20,6 +20,18 @@ namespace JTween.Material {
             m_tweenElement = JTweenElement.Material;
         }
 
+        public Color BeginColor {
+            get {
+                return m_beginColor;
+            }
+            set {
+                m_beginColor = value;
+                if (m_Material != null) {
+                    m_Material.color = m_beginColor;
+                } // end if
+            }
+        }
+
         public Color ToColor {
             get {
                 return m_toColor;
@@ -76,6 +88,8 @@ namespace JTween.Material {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginColor")) BeginColor = JTweenUtils.JsonToColor(json["beginColor"]);
+            // end if
             if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json["color"]);
             // end if
             if (json.Contains("property")) m_property = (string)json["property"];
@@ -85,6 +99,7 @@ namespace JTween.Material {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginColor"] = JTweenUtils.ColorJson(m_beginColor);
             json["color"] = JTweenUtils.ColorJson(m_toColor);
             if (!string.IsNullOrEmpty(m_property)) {
                 json["property"] = m_property;

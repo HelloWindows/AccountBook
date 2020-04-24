@@ -18,6 +18,18 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
+        public Quaternion BeginRotation {
+            get {
+                return m_beginRotation;
+            }
+            set {
+                m_beginRotation = value;
+                if (m_Transform != null) {
+                    m_Transform.localRotation = m_beginRotation;
+                } // end if
+            }
+        }
+
         public Quaternion ToRotate {
             get {
                 return m_toRotate;
@@ -49,6 +61,10 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginRotation")) {
+                Vector4 quaternion = JTweenUtils.JsonToVector4(json["beginRotation"]);
+                BeginRotation = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+            } // end if
             if (json.Contains("quaternion")) {
                 Vector4 quaternion = JTweenUtils.JsonToVector4(json["quaternion"]);
                 m_toRotate = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
@@ -56,7 +72,9 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
-            Vector4 quaternion = new Vector4(m_toRotate.x, m_toRotate.y, m_toRotate.z, m_toRotate.w);
+            Vector4 quaternion = new Vector4(m_beginRotation.x, m_beginRotation.y, m_beginRotation.z, m_beginRotation.w);
+            json["beginRotation"] = JTweenUtils.Vector4Json(quaternion);
+            quaternion = new Vector4(m_toRotate.x, m_toRotate.y, m_toRotate.z, m_toRotate.w);
             json["quaternion"] = JTweenUtils.Vector4Json(quaternion);
         }
 

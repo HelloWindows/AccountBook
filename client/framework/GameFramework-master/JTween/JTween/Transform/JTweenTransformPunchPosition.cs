@@ -20,6 +20,18 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
+        public Vector3 BeginPosition {
+            get {
+                return m_beginPosition;
+            }
+            set {
+                m_beginPosition = value;
+                if (m_Transform != null) {
+                    m_Transform.position = m_beginPosition;
+                } // end if
+            }
+        }
+
         public Vector3 ToPunch {
             get {
                 return m_toPunch;
@@ -69,6 +81,8 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+            // end if
             if (json.Contains("punch")) m_toPunch = JTweenUtils.JsonToVector3(json["punch"]);
             // end if
             if (json.Contains("vibrate")) m_vibrate = (int)json["vibrate"];
@@ -78,6 +92,7 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
             json["punch"] = JTweenUtils.Vector3Json(m_toPunch);
             json["vibrate"] = m_vibrate;
             json["elasticity"] = m_elasticity;

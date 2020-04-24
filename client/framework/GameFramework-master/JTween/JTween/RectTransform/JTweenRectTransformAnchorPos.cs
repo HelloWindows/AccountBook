@@ -26,6 +26,18 @@ namespace JTween.RectTransform {
             m_tweenElement = JTweenElement.RectTransform;
         }
 
+        public Vector2 BeginAnchorPos {
+            get {
+                return m_beginAnchorPos;
+            }
+            set {
+                m_beginAnchorPos = value;
+                if (m_RectTransform != null) {
+                    m_RectTransform.anchoredPosition = m_beginAnchorPos;
+                } // end if
+            }
+        }
+
         public Vector2 ToAnchorPos {
             get {
                 return m_toAnchorPos;
@@ -86,6 +98,8 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json["beginAnchorPos"]);
+            // end if
             if (json.Contains("pos")) {
                 m_posType = PosType.Pos;
                 m_toAnchorPos = JTweenUtils.JsonToVector2(json["pos"]);
@@ -101,6 +115,7 @@ namespace JTween.RectTransform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginAnchorPos"] = JTweenUtils.Vector2Json(m_beginAnchorPos);
             switch (m_posType) {
                 case PosType.Pos:
                     json["pos"] = JTweenUtils.Vector2Json(m_toAnchorPos);

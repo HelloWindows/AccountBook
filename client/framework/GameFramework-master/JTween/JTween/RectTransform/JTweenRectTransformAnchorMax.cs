@@ -18,6 +18,18 @@ namespace JTween.RectTransform {
             m_tweenElement = JTweenElement.RectTransform;
         }
 
+        public Vector2 BeginAnchorMax {
+            get {
+                return m_beginAnchorMax;
+            }
+            set {
+                m_beginAnchorMax = value;
+                if (m_RectTransform != null) {
+                    m_RectTransform.anchorMax = m_beginAnchorMax;
+                } // end if
+            }
+        }
+
         public Vector2 ToAnchorMax {
             get {
                 return m_toAnchorMax;
@@ -49,11 +61,14 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginAnchorMax")) m_beginAnchorMax = JTweenUtils.JsonToVector2(json["beginAnchorMax"]);
+            // end if
             if (json.Contains("anchorMax")) m_toAnchorMax = JTweenUtils.JsonToVector2(json["anchorMax"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginAnchorMax"] = JTweenUtils.Vector2Json(m_beginAnchorMax);
             json["anchorMax"] = JTweenUtils.Vector2Json(m_toAnchorMax);
         }
 

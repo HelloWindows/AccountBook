@@ -30,6 +30,18 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
+        public Vector3 BeginScale {
+            get {
+                return m_beginScale;
+            }
+            set {
+                m_beginScale = value;
+                if (m_beginScale != null) {
+                    m_Transform.localScale = m_beginScale;
+                } // end if
+            }
+        }
+
         public Vector3 ToScale {
             get {
                 return m_toScale;
@@ -113,6 +125,8 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json["beginScale"]);
+            // end if
             if (json.Contains("scale")) {
                 m_ScaleType = ScaleType.Scale;
                 m_toScale = JTweenUtils.JsonToVector3(json["scale"]);
@@ -134,6 +148,7 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginScale"] = JTweenUtils.Vector3Json(m_beginScale);
             switch (m_ScaleType) {
                 case ScaleType.Scale:
                     json["scale"] = JTweenUtils.Vector3Json(m_toScale);

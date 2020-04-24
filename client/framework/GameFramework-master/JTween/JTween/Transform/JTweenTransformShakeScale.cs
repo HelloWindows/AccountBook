@@ -14,12 +14,24 @@ namespace JTween.Transform {
         private int m_vibrato = 0;
         private float m_randomness = 0;
         private bool m_fadeOut = false;
-        private Vector3 m_begainScale = Vector3.zero;
+        private Vector3 m_beginScale = Vector3.zero;
         private UnityEngine.Transform m_Transform;
 
         public JTweenTransformShakeScale() {
             m_tweenType = (int)JTweenTransform.ShakeScale;
             m_tweenElement = JTweenElement.Transform;
+        }
+
+        public Vector3 BeginScale {
+            get {
+                return m_beginScale;
+            }
+            set {
+                m_beginScale = value;
+                if (m_beginScale != null) {
+                    m_Transform.localScale = m_beginScale;
+                } // end if
+            }
         }
 
         public float Strength {
@@ -73,7 +85,7 @@ namespace JTween.Transform {
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
-            m_begainScale = m_Transform.localScale;
+            m_beginScale = m_Transform.localScale;
         }
 
         protected override Tween DOPlay() {
@@ -88,10 +100,12 @@ namespace JTween.Transform {
         public override void Restore() {
             if (null == m_Transform) return;
             // end if
-            m_Transform.localScale = m_begainScale;
+            m_Transform.localScale = m_beginScale;
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json["beginScale"]);
+            // end if
             if (json.Contains("strength")) m_strength = (float)json["strength"];
             // end if
             if (json.Contains("strengthVec")) m_strengthVec = JTweenUtils.JsonToVector3(json["strengthVec"]);
@@ -107,6 +121,7 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginScale"] = JTweenUtils.Vector3Json(m_beginScale);
             json["strength"] = m_strength;
             if (m_strengthVec != null && m_strengthVec != Vector3.zero) {
                 json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);

@@ -38,6 +38,18 @@ namespace JTween.Transform {
             }
         }
 
+        public Vector3 BeginPosition {
+            get {
+                return m_beginPosition;
+            }
+            set {
+                m_beginPosition = value;
+                if (m_Transform != null) {
+                    m_Transform.localPosition = m_beginPosition;
+                } // end if
+            }
+        }
+
         public float ToMoveX {
             get {
                 return m_toMoveX;
@@ -100,6 +112,8 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+            // end if
             if (json.Contains("move")) {
                 m_MoveType = MoveType.Move;
                 m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
@@ -118,6 +132,7 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
             switch (m_MoveType) {
                 case MoveType.Move:
                     json["move"] = JTweenUtils.Vector3Json(m_toPosition);

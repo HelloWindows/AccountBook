@@ -20,6 +20,22 @@ namespace JTween.Material {
             m_tweenElement = JTweenElement.Material;
         }
 
+        public Vector2 BeginOffset {
+            get {
+                return m_beginOffset;
+            }
+            set {
+                m_beginOffset = value;
+                if (m_Material != null) {
+                    if (!string.IsNullOrEmpty(m_property)) {
+                        m_Material.SetTextureOffset(m_property, m_beginOffset);
+                    } else if (-1 != m_propertyID) {
+                        m_Material.SetTextureOffset(m_propertyID, m_beginOffset);
+                    } // end i
+                } // end if
+            }
+        }
+
         public Vector2 ToOffset {
             get {
                 return m_toOffset;
@@ -82,6 +98,8 @@ namespace JTween.Material {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginOffset")) BeginOffset = JTweenUtils.JsonToVector2(json["beginOffset"]);
+            // end if
             if (json.Contains("offset")) m_toOffset = JTweenUtils.JsonToVector2(json["offset"]);
             // end if
             if (json.Contains("property")) m_property = (string)json["property"];
@@ -91,6 +109,7 @@ namespace JTween.Material {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginOffset"] = JTweenUtils.Vector2Json(m_beginOffset);
             json["offset"] = JTweenUtils.Vector2Json(m_toOffset);
             if (!string.IsNullOrEmpty(m_property)) {
                 json["property"] = m_property;

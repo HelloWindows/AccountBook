@@ -18,6 +18,18 @@ namespace JTween.ScrollRect {
             m_tweenElement = JTweenElement.ScrollRect;
         }
 
+        public float BeginVerticalPos {
+            get {
+                return m_beginVerticalPos;
+            }
+            set {
+                m_beginVerticalPos = value;
+                if (m_scrollRect != null) {
+                    m_scrollRect.verticalNormalizedPosition = m_beginVerticalPos;
+                } // end if
+            }
+        }
+
         public float ToVerticalPos {
             get {
                 return m_toVerticalPos;
@@ -49,11 +61,14 @@ namespace JTween.ScrollRect {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginVerticalPos")) m_beginVerticalPos = json["beginVerticalPos"].ToFloat();
+            // end if
             if (json.Contains("vertical")) m_toVerticalPos = json["vertical"].ToFloat();
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginVerticalPos"] = m_beginVerticalPos;
             json["vertical"] = m_toVerticalPos;
         }
 

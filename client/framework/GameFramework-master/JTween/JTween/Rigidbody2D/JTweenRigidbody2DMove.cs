@@ -26,6 +26,18 @@ namespace JTween.Rigidbody2D {
             m_tweenElement = JTweenElement.Rigidbody2D;
         }
 
+        public Vector3 BeginPosition {
+            get {
+                return m_beginPosition;
+            }
+            set {
+                m_beginPosition = value;
+                if (m_Rigidbody != null) {
+                    m_Rigidbody.position = m_beginPosition;
+                } // end if
+            }
+        }
+
         public Vector3 ToPosition {
             get {
                 return m_toPosition;
@@ -86,6 +98,8 @@ namespace JTween.Rigidbody2D {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+            // end if
             if (json.Contains("move")) {
                 m_MoveType = MoveType.Move;
                 m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
@@ -101,6 +115,7 @@ namespace JTween.Rigidbody2D {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
             switch (m_MoveType) {
                 case MoveType.Move:
                     json["move"] = JTweenUtils.Vector3Json(m_toPosition);

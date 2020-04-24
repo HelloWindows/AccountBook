@@ -26,6 +26,18 @@ namespace JTween.RectTransform {
             m_tweenElement = JTweenElement.RectTransform;
         }
 
+        public Vector2 BeginPivot {
+            get {
+                return m_beginPivot;
+            }
+            set {
+                m_beginPivot = value;
+                if (m_RectTransform != null) {
+                    m_RectTransform.pivot = m_beginPivot;
+                } // end if
+            }
+        }
+
         public Vector2 ToPivot {
             get {
                 return m_toPivot;
@@ -86,6 +98,8 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginPivot")) BeginPivot = JTweenUtils.JsonToVector2(json["beginPivot"]);
+            // end if
             if (json.Contains("pivot")) {
                 m_pivotType = PivotType.Pivot;
                 m_toPivot = JTweenUtils.JsonToVector2(json["pivot"]);
@@ -101,6 +115,7 @@ namespace JTween.RectTransform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginPivot"] = JTweenUtils.Vector2Json(m_beginPivot);
             switch (m_pivotType) {
                 case PivotType.Pivot:
                     json["pivot"] = JTweenUtils.Vector2Json(m_toPivot);

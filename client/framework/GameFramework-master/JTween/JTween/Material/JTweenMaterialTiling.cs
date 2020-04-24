@@ -20,6 +20,22 @@ namespace JTween.Material {
             m_tweenElement = JTweenElement.Material;
         }
 
+        public Vector2 BeginTiling {
+            get {
+                return m_beginTiling;
+            }
+            set {
+                m_beginTiling = value;
+                if (m_Material != null) {
+                    if (!string.IsNullOrEmpty(m_property)) {
+                        m_Material.SetTextureScale(m_property, m_beginTiling);
+                    } else if (-1 != m_propertyID) {
+                        m_Material.SetTextureScale(m_propertyID, m_beginTiling);
+                    } // end if
+                } // end if
+            }
+        }
+
         public Vector2 ToTiling {
             get {
                 return m_toTiling;
@@ -82,6 +98,8 @@ namespace JTween.Material {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginTiling")) BeginTiling = JTweenUtils.JsonToVector2(json["beginTiling"]);
+            // end if
             if (json.Contains("tiling")) m_toTiling = JTweenUtils.JsonToVector2(json["tiling"]);
             // end if
             if (json.Contains("property")) m_property = (string)json["property"];
@@ -91,6 +109,7 @@ namespace JTween.Material {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginTiling"] = JTweenUtils.Vector2Json(m_beginTiling);
             json["tiling"] = JTweenUtils.Vector2Json(m_toTiling);
             if (!string.IsNullOrEmpty(m_property)) {
                 json["property"] = m_property;

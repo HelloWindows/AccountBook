@@ -20,6 +20,22 @@ namespace JTween.Material {
             m_tweenElement = JTweenElement.Material;
         }
 
+        public float BeginFloat {
+            get {
+                return m_beginFloat;
+            }
+            set {
+                m_beginFloat = value;
+                if (m_Material != null) {
+                    if (!string.IsNullOrEmpty(m_property)) {
+                        m_Material.SetFloat(m_property, m_beginFloat);
+                    } else if (m_propertyID != -1) {
+                        m_Material.SetFloat(m_propertyID, m_beginFloat);
+                    } // end if
+                } // end if
+            }
+        }
+
         public float ToFloat {
             get {
                 return m_toFloat;
@@ -84,6 +100,8 @@ namespace JTween.Material {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginFloat")) BeginFloat = (float)json["beginFloat"];
+            // end if
             if (json.Contains("float")) m_toFloat = (float)json["float"];
             // end if
             if (json.Contains("property")) m_property = (string)json["property"];
@@ -93,6 +111,7 @@ namespace JTween.Material {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginFloat"] = m_beginFloat;
             json["float"] = m_toFloat;
             if (!string.IsNullOrEmpty(m_property)) {
                 json["property"] = m_property;

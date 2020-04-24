@@ -18,6 +18,18 @@ namespace JTween.TrailRenderer {
             m_tweenElement = JTweenElement.TrailRenderer;
         }
 
+        public float BeginTime {
+            get {
+                return m_beginTime;
+            }
+            set {
+                m_beginTime = value;
+                if (m_TrailRenderer != null) {
+                    m_TrailRenderer.time = m_beginTime;
+                } // end if
+            }
+        }
+
         public float ToTime {
             get {
                 return m_toTime;
@@ -49,11 +61,14 @@ namespace JTween.TrailRenderer {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginTime")) BeginTime = (float)json["beginTime"];
+            // end if
             if (json.Contains("time")) m_toTime = (float)json["time"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginTime"] = m_beginTime;
             json["time"] = m_toTime;
         }
 

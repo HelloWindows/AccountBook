@@ -18,6 +18,18 @@ namespace JTween.Light {
             m_tweenElement = JTweenElement.Light;
         }
 
+        public float BeginIntensity {
+            get {
+                return m_beginIntensity;
+            }
+            set {
+                m_beginIntensity = value;
+                if (m_Light != null) {
+                    m_Light.intensity = m_beginIntensity;
+                } // end if
+            }
+        } 
+
         public float ToIntensity {
             get {
                 return m_toIntensity;
@@ -49,11 +61,14 @@ namespace JTween.Light {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginIntensity")) BeginIntensity = (float)json["beginIntensity"];
+            // end if
             if (json.Contains("intensity")) m_toIntensity = (float)json["intensity"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginIntensity"] = m_beginIntensity;
             json["intensity"] = m_toIntensity;
         }
 

@@ -19,7 +19,17 @@ namespace JTween.RectTransform {
             m_tweenType = (int)JTweenRectTransform.PunchAnchorPos;
             m_tweenElement = JTweenElement.RectTransform;
         }
-
+        public Vector2 BeginAnchorPos {
+            get {
+                return m_beginAnchorPos;
+            }
+            set {
+                m_beginAnchorPos = value;
+                if (m_rectTransform != null) {
+                    m_rectTransform.anchoredPosition = m_beginAnchorPos;
+                } // end if
+            }
+        }
         /// <summary>
         /// The direction and strength of the punch (added to the RectTransform's current position). 
         /// </summary>
@@ -78,6 +88,8 @@ namespace JTween.RectTransform {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json["beginAnchorPos"]);
+            // end if
             if (json.Contains("punch")) m_punch = JTweenUtils.JsonToVector2(json["punch"]);
             // end if
             if (json.Contains("vibrato")) m_vibrato = json["vibrato"].ToInt32();
@@ -87,6 +99,7 @@ namespace JTween.RectTransform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginAnchorPos"] = JTweenUtils.Vector2Json(m_beginAnchorPos);
             json["punch"] = JTweenUtils.Vector2Json(m_punch);
             json["vibrato"] = m_vibrato;
             json["elasticity"] = m_elasticity;

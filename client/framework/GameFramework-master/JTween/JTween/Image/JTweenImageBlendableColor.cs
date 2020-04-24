@@ -61,11 +61,14 @@ namespace JTween.Image {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginColor")) BeginColor = JTweenUtils.JsonToColor(json["beginColor"]);
+            // end if
             if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json["color"]);
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginColor"] = JTweenUtils.ColorJson(m_beginColor);
             json["color"] = JTweenUtils.ColorJson(m_toColor);
         }
 

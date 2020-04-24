@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace JTween.Transform {
     public class JTweenTransformPunchRotation : JTweenBase {
-        private Vector3 m_beginRatation = Vector3.zero;
+        private Vector3 m_beginRotation = Vector3.zero;
         private Vector3 m_toPunch = Vector3.zero;
         private int m_vibrate = 0;
         private float m_elasticity = 0; // [0 - 1]
@@ -18,6 +18,18 @@ namespace JTween.Transform {
         public JTweenTransformPunchRotation() {
             m_tweenType = (int)JTweenTransform.PunchRatation;
             m_tweenElement = JTweenElement.Transform;
+        }
+
+        public Vector3 BeginRotation {
+            get {
+                return m_beginRotation;
+            }
+            set {
+                m_beginRotation = value;
+                if (m_Transform != null) {
+                    m_Transform.eulerAngles = m_beginRotation;
+                } // end if
+            }
         }
 
         public Vector3 ToPunch {
@@ -53,7 +65,7 @@ namespace JTween.Transform {
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
             if (null == m_Transform) return;
             // end if
-            m_beginRatation = m_Transform.eulerAngles;
+            m_beginRotation = m_Transform.eulerAngles;
         }
 
         protected override Tween DOPlay() {
@@ -65,10 +77,12 @@ namespace JTween.Transform {
         public override void Restore() {
             if (null == m_Transform) return;
             // end if
-            m_Transform.eulerAngles = m_beginRatation;
+            m_Transform.eulerAngles = m_beginRotation;
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginRotation")) BeginRotation = JTweenUtils.JsonToVector3(json["beginRotation"]);
+            // end if
             if (json.Contains("punch")) m_toPunch = JTweenUtils.JsonToVector3(json["punch"]);
             // end if
             if (json.Contains("vibrate")) m_vibrate = (int)json["vibrate"];
@@ -78,6 +92,7 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginRotation"] = JTweenUtils.Vector3Json(m_beginRotation);
             json["punch"] = JTweenUtils.Vector3Json(m_toPunch);
             json["vibrate"] = m_vibrate;
             json["elasticity"] = m_elasticity;

@@ -20,6 +20,30 @@ namespace JTween.TrailRenderer {
             m_tweenElement = JTweenElement.TrailRenderer;
         }
 
+        public float BeginStartWidth {
+            get {
+                return m_beginStartWidth;
+            }
+            set {
+                m_beginStartWidth = value;
+                if (m_TrailRenderer != null) {
+                    m_TrailRenderer.startWidth = m_beginStartWidth;
+                } // end if
+            }
+        }
+
+        public float BeginEndWidth {
+            get {
+                return m_beginEndWidth;
+            }
+            set {
+                m_beginEndWidth = value;
+                if (m_TrailRenderer != null) {
+                    m_TrailRenderer.endWidth = m_beginEndWidth;
+                } // end if
+            }
+        }
+
         public float StartWidth {
             get {
                 return m_startWidth;
@@ -62,6 +86,10 @@ namespace JTween.TrailRenderer {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginStartWidth")) BeginStartWidth = (float)json["beginStartWidth"];
+            // end if
+            if (json.Contains("beginEndWidth")) BeginEndWidth = (float)json["beginEndWidth"];
+            // end if
             if (json.Contains("startWidth")) m_startWidth = (float)json["startWidth"];
             // end if
             if (json.Contains("endWidth")) m_endWidth = (float)json["endWidth"];
@@ -69,6 +97,8 @@ namespace JTween.TrailRenderer {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginStartWidth"] = m_beginStartWidth;
+            json["beginEndWidth"] = m_beginEndWidth;
             json["startWidth"] = m_endWidth;
             json["endWidth"] = m_endWidth;
         }

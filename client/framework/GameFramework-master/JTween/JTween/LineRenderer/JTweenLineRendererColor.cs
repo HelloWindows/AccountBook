@@ -22,6 +22,30 @@ namespace JTween.LineRenderer {
             m_tweenElement = JTweenElement.LineRenderer;
         }
 
+        public Color BeginStartColor {
+            get {
+                return m_beginStartColor;
+            }
+            set {
+                m_beginStartColor = value;
+                if (m_LineRenderer != null) {
+                    m_LineRenderer.startColor = m_beginStartColor;
+                } // end if
+            }
+        }
+
+        public Color BeginEndColor {
+            get {
+                return m_beginEndColor;
+            }
+            set {
+                m_beginEndColor = value;
+                if (m_LineRenderer != null) {
+                    m_LineRenderer.endColor = m_beginEndColor;
+                } // end if
+            }
+        }
+
         public Color StartColor {
             get {
                 return m_startColor;
@@ -82,6 +106,10 @@ namespace JTween.LineRenderer {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginStartColor")) BeginStartColor = JTweenUtils.JsonToColor(json["beginStartColor"]);
+            // end if
+            if (json.Contains("beginEndColor")) BeginEndColor = JTweenUtils.JsonToColor(json["beginEndColor"]);
+            // end if
             if (json.Contains("startColor")) m_startColor = JTweenUtils.JsonToColor(json["startColor"]);
             // end if
             if (json.Contains("toStartColor")) m_toStartColor = JTweenUtils.JsonToColor(json["toStartColor"]);
@@ -93,6 +121,8 @@ namespace JTween.LineRenderer {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginStartColor"] = JTweenUtils.ColorJson(m_beginStartColor);
+            json["beginEndColor"] = JTweenUtils.ColorJson(m_beginEndColor);
             json["startColor"] = JTweenUtils.ColorJson(m_startColor);
             json["toStartColor"] = JTweenUtils.ColorJson(m_toStartColor);
             json["endColor"] = JTweenUtils.ColorJson(m_endColor);

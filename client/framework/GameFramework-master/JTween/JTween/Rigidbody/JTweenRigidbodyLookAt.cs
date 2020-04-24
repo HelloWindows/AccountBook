@@ -20,6 +20,18 @@ namespace JTween.Rigidbody {
             m_tweenElement = JTweenElement.Rigidbody;
         }
 
+        public Vector3 BeginRotate {
+            get {
+                return m_beginRotate;
+            }
+            set {
+                m_beginRotate = value;
+                if (m_Rigidbody != null) {
+                    m_Rigidbody.rotation = Quaternion.Euler(m_beginRotate);
+                } // end if
+            }
+        }
+
         public Vector3 Towards {
             get {
                 return m_towards;
@@ -68,6 +80,8 @@ namespace JTween.Rigidbody {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginRotate")) BeginRotate = JTweenUtils.JsonToVector3(json["beginRotate"]);
+            // end if
             if (json.Contains("towards")) m_towards = JTweenUtils.JsonToVector3(json["towards"]);
             // end if
             if (json.Contains("axis")) m_axisConstraint = (AxisConstraint)(int)json["axis"];
@@ -77,6 +91,7 @@ namespace JTween.Rigidbody {
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginRotate"] = JTweenUtils.Vector3Json(m_beginRotate);
             json["towards"] = JTweenUtils.Vector3Json(m_towards);
             json["axis"] = (int)m_axisConstraint;
             json["up"] = JTweenUtils.Vector3Json(m_up);

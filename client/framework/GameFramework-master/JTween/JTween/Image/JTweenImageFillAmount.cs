@@ -18,6 +18,18 @@ namespace JTween.Image {
             m_tweenElement = JTweenElement.Image;
         }
 
+        public float BeginAmount {
+            get {
+                return m_beginAmount;
+            }
+            set {
+                m_beginAmount = value;
+                if (m_Image != null) {
+                    m_Image.fillAmount = m_beginAmount;
+                } // end if
+            }
+        }
+
         public float ToAmount {
             get {
                 return m_toAmount;
@@ -49,11 +61,14 @@ namespace JTween.Image {
         }
 
         protected override void JsonTo(JsonData json) {
+            if (json.Contains("beginAmount")) BeginAmount = (float)json["beginAmount"];
+            // end if
             if (json.Contains("amount")) m_toAmount = (float)json["amount"];
             // end if
         }
 
         protected override void ToJson(ref JsonData json) {
+            json["beginAmount"] = m_beginAmount;
             json["amount"] = m_toAmount;
         }
 

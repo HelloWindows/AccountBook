@@ -38,6 +38,30 @@ namespace JTween.LayoutElement {
             }
         }
 
+        public float BeginWidth {
+            get {
+                return m_beginWidth;
+            }
+            set {
+                m_beginWidth = value;
+                if (m_LayoutElement != null) {
+                    m_LayoutElement.flexibleWidth = m_beginWidth;
+                } // end if
+            }
+        }
+
+        public float BeginHeight {
+            get {
+                return m_beginHeight;
+            }
+            set {
+                m_beginHeight = value;
+                if (m_LayoutElement != null) {
+                    m_LayoutElement.flexibleHeight = m_beginHeight;
+                } // end if
+            }
+        }
+
         protected override void Init() {
             if (null == m_target) return;
             // end if
@@ -66,11 +90,17 @@ namespace JTween.LayoutElement {
             // end if
             if (json.Contains("height")) m_height = json["height"].ToFloat();
             // end if
+            if (json.Contains("beginWidth")) BeginWidth = json["beginWidth"].ToFloat();
+            // end if
+            if (json.Contains("beginHeight")) BeginHeight = json["beginHeight"].ToFloat();
+            // end if
         }
 
         protected override void ToJson(ref JsonData json) {
             json["width"] = m_width;
             json["height"] = m_height;
+            json["beginWidth"] = m_beginWidth;
+            json["beginHeight"] = BeginHeight;
         }
 
         protected override bool CheckValid(out string errorInfo) {
