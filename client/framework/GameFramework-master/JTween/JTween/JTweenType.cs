@@ -155,7 +155,7 @@ namespace JTween {
     /// 刚体
     /// </summary>
     public enum JTweenRigidbody : int {
-        Node = 0,
+        None = 0,
         /// <summary>
         /// 移动
         /// </summary>
@@ -182,7 +182,7 @@ namespace JTween {
     /// 刚体2D
     /// </summary>
     public enum JTweenRigidbody2D : int {
-        Node = 0,
+        None = 0,
         /// <summary>
         /// 移动
         /// </summary>
@@ -201,7 +201,7 @@ namespace JTween {
     /// 精灵渲染
     /// </summary>
     public enum JTweenSpriteRenderer : int {
-        Node = 0,
+        None = 0,
         /// <summary>
         /// 颜色
         /// </summary>
@@ -224,7 +224,7 @@ namespace JTween {
     /// 拖尾渲染
     /// </summary>
     public enum JTweenTrailRenderer : int {
-        Node = 0,
+        None = 0,
         /// <summary>
         /// 尺寸
         /// </summary>
@@ -239,7 +239,7 @@ namespace JTween {
     /// 3D基础组件
     /// </summary>
     public enum JTweenTransform : int {
-        Node = 0,
+        None = 0,
         /// <summary>
         /// 时间坐标移动
         /// </summary>
