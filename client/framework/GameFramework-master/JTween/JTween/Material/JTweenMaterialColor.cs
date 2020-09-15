@@ -77,7 +77,7 @@ namespace JTween.Material {
                 return m_Material.DOColor(m_toColor, m_property, m_duration);
             } else if (m_propertyID != -1) {
                 return m_Material.DOColor(m_toColor, m_propertyID, m_duration);
-            }
+            } // end if
             return m_Material.DOColor(m_toColor, m_duration);
         }
 

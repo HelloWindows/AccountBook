@@ -9,12 +9,12 @@ using UnityEngine;
 
 namespace JTween.Rigidbody2D {
     public class JTweenRigidbody2DMove : JTweenBase {
-        private enum MoveType {
+        public enum MoveTypeEnem {
             Move = 0,
             MoveX = 1,
             MoveY = 2,
         }
-        private MoveType m_MoveType = MoveType.Move;
+        private MoveTypeEnem m_MoveType = MoveTypeEnem.Move;
         private Vector3 m_beginPosition = Vector3.zero;
         private Vector3 m_toPosition = Vector3.zero;
         private float m_toMoveX = 0;
@@ -38,12 +38,20 @@ namespace JTween.Rigidbody2D {
             }
         }
 
+        public MoveTypeEnem MoveType {
+            get {
+                return m_MoveType;
+            }
+            set {
+                m_MoveType = value;
+            }
+        }
+
         public Vector3 ToPosition {
             get {
                 return m_toPosition;
             }
             set {
-                m_MoveType = MoveType.Move;
                 m_toPosition = value;
             }
         }
@@ -53,7 +61,6 @@ namespace JTween.Rigidbody2D {
                 return m_toMoveX;
             }
             set {
-                m_MoveType = MoveType.MoveX;
                 m_toMoveX = value;
             }
         }
@@ -63,7 +70,6 @@ namespace JTween.Rigidbody2D {
                 return m_toMoveY;
             }
             set {
-                m_MoveType = MoveType.MoveY;
                 m_toMoveY = value;
             }
         }
@@ -81,11 +87,11 @@ namespace JTween.Rigidbody2D {
             if (null == m_Rigidbody) return null;
             // end if
             switch (m_MoveType) {
-                case MoveType.Move:
+                case MoveTypeEnem.Move:
                     return m_Rigidbody.DOMove(m_toPosition, m_duration, m_isSnapping);
-                case MoveType.MoveX:
+                case MoveTypeEnem.MoveX:
                     return m_Rigidbody.DOMoveX(m_toMoveX, m_duration, m_isSnapping);
-                case MoveType.MoveY:
+                case MoveTypeEnem.MoveY:
                     return m_Rigidbody.DOMoveY(m_toMoveY, m_duration, m_isSnapping);
                 default: return null;
             } // end switch
@@ -101,13 +107,13 @@ namespace JTween.Rigidbody2D {
             if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
             // end if
             if (json.Contains("move")) {
-                m_MoveType = MoveType.Move;
+                m_MoveType = MoveTypeEnem.Move;
                 m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
             } else if (json.Contains("moveX")) {
-                m_MoveType = MoveType.MoveX;
+                m_MoveType = MoveTypeEnem.MoveX;
                 m_toMoveX = (float)json["moveX"];
             } else if (json.Contains("moveY")) {
-                m_MoveType = MoveType.MoveY;
+                m_MoveType = MoveTypeEnem.MoveY;
                 m_toMoveY = (float)json["moveY"];
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
@@ -117,13 +123,13 @@ namespace JTween.Rigidbody2D {
         protected override void ToJson(ref JsonData json) {
             json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
             switch (m_MoveType) {
-                case MoveType.Move:
+                case MoveTypeEnem.Move:
                     json["move"] = JTweenUtils.Vector3Json(m_toPosition);
                     break;
-                case MoveType.MoveX:
+                case MoveTypeEnem.MoveX:
                     json["moveX"] = m_toMoveX;
                     break;
-                case MoveType.MoveY:
+                case MoveTypeEnem.MoveY:
                     json["moveY"] = m_toMoveY;
                     break;
                 default:

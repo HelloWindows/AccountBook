@@ -9,14 +9,14 @@ using UnityEngine;
 
 namespace JTween.Transform {
     public class JTweenTransformScale : JTweenBase {
-        private enum ScaleType {
+        public enum ScaleTypeEnum {
             Scale = 0,
             ScaleV = 1,
             ScaleX = 2,
             ScaleY = 3,
             ScaleZ = 4,
         }
-        private ScaleType m_ScaleType = ScaleType.Scale;
+        private ScaleTypeEnum m_ScaleType = ScaleTypeEnum.Scale;
         private Vector3 m_beginScale = Vector3.zero;
         private Vector3 m_toScale = Vector3.zero;
         private float m_toScaleV = 0;
@@ -28,6 +28,15 @@ namespace JTween.Transform {
         public JTweenTransformScale() {
             m_tweenType = (int)JTweenTransform.Scale;
             m_tweenElement = JTweenElement.Transform;
+        }
+
+        public ScaleTypeEnum ScaleType {
+            get {
+                return m_ScaleType;
+            }
+            set {
+                m_ScaleType = value;
+            }
         }
 
         public Vector3 BeginScale {
@@ -47,7 +56,6 @@ namespace JTween.Transform {
                 return m_toScale;
             }
             set {
-                m_ScaleType = ScaleType.Scale;
                 m_toScale = value;
             }
         }
@@ -66,7 +74,6 @@ namespace JTween.Transform {
                 return m_toScaleX;
             }
             set {
-                m_ScaleType = ScaleType.ScaleX;
                 m_toScaleX = value;
             }
         }
@@ -76,7 +83,6 @@ namespace JTween.Transform {
                 return m_toScaleY;
             }
             set {
-                m_ScaleType = ScaleType.ScaleY;
                 m_toScaleY = value;
             }
         }
@@ -86,7 +92,6 @@ namespace JTween.Transform {
                 return m_toScaleZ;
             }
             set {
-                m_ScaleType = ScaleType.ScaleZ;
                 m_toScaleZ = value;
             }
         }
@@ -104,15 +109,15 @@ namespace JTween.Transform {
             if (null == m_Transform) return null;
             // end if
             switch (m_ScaleType) {
-                case ScaleType.Scale:
+                case ScaleTypeEnum.Scale:
                     return m_Transform.DOScale(m_toScale, m_duration);
-                case ScaleType.ScaleV:
+                case ScaleTypeEnum.ScaleV:
                     return m_Transform.DOScale(m_toScaleV, m_duration);
-                case ScaleType.ScaleX:
+                case ScaleTypeEnum.ScaleX:
                     return m_Transform.DOScaleX(m_toScaleX, m_duration);
-                case ScaleType.ScaleY:
+                case ScaleTypeEnum.ScaleY:
                     return m_Transform.DOScaleY(m_toScaleY, m_duration);
-                case ScaleType.ScaleZ:
+                case ScaleTypeEnum.ScaleZ:
                     return m_Transform.DOScaleZ(m_toScaleZ, m_duration);
                 default: return null;
             } // end switch
@@ -128,19 +133,19 @@ namespace JTween.Transform {
             if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json["beginScale"]);
             // end if
             if (json.Contains("scale")) {
-                m_ScaleType = ScaleType.Scale;
+                m_ScaleType = ScaleTypeEnum.Scale;
                 m_toScale = JTweenUtils.JsonToVector3(json["scale"]);
             } else if (json.Contains("scaleV")) {
-                m_ScaleType = ScaleType.ScaleV;
+                m_ScaleType = ScaleTypeEnum.ScaleV;
                 m_toScaleV = (float)json["scaleV"];
             } else if (json.Contains("scaleX")) {
-                m_ScaleType = ScaleType.ScaleX;
+                m_ScaleType = ScaleTypeEnum.ScaleX;
                 m_toScaleX = (float)json["scaleX"];
             } else if (json.Contains("scaleY")) {
-                m_ScaleType = ScaleType.ScaleY;
+                m_ScaleType = ScaleTypeEnum.ScaleY;
                 m_toScaleY = (float)json["scaleY"];
             } else if (json.Contains("scaleZ")) {
-                m_ScaleType = ScaleType.ScaleZ;
+                m_ScaleType = ScaleTypeEnum.ScaleZ;
                 m_toScaleZ = (float)json["scaleZ"];
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
@@ -150,19 +155,19 @@ namespace JTween.Transform {
         protected override void ToJson(ref JsonData json) {
             json["beginScale"] = JTweenUtils.Vector3Json(m_beginScale);
             switch (m_ScaleType) {
-                case ScaleType.Scale:
+                case ScaleTypeEnum.Scale:
                     json["scale"] = JTweenUtils.Vector3Json(m_toScale);
                     break;
-                case ScaleType.ScaleV:
+                case ScaleTypeEnum.ScaleV:
                     json["scaleV"] = m_toScaleV;
                     break;
-                case ScaleType.ScaleX:
+                case ScaleTypeEnum.ScaleX:
                     json["scaleX"] = m_toScaleX;
                     break;
-                case ScaleType.ScaleY:
+                case ScaleTypeEnum.ScaleY:
                     json["scaleY"] = m_toScaleY;
                     break;
-                case ScaleType.ScaleZ:
+                case ScaleTypeEnum.ScaleZ:
                     json["scaleZ"] = m_toScaleZ;
                     break;
                 default:

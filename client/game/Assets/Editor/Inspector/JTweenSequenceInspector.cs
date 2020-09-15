@@ -2,13 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using JTween;
-using JTween.AudioSource;
-using JTween.Camera;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
+using DG.Tweening;
 using UnityGameFramework.Editor;
+using JTween;
+using JTween.AudioSource;
+using JTween.Camera;
+using JTween.Light;
+using JTween.LineRenderer;
+using JTween.Material;
+using JTween.Rigidbody;
+using JTween.Rigidbody2D;
+using JTween.SpriteRenderer;
+using JTween.TrailRenderer;
+using JTween.Transform;
 
 namespace JTween.Editor {
     [CanEditMultipleObjects]
@@ -26,7 +35,10 @@ namespace JTween.Editor {
         /// <summary>
         /// 检测绑定的物品
         /// </summary>
-        /// <returns></returns>
+        /// <param name="tween"> 动画序列 </param>
+        /// <param name="tweenBase"> 动画 </param>
+        /// <param name="target"> 目标物体 </param>
+        /// <returns> 是否符合绑定要求 </returns>
         public static bool CheckBindTarget(JTweenSequence tween, JTweenBase tweenBase, GameObject target) {
             if (!JTweenUtils.GetTranPath(target.transform).StartsWith(JTweenUtils.GetTranPath(tween.transform))) {
                 Debug.LogError("必须是自身节点或者子节点!!!");
@@ -247,9 +259,9 @@ namespace JTween.Editor {
         /// <summary>
         /// 绘制动画
         /// </summary>
-        /// <param name="tween"></param>
-        /// <param name="tweenBase"></param>
-        /// <param name="OnDeleteTween"></param>
+        /// <param name="tween"> 动画序列 </param>
+        /// <param name="tweenBase"> 基础动画 </param>
+        /// <param name="OnDeleteTween"> 删除动画回调 </param>
         private void DrawTweenBase(JTweenSequence tween, JTweenBase tweenBase, Action OnDeleteTween) {
             GUILayout.BeginVertical("Box"); {
                 #region Base
@@ -303,13 +315,29 @@ namespace JTween.Editor {
                         DrawCameraTween(tweenBase);
                         break;
                     case JTweenElement.Light:
+                        DrawLightTween(tweenBase);
+                        break;
                     case JTweenElement.LineRenderer:
+                        DrawLineRendererTween(tweenBase);
+                        break;
                     case JTweenElement.Material:
+                        DrawMaterialTween(tweenBase);
+                        break;
                     case JTweenElement.Rigidbody:
+                        DrawRigidbodyTween(tweenBase);
+                        break;
                     case JTweenElement.Rigidbody2D:
+                        DrawRigidbody2DTween(tweenBase);
+                        break;
                     case JTweenElement.SpriteRenderer:
+                        DrawSpriteRendererTween(tweenBase);
+                        break;
                     case JTweenElement.TrailRenderer:
+                        DrawTrailRendererTween(tweenBase);
+                        break;
                     case JTweenElement.Transform:
+                        DrawTransformTween(tweenBase);
+                        break;
                     case JTweenElement.CanvasGroup:
                     case JTweenElement.Graphic:
                     case JTweenElement.Image:
@@ -323,6 +351,10 @@ namespace JTween.Editor {
                 } // end switch
             } GUILayout.EndVertical();
         }
+        /// <summary>
+        /// 绘制音源动画
+        /// </summary>
+        /// <param name="tweenBase"> 音源动画 </param>
         private void DrawAudioSourceTween(JTweenBase tweenBase) {
             switch ((JTweenAudioSource)tweenBase.TweenType) {
                 case JTweenAudioSource.Fade:
@@ -337,6 +369,10 @@ namespace JTween.Editor {
                     break;
             } // end switch
         }
+        /// <summary>
+        /// 绘制相机动画
+        /// </summary>
+        /// <param name="tweenBase"> 相机动画 </param>
         private void DrawCameraTween(JTweenBase tweenBase) {
             switch ((JTweenCamera)tweenBase.TweenType) {
                 case JTweenCamera.Aspect:
@@ -404,6 +440,349 @@ namespace JTween.Editor {
                     shakeRotationTween.Vibrato = EditorGUILayout.IntField("Vibrato:", shakeRotationTween.Vibrato);
                     shakeRotationTween.Randomness = EditorGUILayout.FloatField("Randomness:", shakeRotationTween.Randomness);
                     shakeRotationTween.FadeOut = EditorGUILayout.ToggleLeft("FadeOut:", shakeRotationTween.FadeOut);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制灯光动画
+        /// </summary>
+        /// <param name="tweenBase"> 灯光动画 </param>
+        private void DrawLightTween(JTweenBase tweenBase) {
+            switch ((JTweenLight)tweenBase.TweenType) {
+                case JTweenLight.Color:
+                    JTweenLightColor colorTween = tweenBase as JTweenLightColor;
+                    colorTween.BeginColor = EditorGUILayout.ColorField("初始光照颜色:", colorTween.BeginColor);
+                    colorTween.ToColor = EditorGUILayout.ColorField("目标光照颜色:", colorTween.ToColor);
+                    break;
+                case JTweenLight.Intensity:
+                    JTweenLightIntensity intensityTween = tweenBase as JTweenLightIntensity;
+                    intensityTween.BeginIntensity = EditorGUILayout.FloatField("初始光照强度:", intensityTween.BeginIntensity);
+                    intensityTween.ToIntensity = EditorGUILayout.FloatField("目标光照强度:", intensityTween.ToIntensity);
+                    break;
+                case JTweenLight.ShadowStrength:
+                    JTweenLightShadowStrength shadowTween = tweenBase as JTweenLightShadowStrength;
+                    shadowTween.BeginStrength = EditorGUILayout.FloatField("初始阴影强度:", shadowTween.BeginStrength);
+                    shadowTween.ToStrength = EditorGUILayout.FloatField("目标阴影强度:", shadowTween.ToStrength);
+                    break;
+                case JTweenLight.BlendableColor:
+                    JTweenLightBlendableColor blendableColorTween = tweenBase as JTweenLightBlendableColor;
+                    blendableColorTween.BeginColor = EditorGUILayout.ColorField("初始光照颜色:", blendableColorTween.BeginColor);
+                    blendableColorTween.ToColor = EditorGUILayout.ColorField("目标光照颜色:", blendableColorTween.ToColor);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制线条渲染动画
+        /// </summary>
+        /// <param name="tweenBase"> 线条渲染动画 </param>
+        private void DrawLineRendererTween(JTweenBase tweenBase) {
+            switch ((JTweenLineRenderer)tweenBase.TweenType) {
+                case JTweenLineRenderer.Color:
+                    JTweenLineRendererColor colorTween = tweenBase as JTweenLineRendererColor;
+                    colorTween.BeginStartColor = EditorGUILayout.ColorField("初始起点颜色:", colorTween.BeginStartColor);
+                    colorTween.ToStartColor = EditorGUILayout.ColorField("目标起点颜色:", colorTween.ToStartColor);
+                    colorTween.BeginEndColor = EditorGUILayout.ColorField("初始终点颜色:", colorTween.BeginEndColor);
+                    colorTween.ToEndColor = EditorGUILayout.ColorField("目标终点颜色:", colorTween.ToEndColor);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制材质动画
+        /// </summary>
+        /// <param name="tweenBase"> 材质动画 </param>
+        private void DrawMaterialTween(JTweenBase tweenBase) {
+            switch ((JTweenMaterial)tweenBase.TweenType) {
+                case JTweenMaterial.Color:
+                    JTweenMaterialColor colorTween = tweenBase as JTweenMaterialColor;
+                    colorTween.BeginColor = EditorGUILayout.ColorField("初始颜色:", colorTween.BeginColor);
+                    colorTween.ToColor = EditorGUILayout.ColorField("目标颜色:", colorTween.ToColor);
+                    colorTween.Property = EditorGUILayout.TextField("属性名:", colorTween.Property);
+                    colorTween.PropertyID = EditorGUILayout.IntField("属性ID:", colorTween.PropertyID);
+                    break;
+                case JTweenMaterial.Fade:
+                    JTweenMaterialFade fadeTween = tweenBase as JTweenMaterialFade;
+                    fadeTween.BeginColor = EditorGUILayout.ColorField("初始颜色:", fadeTween.BeginColor);
+                    fadeTween.ToAlpha = EditorGUILayout.FloatField("目标Alpha:", fadeTween.ToAlpha);
+                    fadeTween.Property = EditorGUILayout.TextField("属性名:", fadeTween.Property);
+                    fadeTween.PropertyID = EditorGUILayout.IntField("属性ID:", fadeTween.PropertyID);
+                    break;
+                case JTweenMaterial.Float:
+                    JTweenMaterialFloat floatTween = tweenBase as JTweenMaterialFloat;
+                    floatTween.BeginFloat = EditorGUILayout.FloatField("初始数值:", floatTween.BeginFloat);
+                    floatTween.ToFloat = EditorGUILayout.FloatField("目标数值:", floatTween.ToFloat);
+                    floatTween.Property = EditorGUILayout.TextField("属性名:", floatTween.Property);
+                    floatTween.PropertyID = EditorGUILayout.IntField("属性ID:", floatTween.PropertyID);
+                    break;
+                case JTweenMaterial.GradientColor:
+                    break;
+                case JTweenMaterial.Offset:
+                    JTweenMaterialOffset offsetTween = tweenBase as JTweenMaterialOffset;
+                    offsetTween.BeginOffset = EditorGUILayout.Vector2Field("初始偏移:", offsetTween.BeginOffset);
+                    offsetTween.ToOffset = EditorGUILayout.Vector2Field("目标偏移:", offsetTween.ToOffset);
+                    offsetTween.Property = EditorGUILayout.TextField("属性名:", offsetTween.Property);
+                    offsetTween.PropertyID = EditorGUILayout.IntField("属性ID:", offsetTween.PropertyID);
+                    break;
+                case JTweenMaterial.Tiling:
+                    JTweenMaterialTiling tilingTween = tweenBase as JTweenMaterialTiling;
+                    tilingTween.BeginTiling = EditorGUILayout.Vector2Field("初始平铺:", tilingTween.BeginTiling);
+                    tilingTween.ToTiling = EditorGUILayout.Vector2Field("目标平铺:", tilingTween.ToTiling);
+                    tilingTween.Property = EditorGUILayout.TextField("属性名:", tilingTween.Property);
+                    tilingTween.PropertyID = EditorGUILayout.IntField("属性ID:", tilingTween.PropertyID);
+                    break;
+                case JTweenMaterial.Vector:
+                    JTweenMaterialVector vectorTween = tweenBase as JTweenMaterialVector;
+                    vectorTween.BeginVector = EditorGUILayout.Vector4Field("初始值:", vectorTween.BeginVector);
+                    vectorTween.ToVector = EditorGUILayout.Vector4Field("目标值:", vectorTween.ToVector);
+                    vectorTween.Property = EditorGUILayout.TextField("属性名:", vectorTween.Property);
+                    vectorTween.PropertyID = EditorGUILayout.IntField("属性ID:", vectorTween.PropertyID);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制刚体动画
+        /// </summary>
+        /// <param name="tweenBase"> 刚体动画 </param>
+        private void DrawRigidbodyTween(JTweenBase tweenBase) {
+            switch ((JTweenRigidbody)tweenBase.TweenType) {
+                case JTweenRigidbody.Move:
+                    break;
+                case JTweenRigidbody.Jump:
+                    JTweenRigidbodyJump jumpTween = tweenBase as JTweenRigidbodyJump;
+                    jumpTween.BeginPosition = EditorGUILayout.Vector3Field("初始位置:", jumpTween.BeginPosition);
+                    jumpTween.ToPosition = EditorGUILayout.Vector3Field("目标位置:", jumpTween.ToPosition);
+                    jumpTween.NumJumps = EditorGUILayout.IntField("跳跃次数:", jumpTween.NumJumps);
+                    jumpTween.JumpPower = EditorGUILayout.FloatField("跳跃力度（最大高度）:", jumpTween.JumpPower);
+                    break;
+                case JTweenRigidbody.Rotate:
+                    JTweenRigidbodyRotate rotateTween = tweenBase as JTweenRigidbodyRotate;
+                    rotateTween.BeginRotate = EditorGUILayout.Vector3Field("初始角度:", rotateTween.BeginRotate);
+                    rotateTween.ToRotate = EditorGUILayout.Vector3Field("目标角度:", rotateTween.ToRotate);
+                    rotateTween.RotateMode = (RotateMode)EditorGUILayout.EnumPopup("跳跃次数:", RotateMode.Fast);
+                    break;
+                case JTweenRigidbody.LookAt:
+                    JTweenRigidbodyLookAt lookAtTween = tweenBase as JTweenRigidbodyLookAt;
+                    lookAtTween.BeginRotate = EditorGUILayout.Vector3Field("初始角度:", lookAtTween.BeginRotate);
+                    lookAtTween.Towards = EditorGUILayout.Vector3Field("朝向角度:", lookAtTween.Towards);
+                    lookAtTween.AxisConstraint = (AxisConstraint)EditorGUILayout.EnumPopup("约束轴:", AxisConstraint.None);
+                    lookAtTween.Up = EditorGUILayout.Vector3Field("向上方向:", lookAtTween.Up);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制2D刚体动画
+        /// </summary>
+        /// <param name="tweenBase"> 2D刚体动画 </param>
+        private void DrawRigidbody2DTween(JTweenBase tweenBase) {
+            switch ((JTweenRigidbody2D)tweenBase.TweenType) {
+                case JTweenRigidbody2D.Move:
+                    break;
+                case JTweenRigidbody2D.Jump:
+                    JTweenRigidbody2DJump jumpTween = tweenBase as JTweenRigidbody2DJump;
+                    jumpTween.BeginPosition = EditorGUILayout.Vector3Field("初始位置:", jumpTween.BeginPosition);
+                    jumpTween.ToPosition = EditorGUILayout.Vector3Field("目标位置:", jumpTween.ToPosition);
+                    jumpTween.NumJumps = EditorGUILayout.IntField("跳跃次数:", jumpTween.NumJumps);
+                    jumpTween.JumpPower = EditorGUILayout.FloatField("跳跃力度（最大高度）:", jumpTween.JumpPower);
+                    break;
+                case JTweenRigidbody2D.Rotate:
+                    JTweenRigidbody2DRotate rotateTween = tweenBase as JTweenRigidbody2DRotate;
+                    rotateTween.BeginRotation = EditorGUILayout.FloatField("初始角度:", rotateTween.BeginRotation);
+                    rotateTween.ToAngle = EditorGUILayout.FloatField("目标角度:", rotateTween.ToAngle);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制精灵渲染动画
+        /// </summary>
+        /// <param name="tweenBase"> 精灵渲染动画 </param>
+        private void DrawSpriteRendererTween(JTweenBase tweenBase) {
+            switch ((JTweenSpriteRenderer)tweenBase.TweenType) {
+                case JTweenSpriteRenderer.Color:
+                    JTweenSpriteRendererColor colorTween = tweenBase as JTweenSpriteRendererColor;
+                    colorTween.BeginColor = EditorGUILayout.ColorField("初始颜色:", colorTween.BeginColor);
+                    colorTween.ToColor = EditorGUILayout.ColorField("目标颜色:", colorTween.ToColor);
+                    break;
+                case JTweenSpriteRenderer.Fade:
+                    JTweenSpriteRendererFade fadeTween = tweenBase as JTweenSpriteRendererFade;
+                    fadeTween.BeginColor = EditorGUILayout.ColorField("初始颜色:", fadeTween.BeginColor);
+                    fadeTween.ToAlpha = EditorGUILayout.FloatField("目标Alpha:", fadeTween.ToAlpha);
+                    break;
+                case JTweenSpriteRenderer.BlendableColor:
+                    JTweenSpriteRendererBlendableColor blendableColorTween = tweenBase as JTweenSpriteRendererBlendableColor;
+                    blendableColorTween.BeginColor = EditorGUILayout.ColorField("初始颜色:", blendableColorTween.BeginColor);
+                    blendableColorTween.ToColor = EditorGUILayout.ColorField("目标颜色:", blendableColorTween.ToColor);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制拖尾渲染动画
+        /// </summary>
+        /// <param name="tweenBase"> 拖尾渲染动画 </param>
+        private void DrawTrailRendererTween(JTweenBase tweenBase) {
+            switch ((JTweenTrailRenderer)tweenBase.TweenType) {
+                case JTweenTrailRenderer.Resize:
+                    JTweenTrailRendererResize resizeTween = tweenBase as JTweenTrailRendererResize;
+                    resizeTween.BeginStartWidth = EditorGUILayout.FloatField("初始头部宽度:", resizeTween.BeginStartWidth);
+                    resizeTween.StartWidth = EditorGUILayout.FloatField("目标头部宽度:", resizeTween.StartWidth);
+                    resizeTween.BeginEndWidth = EditorGUILayout.FloatField("初始尾部宽度:", resizeTween.BeginEndWidth);
+                    resizeTween.EndWidth = EditorGUILayout.FloatField("目标尾部宽度:", resizeTween.EndWidth);
+                    break;
+                case JTweenTrailRenderer.Time:
+                    JTweenTrailRendererTime timeTween = tweenBase as JTweenTrailRendererTime;
+                    timeTween.BeginTime = EditorGUILayout.FloatField("初始时间:", timeTween.BeginTime);
+                    timeTween.ToTime = EditorGUILayout.FloatField("目标时间:", timeTween.ToTime);
+                    break;
+            } // end switch
+        }
+        /// <summary>
+        /// 绘制3D基础组件动画
+        /// </summary>
+        /// <param name="tweenBase"> 3D基础组件动画 </param>
+        private void DrawTransformTween(JTweenBase tweenBase) {
+            switch ((JTweenTransform)tweenBase.TweenType) {
+                case JTweenTransform.Move:
+                    break;
+                case JTweenTransform.LocalMove:
+                    break;
+                case JTweenTransform.Jump:
+                    JTweenTransformJump jumpTween = tweenBase as JTweenTransformJump;
+                    jumpTween.BeginPosition = EditorGUILayout.Vector3Field("初始位置:", jumpTween.BeginPosition);
+                    jumpTween.ToPosition = EditorGUILayout.Vector3Field("目标位置:", jumpTween.ToPosition);
+                    jumpTween.NumJumps = EditorGUILayout.IntField("跳跃次数:", jumpTween.NumJumps);
+                    jumpTween.JumpPower = EditorGUILayout.FloatField("跳跃力度（最大高度）:", jumpTween.JumpPower);
+                    break;
+                case JTweenTransform.LocalJump:
+                    JTweenTransformJump localJumpTween = tweenBase as JTweenTransformJump;
+                    localJumpTween.BeginPosition = EditorGUILayout.Vector3Field("初始位置:", localJumpTween.BeginPosition);
+                    localJumpTween.ToPosition = EditorGUILayout.Vector3Field("目标位置:", localJumpTween.ToPosition);
+                    localJumpTween.NumJumps = EditorGUILayout.IntField("跳跃次数:", localJumpTween.NumJumps);
+                    localJumpTween.JumpPower = EditorGUILayout.FloatField("跳跃力度（最大高度）:", localJumpTween.JumpPower);
+                    break;
+                case JTweenTransform.Rotate:
+                    JTweenTransformRotate rotateTween = tweenBase as JTweenTransformRotate;
+                    rotateTween.BeginRotation = EditorGUILayout.Vector3Field("初始角度:", rotateTween.BeginRotation);
+                    rotateTween.ToRotate = EditorGUILayout.Vector3Field("目标角度:", rotateTween.ToRotate);
+                    rotateTween.RotateMode = (RotateMode)EditorGUILayout.EnumPopup("跳跃次数:", RotateMode.Fast);
+                    break;
+                case JTweenTransform.Quaternion:
+                    JTweenTransformQuaternion quaternionTween = tweenBase as JTweenTransformQuaternion;
+                    var ratation = quaternionTween.BeginRotation;
+                    Vector4 vector = new Vector4(ratation.x, ratation.y, ratation.z, ratation.w);
+                    vector = EditorGUILayout.Vector4Field("初始四元数:", vector);
+                    quaternionTween.BeginRotation = new Quaternion(vector.x, vector.y, vector.z, vector.w);
+                    ratation = quaternionTween.ToRotate;
+                    vector = new Vector4(ratation.x, ratation.y, ratation.z, ratation.w);
+                    vector = EditorGUILayout.Vector4Field("目标四元数:", vector);
+                    quaternionTween.ToRotate = new Quaternion(vector.x, vector.y, vector.z, vector.w);
+                    break;
+                case JTweenTransform.LocalRotate:
+                    JTweenTransformRotate localRotateTween = tweenBase as JTweenTransformRotate;
+                    localRotateTween.BeginRotation = EditorGUILayout.Vector3Field("初始角度:", localRotateTween.BeginRotation);
+                    localRotateTween.ToRotate = EditorGUILayout.Vector3Field("目标角度:", localRotateTween.ToRotate);
+                    localRotateTween.RotateMode = (RotateMode)EditorGUILayout.EnumPopup("跳跃次数:", RotateMode.Fast);
+                    break;
+                case JTweenTransform.LocalQuaternion:
+                    JTweenTransformQuaternion localQuaternionTween = tweenBase as JTweenTransformQuaternion;
+                    ratation = localQuaternionTween.BeginRotation;
+                    vector = new Vector4(ratation.x, ratation.y, ratation.z, ratation.w);
+                    vector = EditorGUILayout.Vector4Field("初始四元数:", vector);
+                    localQuaternionTween.BeginRotation = new Quaternion(vector.x, vector.y, vector.z, vector.w);
+                    ratation = localQuaternionTween.ToRotate;
+                    vector = new Vector4(ratation.x, ratation.y, ratation.z, ratation.w);
+                    vector = EditorGUILayout.Vector4Field("目标四元数:", vector);
+                    localQuaternionTween.ToRotate = new Quaternion(vector.x, vector.y, vector.z, vector.w);
+                    break;
+                case JTweenTransform.LookAt:
+                    JTweenTransformLookAt lookAtTween = tweenBase as JTweenTransformLookAt;
+                    lookAtTween.BeginRotate = EditorGUILayout.Vector3Field("初始角度:", lookAtTween.BeginRotate);
+                    lookAtTween.Towards = EditorGUILayout.Vector3Field("朝向角度:", lookAtTween.Towards);
+                    lookAtTween.AxisConstraint = (AxisConstraint)EditorGUILayout.EnumPopup("约束轴:", AxisConstraint.None);
+                    lookAtTween.Up = EditorGUILayout.Vector3Field("向上方向:", lookAtTween.Up);
+                    break;
+                case JTweenTransform.Scale:
+                    break;
+                case JTweenTransform.PunchPosition:
+                    JTweenTransformPunchPosition punchPosTween = tweenBase as JTweenTransformPunchPosition;
+                    punchPosTween.BeginPosition = EditorGUILayout.Vector3Field("初始位置:", punchPosTween.BeginPosition);
+                    punchPosTween.ToPunch = EditorGUILayout.Vector3Field("抖动方向强度:", punchPosTween.ToPunch);
+                    punchPosTween.Vibrate = EditorGUILayout.IntField("抖动次数:", punchPosTween.Vibrate);
+                    punchPosTween.Elasticity = EditorGUILayout.FloatField("弹力:", punchPosTween.Elasticity);
+                    break;
+                case JTweenTransform.PunchRatation:
+                    JTweenTransformPunchRotation punchRotTween = tweenBase as JTweenTransformPunchRotation;
+                    punchRotTween.BeginRotation = EditorGUILayout.Vector3Field("初始角度:", punchRotTween.BeginRotation);
+                    punchRotTween.ToPunch = EditorGUILayout.Vector3Field("抖动强度:", punchRotTween.ToPunch);
+                    punchRotTween.Vibrate = EditorGUILayout.IntField("抖动次数:", punchRotTween.Vibrate);
+                    punchRotTween.Elasticity = EditorGUILayout.FloatField("弹力:", punchRotTween.Elasticity);
+                    break;
+                case JTweenTransform.PunchScale:
+                    JTweenTransformPunchScale punchScaTween = tweenBase as JTweenTransformPunchScale;
+                    punchScaTween.BeginScale = EditorGUILayout.Vector3Field("初始尺寸:", punchScaTween.BeginScale);
+                    punchScaTween.ToPunch = EditorGUILayout.Vector3Field("抖动强度:", punchScaTween.ToPunch);
+                    punchScaTween.Vibrate = EditorGUILayout.IntField("抖动次数:", punchScaTween.Vibrate);
+                    punchScaTween.Elasticity = EditorGUILayout.FloatField("弹力:", punchScaTween.Elasticity);
+                    break;
+                case JTweenTransform.ShakePosition:
+                    JTweenTransformShakePosition shakePosTween = tweenBase as JTweenTransformShakePosition;
+                    shakePosTween.BeginPosition = EditorGUILayout.Vector3Field("初始位置:", shakePosTween.BeginPosition);
+                    shakePosTween.StrengthVec = EditorGUILayout.Vector3Field("晃动次数:", shakePosTween.StrengthVec);
+                    if (shakePosTween.StrengthVec == Vector3.zero) {
+                        shakePosTween.Strength = EditorGUILayout.FloatField("晃动强度:", shakePosTween.Strength);
+                    } // end if
+                    shakePosTween.Randomness = EditorGUILayout.FloatField("随机性:", shakePosTween.Randomness);
+                    shakePosTween.FadeOut = EditorGUILayout.ToggleLeft("淡出:", shakePosTween.FadeOut);
+                    break;
+                case JTweenTransform.ShakeRotation:
+                    JTweenTransformShakeRotation shakeRotTween = tweenBase as JTweenTransformShakeRotation;
+                    shakeRotTween.BeginRotation = EditorGUILayout.Vector3Field("初始角度:", shakeRotTween.BeginRotation);
+                    shakeRotTween.StrengthVec = EditorGUILayout.Vector3Field("晃动次数:", shakeRotTween.StrengthVec);
+                    if (shakeRotTween.StrengthVec == Vector3.zero) {
+                        shakeRotTween.Strength = EditorGUILayout.FloatField("晃动强度:", shakeRotTween.Strength);
+                    } // end if
+                    shakeRotTween.Randomness = EditorGUILayout.FloatField("随机性:", shakeRotTween.Randomness);
+                    shakeRotTween.FadeOut = EditorGUILayout.ToggleLeft("淡出:", shakeRotTween.FadeOut);
+                    break;
+                case JTweenTransform.ShakeScale:
+                    JTweenTransformShakeScale shakeScaTween = tweenBase as JTweenTransformShakeScale;
+                    shakeScaTween.BeginScale = EditorGUILayout.Vector3Field("初始尺寸:", shakeScaTween.BeginScale);
+                    shakeScaTween.StrengthVec = EditorGUILayout.Vector3Field("晃动次数:", shakeScaTween.StrengthVec);
+                    if (shakeScaTween.StrengthVec == Vector3.zero) {
+                        shakeScaTween.Strength = EditorGUILayout.FloatField("晃动强度:", shakeScaTween.Strength);
+                    } // end if
+                    shakeScaTween.Randomness = EditorGUILayout.FloatField("随机性:", shakeScaTween.Randomness);
+                    shakeScaTween.FadeOut = EditorGUILayout.ToggleLeft("淡出:", shakeScaTween.FadeOut);
+                    break;
+                case JTweenTransform.Path:
+                    JTweenTransformPath pathTween = tweenBase as JTweenTransformPath;
+                    pathTween.BeginPosition = EditorGUILayout.Vector3Field("初始位置:", pathTween.BeginPosition);
+                    pathTween.PathType = (PathType)EditorGUILayout.EnumPopup("曲线类型:", PathType.Linear);
+                    pathTween.PathMode = (PathMode)EditorGUILayout.EnumPopup("路线模式:", PathMode.Full3D);
+                    pathTween.Resolution = EditorGUILayout.IntField("辨析率:", pathTween.Resolution);
+                    GUILayout.BeginVertical("Box"); {
+                        GUILayout.Label("路径点：");
+                        List<Vector3> posList = new List<Vector3>();
+                        if (pathTween.ToPath != null && pathTween.ToPath.Length >= 0) {
+                            posList.AddRange(pathTween.ToPath);
+                        } // end if
+                        for (int i = 0; i < posList.Count; ++i) {
+                            GUILayout.BeginHorizontal(); {
+                                posList[i] = EditorGUILayout.Vector3Field("pos_" + (i + 1), posList[i]);
+                                if (GUILayout.Button("+", GUILayout.Width(40f), GUILayout.Height(15))) {
+                                    posList.Insert(i + 1, Vector3.zero);
+                                    break;
+                                } // end if
+                                if (GUILayout.Button("-", GUILayout.Width(40f), GUILayout.Height(15))) {
+                                    posList.RemoveAt(i);
+                                    break;
+                                } // end if
+                            } GUILayout.EndHorizontal();
+                        } // end for
+                        if (GUILayout.Button("Add", GUILayout.Width(83f))) {
+                            posList.Add(Vector3.zero);
+                        } // end if
+                        if (posList.Count > 0) {
+                            pathTween.ToPath = posList.ToArray();
+                        } // end if
+                    } GUILayout.EndVertical();
                     break;
             } // end switch
         }
