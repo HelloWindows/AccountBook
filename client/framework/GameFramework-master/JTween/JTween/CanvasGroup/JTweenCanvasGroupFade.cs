@@ -24,9 +24,6 @@ namespace JTween.CanvasGroup {
             }
             set {
                 m_beginAlpha = value;
-                if (null != m_CanvasGroup) {
-                    m_CanvasGroup.alpha = m_beginAlpha;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.CanvasGroup {
             // end if
             if (json.Contains("alpha")) m_toAlpha = (float)json["alpha"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

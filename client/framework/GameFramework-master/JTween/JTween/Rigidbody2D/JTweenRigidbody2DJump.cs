@@ -26,9 +26,6 @@ namespace JTween.Rigidbody2D {
             }
             set {
                 m_beginPosition = value;
-                if (m_Rigidbody != null) {
-                    m_Rigidbody.position = m_beginPosition;
-                } // end if
             }
         }
 
@@ -89,6 +86,7 @@ namespace JTween.Rigidbody2D {
             // end if
             if (json.Contains("numJumps")) m_numJumps = (int)json["numJumps"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

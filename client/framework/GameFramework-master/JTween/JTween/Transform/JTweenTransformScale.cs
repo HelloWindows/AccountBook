@@ -45,9 +45,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginScale = value;
-                if (m_beginScale != null) {
-                    m_Transform.localScale = m_beginScale;
-                } // end if
             }
         }
 
@@ -69,7 +66,7 @@ namespace JTween.Transform {
             }
         }
 
-        public float ToMoveX {
+        public float ToScaleX {
             get {
                 return m_toScaleX;
             }
@@ -78,7 +75,7 @@ namespace JTween.Transform {
             }
         }
 
-        public float ToMoveY {
+        public float ToScaleY {
             get {
                 return m_toScaleY;
             }
@@ -87,7 +84,7 @@ namespace JTween.Transform {
             }
         }
 
-        public float ToMoveZ {
+        public float ToScaleZ {
             get {
                 return m_toScaleZ;
             }
@@ -150,6 +147,7 @@ namespace JTween.Transform {
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

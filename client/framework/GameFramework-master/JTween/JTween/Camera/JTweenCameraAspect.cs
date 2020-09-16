@@ -24,9 +24,6 @@ namespace JTween.Camera {
             }
             set {
                 m_beginAspect = value;
-                if (m_Camera != null) {
-                    m_Camera.aspect = m_beginAspect;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Camera {
             // end if
             if (json.Contains("aspect")) m_toAspect = (float)json["aspect"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

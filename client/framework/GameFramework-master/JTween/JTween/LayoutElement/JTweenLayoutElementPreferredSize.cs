@@ -44,9 +44,6 @@ namespace JTween.LayoutElement {
             }
             set {
                 m_beginWidth = value;
-                if (m_LayoutElement != null) {
-                    m_LayoutElement.minWidth = m_beginWidth;
-                } // end if
             }
         }
 
@@ -56,9 +53,6 @@ namespace JTween.LayoutElement {
             }
             set {
                 m_beginHeight = value;
-                if (m_LayoutElement != null) {
-                    m_LayoutElement.minHeight = m_beginHeight;
-                } // end if
             }
         }
 
@@ -94,6 +88,7 @@ namespace JTween.LayoutElement {
             // end if
             if (json.Contains("beginHeight")) BeginHeight = json["beginHeight"].ToFloat();
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

@@ -25,9 +25,6 @@ namespace JTween.RectTransform {
             }
             set {
                 m_beginAnchorPos = value;
-                if (m_rectTransform != null) {
-                    m_rectTransform.anchoredPosition = m_beginAnchorPos;
-                } // end if
             }
         }
         /// <summary>
@@ -96,6 +93,7 @@ namespace JTween.RectTransform {
             // end if
             if (json.Contains("elasticity")) m_elasticity = json["elasticity"].ToInt32();
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

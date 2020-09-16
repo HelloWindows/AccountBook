@@ -24,9 +24,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginPosition = value;
-                if (m_Transform != null) {
-                    m_Transform.localPosition = m_beginPosition;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Transform {
             // end if
             if (json.Contains("move")) m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

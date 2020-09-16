@@ -26,13 +26,6 @@ namespace JTween.Material {
             }
             set {
                 m_beginOffset = value;
-                if (m_Material != null) {
-                    if (!string.IsNullOrEmpty(m_property)) {
-                        m_Material.SetTextureOffset(m_property, m_beginOffset);
-                    } else if (-1 != m_propertyID) {
-                        m_Material.SetTextureOffset(m_propertyID, m_beginOffset);
-                    } // end i
-                } // end if
             }
         }
 
@@ -106,6 +99,7 @@ namespace JTween.Material {
             // end if
             if (json.Contains("propertyID")) m_propertyID = (int)json["propertyID"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

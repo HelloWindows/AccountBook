@@ -26,9 +26,6 @@ namespace JTween.Rigidbody {
             }
             set {
                 m_beginRotate = value;
-                if (m_Rigidbody != null) {
-                    m_Rigidbody.rotation = Quaternion.Euler(m_beginRotate);
-                } // end if
             }
         }
 
@@ -88,6 +85,7 @@ namespace JTween.Rigidbody {
             // end if
             if (json.Contains("up")) m_up = JTweenUtils.JsonToVector3(json["up"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

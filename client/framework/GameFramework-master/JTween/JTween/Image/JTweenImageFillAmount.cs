@@ -24,9 +24,6 @@ namespace JTween.Image {
             }
             set {
                 m_beginAmount = value;
-                if (m_Image != null) {
-                    m_Image.fillAmount = m_beginAmount;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Image {
             // end if
             if (json.Contains("amount")) m_toAmount = (float)json["amount"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

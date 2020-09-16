@@ -9,17 +9,31 @@ using UnityEngine;
 
 namespace JTween.Camera {
     public class JTweenCameraShakeRotation : JTweenBase {
+        public enum ShakeTypeEnum {
+            Value = 0,
+            Axis = 1,
+        }
         private float m_strength = 0;
         private Vector3 m_strengthVec = Vector3.zero;
         private int m_vibrato = 0;
         private float m_randomness = 0;
         private bool m_fadeOut = false;
         private Vector3 m_begainRotation = Vector3.zero;
+        private ShakeTypeEnum m_shakeType = ShakeTypeEnum.Value;
         private UnityEngine.Camera m_Camera;
 
         public JTweenCameraShakeRotation() {
             m_tweenType = (int)JTweenCamera.ShakeRotation;
             m_tweenElement = JTweenElement.Camera;
+        }
+
+        public ShakeTypeEnum ShakeType {
+            get {
+                return m_shakeType;
+            }
+            set {
+                m_shakeType = value;
+            }
         }
 
         public float Strength {
@@ -73,9 +87,6 @@ namespace JTween.Camera {
             }
             set {
                 m_begainRotation = value;
-                if (m_target != null) {
-                    m_target.eulerAngles = m_begainRotation;
-                } // end if
             }
         }
 
@@ -104,10 +115,14 @@ namespace JTween.Camera {
         }
 
         protected override void JsonTo(JsonData json) {
-            if (json.Contains("strength")) m_strength = (float)json["strength"];
-            // end if
-            if (json.Contains("strengthVec")) m_strengthVec = JTweenUtils.JsonToVector3(json["strengthVec"]);
-            // end if
+            if (json.Contains("strength")) {
+                m_shakeType = ShakeTypeEnum.Value;
+                m_strength = (float)json["strength"];
+            } // end if
+            if (json.Contains("strengthVec")) {
+                m_shakeType = ShakeTypeEnum.Axis;
+                m_strengthVec = JTweenUtils.JsonToVector3(json["strengthVec"]);
+            } // end if
             if (json.Contains("vibrato")) m_vibrato = (int)json["vibrato"];
             // end if
             if (json.Contains("randomness")) m_randomness = (float)json["randomness"];
@@ -118,13 +133,21 @@ namespace JTween.Camera {
             } // end if
             if (json.Contains("begainRotation")) BegainRotation = JTweenUtils.JsonToVector3(json["begainRotation"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
-            json["strength"] = m_strength;
-            if (m_strengthVec != null) {
-                json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);
-            } // end if
+            switch (m_shakeType) {
+                case ShakeTypeEnum.Value:
+                    json["strength"] = m_strength;
+                    break;
+                case ShakeTypeEnum.Axis:
+                    json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);
+                    break;
+                default:
+                    Debug.LogError(GetType().FullName + " ToJson ShakeType is null");
+                    break;
+            } // end swtich
             json["vibrato"] = m_vibrato;
             json["randomness"] = m_randomness;
             json["fadeOut"] = m_fadeOut ? 1 : 0;

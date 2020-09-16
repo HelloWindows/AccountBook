@@ -24,9 +24,6 @@ namespace JTween.Camera {
             }
             set {
                 m_beginOrthoSize = value;
-                if (m_Camera != null) {
-                    m_Camera.orthographicSize = m_beginOrthoSize;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Camera {
             // end if
             if (json.Contains("orthoSize")) m_toOrthoSize = (float)json["orthoSize"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

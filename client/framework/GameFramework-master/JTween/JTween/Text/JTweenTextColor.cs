@@ -24,9 +24,6 @@ namespace JTween.Text {
             }
             set {
                 m_beginColor = value;
-                if (m_text != null) {
-                    m_text.color = m_beginColor;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Text {
             // end if
             if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json["color"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

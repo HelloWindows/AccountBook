@@ -62,6 +62,7 @@ namespace JTween.Transform {
             // end if
             if (json.Contains("move")) m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

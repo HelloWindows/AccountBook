@@ -257,6 +257,7 @@ namespace JTween {
             // end if
             if (json.Contains("loopType")) m_loopType = (LoopType)json["loopType"].ToInt32();
             // end if
+            JsonTo(json);
         }
         /// <summary>
         /// 转成Json

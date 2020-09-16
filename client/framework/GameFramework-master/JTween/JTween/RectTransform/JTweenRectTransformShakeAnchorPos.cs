@@ -9,16 +9,16 @@ using UnityEngine;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformShakeAnchorPos : JTweenBase {
-        private enum ShakeType {
+        public enum ShakeTypeEnum {
             Value = 0,
             Axis = 1,
         }
         private Vector2 m_beginAnchorPos = Vector2.zero;
         private Vector2 m_strengthAxis = Vector2.zero;
-        private ShakeType m_shakeType = ShakeType.Value;
-        private float m_strength;
-        private int m_vibrato = 0;
-        private float m_randomness = 0;
+        private ShakeTypeEnum m_shakeType = ShakeTypeEnum.Value;
+        private float m_strength = 100;
+        private int m_vibrato = 10;
+        private float m_randomness = 90;
         private bool m_fadeOut = true;
         private UnityEngine.RectTransform m_rectTransform;
 
@@ -27,15 +27,21 @@ namespace JTween.RectTransform {
             m_tweenElement = JTweenElement.RectTransform;
         }
 
+        public ShakeTypeEnum ShakeType {
+            get {
+                return m_shakeType;
+            }
+            set {
+                m_shakeType = value;
+            }
+        }
+
         public Vector2 BeginAnchorPos {
             get {
                 return m_beginAnchorPos;
             }
             set {
                 m_beginAnchorPos = value;
-                if (m_rectTransform != null) {
-                    m_rectTransform.anchoredPosition = m_beginAnchorPos;
-                } // end if
             }
         }
 
@@ -47,7 +53,6 @@ namespace JTween.RectTransform {
                 return m_strength;
             }
             set {
-                m_shakeType = ShakeType.Value;
                 m_strength = value;
             }
         }
@@ -59,7 +64,6 @@ namespace JTween.RectTransform {
                 return m_strengthAxis;
             }
             set {
-                m_shakeType = ShakeType.Axis;
                 m_strengthAxis = value;
             }
         }
@@ -112,9 +116,9 @@ namespace JTween.RectTransform {
             if (null == m_rectTransform) return null;
             // end if
             switch (m_shakeType) {
-                case ShakeType.Value:
+                case ShakeTypeEnum.Value:
                     return m_rectTransform.DOShakeAnchorPos(m_duration, m_strength, m_vibrato, m_randomness, m_isSnapping, m_fadeOut);
-                case ShakeType.Axis:
+                case ShakeTypeEnum.Axis:
                     return m_rectTransform.DOShakeAnchorPos(m_duration, m_strengthAxis, m_vibrato, m_randomness, m_isSnapping, m_fadeOut);
                 default: return null;
             } // end switch
@@ -130,10 +134,10 @@ namespace JTween.RectTransform {
             if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json["beginAnchorPos"]);
             // end if
             if (json.Contains("strength")) {
-                m_shakeType = ShakeType.Value;
+                m_shakeType = ShakeTypeEnum.Value;
                 m_strength = json["strength"].ToFloat();
             } else if (json.Contains("strengthAxis")) {
-                m_shakeType = ShakeType.Axis;
+                m_shakeType = ShakeTypeEnum.Axis;
                 m_strengthAxis = JTweenUtils.JsonToVector2(json["strengthAxis"]);
             } // end if
             if (json.Contains("vibrato")) m_vibrato = json["vibrato"].ToInt32();
@@ -142,15 +146,16 @@ namespace JTween.RectTransform {
             // end if
             if (json.Contains("fadeOut")) m_fadeOut = json["fadeOut"].ToBool();
             // end if
-    }
+            Restore();
+        }
 
         protected override void ToJson(ref JsonData json) {
             json["beginAnchorPos"] = JTweenUtils.Vector2Json(m_beginAnchorPos);
             switch (m_shakeType) {
-                case ShakeType.Value:
+                case ShakeTypeEnum.Value:
                     json["strength"] = m_strength;
                     break;
-                case ShakeType.Axis:
+                case ShakeTypeEnum.Axis:
                     json["strengthAxis"] = JTweenUtils.Vector2Json(m_strengthAxis);
                     break;
                 default:

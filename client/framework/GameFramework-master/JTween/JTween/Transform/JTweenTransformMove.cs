@@ -34,9 +34,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginPosition = value;
-                if (m_Transform != null) {
-                    m_Transform.position = m_beginPosition;
-                } // end if
             }
         }
 
@@ -134,6 +131,7 @@ namespace JTween.Transform {
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

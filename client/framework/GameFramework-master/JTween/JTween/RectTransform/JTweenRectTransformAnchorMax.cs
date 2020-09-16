@@ -24,9 +24,6 @@ namespace JTween.RectTransform {
             }
             set {
                 m_beginAnchorMax = value;
-                if (m_RectTransform != null) {
-                    m_RectTransform.anchorMax = m_beginAnchorMax;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.RectTransform {
             // end if
             if (json.Contains("anchorMax")) m_toAnchorMax = JTweenUtils.JsonToVector2(json["anchorMax"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

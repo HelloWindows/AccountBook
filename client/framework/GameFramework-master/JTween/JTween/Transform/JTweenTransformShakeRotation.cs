@@ -9,17 +9,31 @@ using UnityEngine;
 
 namespace JTween.Transform {
     public class JTweenTransformShakeRotation : JTweenBase {
+        public enum ShakeTypeEnum {
+            Value = 0,
+            Axis = 1,
+        }
         private float m_strength = 0;
         private Vector3 m_strengthVec = Vector3.zero;
         private int m_vibrato = 0;
         private float m_randomness = 0;
         private bool m_fadeOut = false;
         private Vector3 m_beginRotation = Vector3.zero;
+        private ShakeTypeEnum m_shakeType = ShakeTypeEnum.Value;
         private UnityEngine.Transform m_Transform;
 
         public JTweenTransformShakeRotation() {
             m_tweenType = (int)JTweenTransform.ShakeRotation;
             m_tweenElement = JTweenElement.Transform;
+        }
+
+        public ShakeTypeEnum ShakeType {
+            get {
+                return m_shakeType;
+            }
+            set {
+                m_shakeType = value;
+            }
         }
 
         public Vector3 BeginRotation {
@@ -28,9 +42,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginRotation = value;
-                if (m_Transform != null) {
-                    m_Transform.eulerAngles = m_beginRotation;
-                } // end if
             }
         }
 
@@ -106,10 +117,14 @@ namespace JTween.Transform {
         protected override void JsonTo(JsonData json) {
             if (json.Contains("beginRotation")) BeginRotation = JTweenUtils.JsonToVector3(json["beginRotation"]);
             // end if
-            if (json.Contains("strength")) m_strength = (float)json["strength"];
-            // end if
-            if (json.Contains("strengthVec")) m_strengthVec = JTweenUtils.JsonToVector3(json["strengthVec"]);
-            // end if
+            if (json.Contains("strength")) {
+                m_shakeType = ShakeTypeEnum.Value;
+                m_strength = (float)json["strength"];
+            } // end if
+            if (json.Contains("strengthVec")) {
+                m_shakeType = ShakeTypeEnum.Axis;
+                m_strengthVec = JTweenUtils.JsonToVector3(json["strengthVec"]);
+            } // end if
             if (json.Contains("vibrato")) m_vibrato = (int)json["vibrato"];
             // end if
             if (json.Contains("randomness")) m_randomness = (float)json["randomness"];
@@ -118,14 +133,22 @@ namespace JTween.Transform {
                 int fadeOut = (int)json["fadeOut"];
                 m_fadeOut = fadeOut == 0 ? false : true;
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
             json["beginRotation"] = JTweenUtils.Vector3Json(m_beginRotation);
-            json["strength"] = m_strength;
-            if (m_strengthVec != null && m_strengthVec != Vector3.zero) {
-                json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);
-            } // end if
+            switch (m_shakeType) {
+                case ShakeTypeEnum.Value:
+                    json["strength"] = m_strength;
+                    break;
+                case ShakeTypeEnum.Axis:
+                    json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);
+                    break;
+                default:
+                    Debug.LogError(GetType().FullName + " ToJson ShakeType is null");
+                    break;
+            } // end swtich
             json["vibrato"] = m_vibrato;
             json["randomness"] = m_randomness;
             json["fadeOut"] = m_fadeOut ? 1 : 0;

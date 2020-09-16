@@ -26,9 +26,6 @@ namespace JTween.Material {
             }
             set {
                 m_beginColor = value;
-                if (m_Material != null) {
-                    m_Material.color = m_beginColor;
-                } // end if
             }
         }
 
@@ -84,7 +81,11 @@ namespace JTween.Material {
         public override void Restore() {
             if (null == m_Material) return;
             // end if
-            m_Material.color = m_beginColor;
+            if (!string.IsNullOrEmpty(m_property)) {
+                m_Material.SetColor(m_property, m_beginColor);
+            } else if (m_propertyID != -1) {
+                m_Material.SetColor(m_propertyID, m_beginColor);
+            } // end if
         }
 
         protected override void JsonTo(JsonData json) {
@@ -96,6 +97,7 @@ namespace JTween.Material {
             // end if
             if (json.Contains("propertyID")) m_propertyID = (int)json["propertyID"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

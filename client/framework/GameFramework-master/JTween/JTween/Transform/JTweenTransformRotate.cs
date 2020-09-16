@@ -25,9 +25,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginRotation = value;
-                if (m_Transform != null) {
-                    m_Transform.eulerAngles = m_beginRotation;
-                } // end if
             }
         }
 
@@ -77,6 +74,7 @@ namespace JTween.Transform {
             // end if
             if (json.Contains("mode")) m_RotateMode = (RotateMode)(int)json["mode"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

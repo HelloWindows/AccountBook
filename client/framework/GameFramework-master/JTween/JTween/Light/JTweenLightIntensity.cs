@@ -24,9 +24,6 @@ namespace JTween.Light {
             }
             set {
                 m_beginIntensity = value;
-                if (m_Light != null) {
-                    m_Light.intensity = m_beginIntensity;
-                } // end if
             }
         } 
 
@@ -65,6 +62,7 @@ namespace JTween.Light {
             // end if
             if (json.Contains("intensity")) m_toIntensity = (float)json["intensity"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

@@ -14,6 +14,8 @@ namespace JTween.Transform {
         private PathType m_pathType = PathType.Linear;
         private PathMode m_pathMode = PathMode.Full3D;
         private int m_resolution = 10;
+        private Color m_gizmoColor = Color.clear;
+        private bool m_showGizmo = false;
         private UnityEngine.Transform m_Transform;
 
         public JTweenTransformLocalPath() {
@@ -25,15 +27,14 @@ namespace JTween.Transform {
             get { return m_beginPosition; }
             set {
                 m_beginPosition = value;
-                if (m_Transform != null) {
-                    m_Transform.localPosition = m_beginPosition;
-                } // end if
             }
         }
         public Vector3[] ToPath { get { return m_toPath; } set { m_toPath = value; } }
         public PathType PathType { get { return m_pathType; } set { m_pathType = value; } }
         public PathMode PathMode { get { return m_pathMode; } set { m_pathMode = value; } }
         public int Resolution { get { return m_resolution; } set { m_resolution = value; } }
+        public Color GizmoColor { get { return m_gizmoColor; } set { m_gizmoColor = value; } }
+        public bool ShowGizmo { get { return m_showGizmo; } set { m_showGizmo = value; } }
 
         protected override void Init() {
             if (null == m_target) return;
@@ -74,6 +75,11 @@ namespace JTween.Transform {
             // end if
             if (json.Contains("resolution")) m_resolution = json["resolution"].ToInt32();
             // end if
+            if (json.Contains("gizmoColor")) m_gizmoColor = JTweenUtils.JsonToColor(json["gizmoColor"]);
+            // end if
+            if (json.Contains("showGizmo")) m_showGizmo = json["showGizmo"].ToBool();
+            // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
@@ -87,6 +93,8 @@ namespace JTween.Transform {
             json["type"] = (int)m_pathType;
             json["mode"] = (int)m_pathMode;
             json["resolution"] = (int)m_resolution;
+            json["gizmoColor"] = JTweenUtils.ColorJson(m_gizmoColor);
+            json["showGizmo"] = m_showGizmo;
         }
 
         protected override bool CheckValid(out string errorInfo) {

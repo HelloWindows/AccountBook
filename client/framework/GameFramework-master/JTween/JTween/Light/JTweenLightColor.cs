@@ -24,9 +24,6 @@ namespace JTween.Light {
             }
             set {
                 m_beginColor = value;
-                if (m_Light != null) {
-                    m_Light.color = m_beginColor;
-                } // end if
             }
         }
 
@@ -70,6 +67,7 @@ namespace JTween.Light {
         protected override void ToJson(ref JsonData json) {
             json["beginColor"] = JTweenUtils.ColorJson(m_beginColor);
             json["color"] = JTweenUtils.ColorJson(m_toColor);
+            Restore();
         }
 
         protected override bool CheckValid(out string errorInfo) {

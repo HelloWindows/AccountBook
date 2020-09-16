@@ -9,12 +9,12 @@ using UnityEngine;
 
 namespace JTween.Rigidbody2D {
     public class JTweenRigidbody2DMove : JTweenBase {
-        public enum MoveTypeEnem {
+        public enum MoveTypeEnum {
             Move = 0,
             MoveX = 1,
             MoveY = 2,
         }
-        private MoveTypeEnem m_MoveType = MoveTypeEnem.Move;
+        private MoveTypeEnum m_MoveType = MoveTypeEnum.Move;
         private Vector3 m_beginPosition = Vector3.zero;
         private Vector3 m_toPosition = Vector3.zero;
         private float m_toMoveX = 0;
@@ -32,13 +32,10 @@ namespace JTween.Rigidbody2D {
             }
             set {
                 m_beginPosition = value;
-                if (m_Rigidbody != null) {
-                    m_Rigidbody.position = m_beginPosition;
-                } // end if
             }
         }
 
-        public MoveTypeEnem MoveType {
+        public MoveTypeEnum MoveType {
             get {
                 return m_MoveType;
             }
@@ -87,11 +84,11 @@ namespace JTween.Rigidbody2D {
             if (null == m_Rigidbody) return null;
             // end if
             switch (m_MoveType) {
-                case MoveTypeEnem.Move:
+                case MoveTypeEnum.Move:
                     return m_Rigidbody.DOMove(m_toPosition, m_duration, m_isSnapping);
-                case MoveTypeEnem.MoveX:
+                case MoveTypeEnum.MoveX:
                     return m_Rigidbody.DOMoveX(m_toMoveX, m_duration, m_isSnapping);
-                case MoveTypeEnem.MoveY:
+                case MoveTypeEnum.MoveY:
                     return m_Rigidbody.DOMoveY(m_toMoveY, m_duration, m_isSnapping);
                 default: return null;
             } // end switch
@@ -107,29 +104,30 @@ namespace JTween.Rigidbody2D {
             if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
             // end if
             if (json.Contains("move")) {
-                m_MoveType = MoveTypeEnem.Move;
+                m_MoveType = MoveTypeEnum.Move;
                 m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
             } else if (json.Contains("moveX")) {
-                m_MoveType = MoveTypeEnem.MoveX;
+                m_MoveType = MoveTypeEnum.MoveX;
                 m_toMoveX = (float)json["moveX"];
             } else if (json.Contains("moveY")) {
-                m_MoveType = MoveTypeEnem.MoveY;
+                m_MoveType = MoveTypeEnum.MoveY;
                 m_toMoveY = (float)json["moveY"];
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
             json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
             switch (m_MoveType) {
-                case MoveTypeEnem.Move:
+                case MoveTypeEnum.Move:
                     json["move"] = JTweenUtils.Vector3Json(m_toPosition);
                     break;
-                case MoveTypeEnem.MoveX:
+                case MoveTypeEnum.MoveX:
                     json["moveX"] = m_toMoveX;
                     break;
-                case MoveTypeEnem.MoveY:
+                case MoveTypeEnum.MoveY:
                     json["moveY"] = m_toMoveY;
                     break;
                 default:

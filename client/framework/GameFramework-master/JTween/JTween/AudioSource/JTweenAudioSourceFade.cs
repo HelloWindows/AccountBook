@@ -28,9 +28,6 @@ namespace JTween.AudioSource {
                 } else if (m_beginVolume > 1) {
                     m_beginVolume = 1;
                 } // end if
-                if (m_AudioSource != null) {
-                    m_AudioSource.volume = m_beginVolume;
-                } // end if
             }
         }
         public float ToVolume {
@@ -73,6 +70,7 @@ namespace JTween.AudioSource {
             // end if
             if (json.Contains("volume")) m_toVolume = (float)json["volume"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

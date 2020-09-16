@@ -26,9 +26,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginRotate = value;
-                if (m_Transform != null) {
-                    m_Transform.rotation = Quaternion.Euler(m_beginRotate);
-                } // end if
             }
         }
 
@@ -88,6 +85,7 @@ namespace JTween.Transform {
             // end if
             if (json.Contains("up")) m_up = JTweenUtils.JsonToVector3(json["up"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

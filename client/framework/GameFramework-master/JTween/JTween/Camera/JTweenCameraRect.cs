@@ -24,9 +24,6 @@ namespace JTween.Camera {
             }
             set {
                 m_beginRect = value;
-                if (m_Camera) {
-                    m_Camera.rect = m_beginRect;
-                } // end if
             }
         }
 
@@ -69,6 +66,7 @@ namespace JTween.Camera {
                 Vector4 rect = JTweenUtils.JsonToVector4(json["rect"]);
                 m_toRect = new Rect(rect.x, rect.y, rect.z, rect.w);
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

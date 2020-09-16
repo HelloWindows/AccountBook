@@ -24,9 +24,6 @@ namespace JTween.Slider {
             }
             set {
                 m_beginValue = value;
-                if (m_slider != null) {
-                    m_slider.value = m_beginValue;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Slider {
             // end if
             if (json.Contains("value")) m_toValue = json["value"].ToFloat();
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

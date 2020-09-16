@@ -24,9 +24,6 @@ namespace JTween.Camera {
             }
             set {
                 m_beginNCP = value;
-                if (m_Camera != null) {
-                    m_Camera.nearClipPlane = m_beginNCP;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Camera {
             // end if
             if (json.Contains("NCP")) m_toNCP = (float)json["NCP"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

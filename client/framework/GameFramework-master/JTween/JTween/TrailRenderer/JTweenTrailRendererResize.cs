@@ -26,9 +26,6 @@ namespace JTween.TrailRenderer {
             }
             set {
                 m_beginStartWidth = value;
-                if (m_TrailRenderer != null) {
-                    m_TrailRenderer.startWidth = m_beginStartWidth;
-                } // end if
             }
         }
 
@@ -38,9 +35,6 @@ namespace JTween.TrailRenderer {
             }
             set {
                 m_beginEndWidth = value;
-                if (m_TrailRenderer != null) {
-                    m_TrailRenderer.endWidth = m_beginEndWidth;
-                } // end if
             }
         }
 
@@ -94,6 +88,7 @@ namespace JTween.TrailRenderer {
             // end if
             if (json.Contains("endWidth")) m_endWidth = (float)json["endWidth"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

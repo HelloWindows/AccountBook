@@ -24,9 +24,6 @@ namespace JTween.ScrollRect {
             }
             set {
                 m_beginVerticalPos = value;
-                if (m_scrollRect != null) {
-                    m_scrollRect.verticalNormalizedPosition = m_beginVerticalPos;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.ScrollRect {
             // end if
             if (json.Contains("vertical")) m_toVerticalPos = json["vertical"].ToFloat();
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

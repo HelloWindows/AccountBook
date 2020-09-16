@@ -24,9 +24,6 @@ namespace JTween.Outline {
             }
             set {
                 m_beginColor = value;
-                if (m_Outline != null) {
-                    m_Outline.effectColor = m_beginColor;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Outline {
             // end if
             if (json.Contains("alpha")) m_toAlpha = (float)json["alpha"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

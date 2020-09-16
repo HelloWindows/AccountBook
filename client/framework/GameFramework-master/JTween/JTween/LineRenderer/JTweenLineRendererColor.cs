@@ -26,9 +26,6 @@ namespace JTween.LineRenderer {
             }
             set {
                 m_beginStartColor = value;
-                if (m_LineRenderer != null) {
-                    m_LineRenderer.startColor = m_beginStartColor;
-                } // end if
             }
         }
 
@@ -38,9 +35,6 @@ namespace JTween.LineRenderer {
             }
             set {
                 m_beginEndColor = value;
-                if (m_LineRenderer != null) {
-                    m_LineRenderer.endColor = m_beginEndColor;
-                } // end if
             }
         }
 
@@ -94,6 +88,7 @@ namespace JTween.LineRenderer {
             // end if
             if (json.Contains("toEndColor")) m_toEndColor = JTweenUtils.JsonToColor(json["toEndColor"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

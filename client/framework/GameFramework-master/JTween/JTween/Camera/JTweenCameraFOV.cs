@@ -24,9 +24,6 @@ namespace JTween.Camera {
             }
             set {
                 m_beginFOV = value;
-                if (m_Camera != null) {
-                    m_Camera.fieldOfView = m_beginFOV;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Camera {
             // end if
             if (json.Contains("FOV")) m_toFOV = (float)json["FOV"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

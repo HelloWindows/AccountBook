@@ -9,14 +9,14 @@ using UnityEngine;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformPivot : JTweenBase {
-        private enum PivotType {
+        public enum PivotTypeEnum {
             Pivot = 0,
             PivotX = 1,
             PivotY = 2,
         }
         private Vector2 m_beginPivot = Vector2.zero;
         private Vector2 m_toPivot = Vector2.zero;
-        private PivotType m_pivotType = PivotType.Pivot;
+        private PivotTypeEnum m_pivotType = PivotTypeEnum.Pivot;
         private float m_toPivotX = 0;
         private float m_toPivotY = 0;
         private UnityEngine.RectTransform m_RectTransform;
@@ -26,15 +26,21 @@ namespace JTween.RectTransform {
             m_tweenElement = JTweenElement.RectTransform;
         }
 
+        public PivotTypeEnum PivotType {
+            get {
+                return m_pivotType;
+            }
+            set {
+                m_pivotType = value;
+            }
+        }
+
         public Vector2 BeginPivot {
             get {
                 return m_beginPivot;
             }
             set {
                 m_beginPivot = value;
-                if (m_RectTransform != null) {
-                    m_RectTransform.pivot = m_beginPivot;
-                } // end if
             }
         }
 
@@ -43,7 +49,6 @@ namespace JTween.RectTransform {
                 return m_toPivot;
             }
             set {
-                m_pivotType = PivotType.Pivot;
                 m_toPivot = value;
             }
         }
@@ -53,7 +58,6 @@ namespace JTween.RectTransform {
                 return m_toPivotX;
             }
             set {
-                m_pivotType = PivotType.PivotX;
                 m_toPivotX = value;
             }
         }
@@ -63,7 +67,6 @@ namespace JTween.RectTransform {
                 return m_toPivotY;
             }
             set {
-                m_pivotType = PivotType.PivotY;
                 m_toPivotY = value;
             }
         }
@@ -81,11 +84,11 @@ namespace JTween.RectTransform {
             if (null == m_RectTransform) return null;
             // end if
             switch (m_pivotType) {
-                case PivotType.Pivot:
+                case PivotTypeEnum.Pivot:
                     return m_RectTransform.DOPivot(m_toPivot, m_duration);
-                case PivotType.PivotX:
+                case PivotTypeEnum.PivotX:
                     return m_RectTransform.DOPivotX(m_toPivotX, m_duration);
-                case PivotType.PivotY:
+                case PivotTypeEnum.PivotY:
                     return m_RectTransform.DOPivotY(m_toPivotY, m_duration);
                 default: return null;
             } // end switch
@@ -101,29 +104,30 @@ namespace JTween.RectTransform {
             if (json.Contains("beginPivot")) BeginPivot = JTweenUtils.JsonToVector2(json["beginPivot"]);
             // end if
             if (json.Contains("pivot")) {
-                m_pivotType = PivotType.Pivot;
+                m_pivotType = PivotTypeEnum.Pivot;
                 m_toPivot = JTweenUtils.JsonToVector2(json["pivot"]);
             } else if (json.Contains("pivotX")) {
-                m_pivotType = PivotType.PivotX;
+                m_pivotType = PivotTypeEnum.PivotX;
                 m_toPivotX = (float)json["pivotX"];
             } else if (json.Contains("pivotY")) {
-                m_pivotType = PivotType.PivotY;
+                m_pivotType = PivotTypeEnum.PivotY;
                 m_toPivotY = (float)json["pivotY"];
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo PivotType is null");
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
             json["beginPivot"] = JTweenUtils.Vector2Json(m_beginPivot);
             switch (m_pivotType) {
-                case PivotType.Pivot:
+                case PivotTypeEnum.Pivot:
                     json["pivot"] = JTweenUtils.Vector2Json(m_toPivot);
                     break;
-                case PivotType.PivotX:
+                case PivotTypeEnum.PivotX:
                     json["pivotX"] = m_toPivotX;
                     break;
-                case PivotType.PivotY:
+                case PivotTypeEnum.PivotY:
                     json["pivotY"] = m_toPivotY;
                     break;
                 default:

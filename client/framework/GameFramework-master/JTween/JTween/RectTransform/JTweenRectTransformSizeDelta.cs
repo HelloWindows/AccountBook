@@ -24,9 +24,6 @@ namespace JTween.RectTransform {
             }
             set {
                 m_beginSizeDelta = value;
-                if (m_rectTransform != null) {
-                    m_rectTransform.sizeDelta = m_beginSizeDelta;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.RectTransform {
             // end if
             if (json.Contains("size")) m_toSizeDelta = JTweenUtils.JsonToVector2(json["size"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

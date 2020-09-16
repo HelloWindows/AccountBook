@@ -27,9 +27,6 @@ namespace JTween.Text {
             }
             set {
                 m_beginStr = value;
-                if (m_beginStr != null) {
-                    m_text.text = m_beginStr;
-                } // end if
             }
         }
 
@@ -114,6 +111,7 @@ namespace JTween.Text {
             // end if
             if (json.Contains("char")) m_scrambleChars = json["char"].ToString();
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

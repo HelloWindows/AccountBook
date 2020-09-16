@@ -24,9 +24,6 @@ namespace JTween.Image {
             }
             set {
                 m_beginColor = value;
-                if (m_Image != null) {
-                    m_Image.color = m_beginColor;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Image {
             // end if
             if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json["color"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

@@ -24,9 +24,6 @@ namespace JTween.Rigidbody2D {
             }
             set {
                 m_beginRotation = value;
-                if (m_Rigidbody != null) {
-                    m_Rigidbody.rotation = m_beginRotation;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Rigidbody2D {
             // end if
             if (json.Contains("angle")) m_toAngle = (float)json["angle"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

@@ -26,9 +26,6 @@ namespace JTween.RectTransform {
             }
             set {
                 m_beginAnchorPos = value;
-                if (m_RectTransform != null) {
-                    m_RectTransform.anchoredPosition = m_beginAnchorPos;
-                } // end if
             }
         }
 
@@ -89,6 +86,7 @@ namespace JTween.RectTransform {
             // end if
             if (json.Contains("numJumps")) m_jumpPower = json["numJumps"].ToInt32();
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

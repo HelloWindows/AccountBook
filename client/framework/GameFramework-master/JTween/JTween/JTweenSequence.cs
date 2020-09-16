@@ -149,6 +149,7 @@ namespace JTween {
                 } else {
                     tween.Bind(transform);
                 } // end if
+                tween.JsonDo(node);
             } // end for
         }
     }

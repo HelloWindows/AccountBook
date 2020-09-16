@@ -28,9 +28,6 @@ namespace JTween.AudioSource {
                 } else if (m_beginPitch > 1) {
                     m_beginPitch = 1;
                 } // end if
-                if (m_AudioSource != null) {
-                    m_AudioSource.volume = m_beginPitch;
-                } // end if
             }
         }
 
@@ -74,6 +71,7 @@ namespace JTween.AudioSource {
             // end if
             if (json.Contains("pitch")) m_toPitch = (float)json["pitch"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

@@ -24,9 +24,6 @@ namespace JTween.Camera {
             }
             set {
                 m_beginPixelRect = value;
-                if (m_Camera != null) {
-                    m_Camera.pixelRect = m_beginPixelRect;
-                } // end if
             }
         }
 
@@ -76,6 +73,7 @@ namespace JTween.Camera {
             json["beginPixelRect"] = JTweenUtils.Vector4Json(rect);
             rect = new Vector4(m_toPixelRect.x, m_toPixelRect.y, m_toPixelRect.width, m_toPixelRect.height);
             json["pixelRect"] = JTweenUtils.Vector4Json(rect);
+            Restore();
         }
 
         protected override bool CheckValid(out string errorInfo) {

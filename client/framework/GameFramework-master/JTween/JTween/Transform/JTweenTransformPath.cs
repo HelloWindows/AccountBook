@@ -15,6 +15,7 @@ namespace JTween.Transform {
         private PathMode m_pathMode = PathMode.Full3D;
         private int m_resolution = 10;
         private Color m_gizmoColor = Color.clear;
+        private bool m_showGizmo = false;
         private UnityEngine.Transform m_Transform;
 
         public JTweenTransformPath() {
@@ -28,9 +29,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginPosition = value;
-                if (m_Transform != null) {
-                    m_Transform.position = m_beginPosition;
-                } // end if
             }
         }
 
@@ -38,7 +36,8 @@ namespace JTween.Transform {
         public PathType PathType { get { return m_pathType; } set { m_pathType = value; } }
         public PathMode PathMode { get { return m_pathMode; } set { m_pathMode = value; } }
         public int Resolution { get { return m_resolution; } set { m_resolution = value; } }
-        public Color GizmoColor { get { return m_gizmoColor; } set { m_gizmoColor = value; }  }
+        public Color GizmoColor { get { return m_gizmoColor; } set { m_gizmoColor = value; } }
+        public bool ShowGizmo { get { return m_showGizmo; } set { m_showGizmo = value; } }
 
         protected override void Init() {
             if (null == m_target) return;
@@ -54,7 +53,10 @@ namespace JTween.Transform {
             // end if
             if (m_toPath == null || m_toPath.Length <= 0) return null;
             // end if
-            return ShortcutExtensions.DOPath(m_target, m_toPath, m_duration, m_pathType, m_pathMode, m_resolution, m_gizmoColor);
+            if (m_showGizmo) {
+                return ShortcutExtensions.DOPath(m_target, m_toPath, m_duration, m_pathType, m_pathMode, m_resolution, m_gizmoColor);
+            } // end if
+            return ShortcutExtensions.DOPath(m_target, m_toPath, m_duration, m_pathType, m_pathMode, m_resolution);
         }
 
         public override void Restore() {
@@ -81,6 +83,9 @@ namespace JTween.Transform {
             // end if
             if (json.Contains("gizmoColor")) m_gizmoColor = JTweenUtils.JsonToColor(json["gizmoColor"]);
             // end if
+            if (json.Contains("showGizmo")) m_showGizmo = json["showGizmo"].ToBool();
+            // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
@@ -95,6 +100,7 @@ namespace JTween.Transform {
             json["mode"] = (int)m_pathMode;
             json["resolution"] = (int)m_resolution;
             json["gizmoColor"] = JTweenUtils.ColorJson(m_gizmoColor);
+            json["showGizmo"] = m_showGizmo;
         }
 
         protected override bool CheckValid(out string errorInfo) {

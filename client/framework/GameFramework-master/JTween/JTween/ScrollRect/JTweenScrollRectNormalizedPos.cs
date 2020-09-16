@@ -24,9 +24,6 @@ namespace JTween.ScrollRect {
             }
             set {
                 m_beginNormalizedPos = value;
-                if (m_scrollRect != null) {
-                    m_scrollRect.normalizedPosition = m_beginNormalizedPos;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.ScrollRect {
             // end if
             if (json.Contains("pos")) m_toNormalizedPos = JTweenUtils.JsonToVector2(json["pos"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

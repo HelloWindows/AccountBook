@@ -34,9 +34,6 @@ namespace JTween.Rigidbody {
             }
             set {
                 m_beginPosition = value;
-                if (m_Rigidbody != null) {
-                    m_Rigidbody.position = m_beginPosition;
-                } // end if
             }
         }
 
@@ -134,6 +131,7 @@ namespace JTween.Rigidbody {
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

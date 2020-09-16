@@ -24,9 +24,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginScale = value;
-                if (m_beginScale != null) {
-                    m_Transform.localScale = m_beginScale;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Transform {
             // end if
             if (json.Contains("scale")) m_toScale = JTweenUtils.JsonToVector3(json["scale"]);
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

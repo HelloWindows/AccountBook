@@ -24,9 +24,6 @@ namespace JTween.TrailRenderer {
             }
             set {
                 m_beginTime = value;
-                if (m_TrailRenderer != null) {
-                    m_TrailRenderer.time = m_beginTime;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.TrailRenderer {
             // end if
             if (json.Contains("time")) m_toTime = (float)json["time"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

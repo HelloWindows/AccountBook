@@ -24,9 +24,6 @@ namespace JTween.Light {
             }
             set {
                 m_beginStrength = value;
-                if (m_Light != null) {
-                    m_Light.shadowStrength = m_beginStrength;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Light {
             // end if
             if (json.Contains("strength")) m_toStrength = (float)json["strength"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

@@ -26,13 +26,6 @@ namespace JTween.Material {
             }
             set {
                 m_beginFloat = value;
-                if (m_Material != null) {
-                    if (!string.IsNullOrEmpty(m_property)) {
-                        m_Material.SetFloat(m_property, m_beginFloat);
-                    } else if (m_propertyID != -1) {
-                        m_Material.SetFloat(m_propertyID, m_beginFloat);
-                    } // end if
-                } // end if
             }
         }
 
@@ -108,6 +101,7 @@ namespace JTween.Material {
             // end if
             if (json.Contains("propertyID")) m_propertyID = (int)json["propertyID"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

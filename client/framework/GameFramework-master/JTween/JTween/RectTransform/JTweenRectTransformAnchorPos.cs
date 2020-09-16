@@ -9,14 +9,14 @@ using UnityEngine;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformAnchorPos : JTweenBase {
-        private enum PosType {
+        public enum PosTypeEnum {
             Pos = 0,
             PosX = 1,
             PosY = 2,
         }
         private Vector2 m_beginAnchorPos = Vector2.zero;
         private Vector2 m_toAnchorPos = Vector2.zero;
-        private PosType m_posType = PosType.Pos;
+        private PosTypeEnum m_posType = PosTypeEnum.Pos;
         private float m_toAnchorPosX = 0;
         private float m_toAnchorPosY = 0;
         private UnityEngine.RectTransform m_RectTransform;
@@ -26,15 +26,21 @@ namespace JTween.RectTransform {
             m_tweenElement = JTweenElement.RectTransform;
         }
 
+        public PosTypeEnum PosType {
+            get {
+                return m_posType;
+            }
+            set {
+                m_posType = value;
+            }
+        }
+
         public Vector2 BeginAnchorPos {
             get {
                 return m_beginAnchorPos;
             }
             set {
                 m_beginAnchorPos = value;
-                if (m_RectTransform != null) {
-                    m_RectTransform.anchoredPosition = m_beginAnchorPos;
-                } // end if
             }
         }
 
@@ -43,7 +49,6 @@ namespace JTween.RectTransform {
                 return m_toAnchorPos;
             }
             set {
-                m_posType = PosType.Pos;
                 m_toAnchorPos = value;
             }
         }
@@ -53,7 +58,6 @@ namespace JTween.RectTransform {
                 return m_toAnchorPosX;
             }
             set {
-                m_posType = PosType.PosX;
                 m_toAnchorPosX = value;
             }
         }
@@ -63,7 +67,6 @@ namespace JTween.RectTransform {
                 return m_toAnchorPosY;
             }
             set {
-                m_posType = PosType.PosY;
                 m_toAnchorPosY = value;
             }
         }
@@ -81,11 +84,11 @@ namespace JTween.RectTransform {
             if (null == m_RectTransform) return null;
             // end if
             switch (m_posType) {
-                case PosType.Pos:
+                case PosTypeEnum.Pos:
                     return m_RectTransform.DOAnchorPos(m_toAnchorPos, m_duration, m_isSnapping);
-                case PosType.PosX:
+                case PosTypeEnum.PosX:
                     return m_RectTransform.DOAnchorPosX(m_toAnchorPosX, m_duration, m_isSnapping);
-                case PosType.PosY:
+                case PosTypeEnum.PosY:
                     return m_RectTransform.DOAnchorPosY(m_toAnchorPosY, m_duration, m_isSnapping);
                 default: return null;
             } // end switch
@@ -101,29 +104,30 @@ namespace JTween.RectTransform {
             if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json["beginAnchorPos"]);
             // end if
             if (json.Contains("pos")) {
-                m_posType = PosType.Pos;
+                m_posType = PosTypeEnum.Pos;
                 m_toAnchorPos = JTweenUtils.JsonToVector2(json["pos"]);
             } else if (json.Contains("posX")) {
-                m_posType = PosType.PosX;
+                m_posType = PosTypeEnum.PosX;
                 m_toAnchorPosX = (float)json["posX"];
             } else if (json.Contains("posY")) {
-                m_posType = PosType.PosY;
+                m_posType = PosTypeEnum.PosY;
                 m_toAnchorPosY = (float)json["posY"];
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo PosType is null");
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
             json["beginAnchorPos"] = JTweenUtils.Vector2Json(m_beginAnchorPos);
             switch (m_posType) {
-                case PosType.Pos:
+                case PosTypeEnum.Pos:
                     json["pos"] = JTweenUtils.Vector2Json(m_toAnchorPos);
                     break;
-                case PosType.PosX:
+                case PosTypeEnum.PosX:
                     json["posX"] = m_toAnchorPosX;
                     break;
-                case PosType.PosY:
+                case PosTypeEnum.PosY:
                     json["posY"] = m_toAnchorPosY;
                     break;
                 default:

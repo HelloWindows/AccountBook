@@ -24,9 +24,6 @@ namespace JTween.Transform {
             }
             set {
                 m_beginRotation = value;
-                if (m_Transform != null) {
-                    m_Transform.localRotation = m_beginRotation;
-                } // end if
             }
         }
 
@@ -69,6 +66,7 @@ namespace JTween.Transform {
                 Vector4 quaternion = JTweenUtils.JsonToVector4(json["quaternion"]);
                 m_toRotate = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
             } // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

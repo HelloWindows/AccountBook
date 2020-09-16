@@ -26,13 +26,6 @@ namespace JTween.Material {
             }
             set {
                 m_beginTiling = value;
-                if (m_Material != null) {
-                    if (!string.IsNullOrEmpty(m_property)) {
-                        m_Material.SetTextureScale(m_property, m_beginTiling);
-                    } else if (-1 != m_propertyID) {
-                        m_Material.SetTextureScale(m_propertyID, m_beginTiling);
-                    } // end if
-                } // end if
             }
         }
 
@@ -106,6 +99,7 @@ namespace JTween.Material {
             // end if
             if (json.Contains("propertyID")) m_propertyID = (int)json["propertyID"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {

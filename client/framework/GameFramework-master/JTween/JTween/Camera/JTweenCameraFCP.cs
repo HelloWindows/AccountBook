@@ -24,9 +24,6 @@ namespace JTween.Camera {
             }
             set {
                 m_beginFCP = value;
-                if (m_Camera != null) {
-                    m_Camera.farClipPlane = m_beginFCP;
-                } // end if
             }
         }
 
@@ -65,6 +62,7 @@ namespace JTween.Camera {
             // end if
             if (json.Contains("FCP")) m_toFCP = (float)json["FCP"];
             // end if
+            Restore();
         }
 
         protected override void ToJson(ref JsonData json) {
