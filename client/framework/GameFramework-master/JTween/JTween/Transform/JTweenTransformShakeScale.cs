@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformShakeScale : JTweenBase {
@@ -114,44 +109,42 @@ namespace JTween.Transform {
             m_Transform.localScale = m_beginScale;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json["beginScale"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json.GetNode("beginScale"));
             // end if
             if (json.Contains("strength")) {
                 m_shakeType = ShakeTypeEnum.Value;
-                m_strength = (float)json["strength"];
+                m_strength = json.GetFloat("strength");
             } // end if
             if (json.Contains("strengthVec")) {
                 m_shakeType = ShakeTypeEnum.Axis;
-                m_strengthVec = JTweenUtils.JsonToVector3(json["strengthVec"]);
+                m_strengthVec = JTweenUtils.JsonToVector3(json.GetNode("strengthVec"));
             } // end if
-            if (json.Contains("vibrato")) m_vibrato = (int)json["vibrato"];
+            if (json.Contains("vibrato")) m_vibrato = json.GetInt("vibrato");
             // end if
-            if (json.Contains("randomness")) m_randomness = (float)json["randomness"];
+            if (json.Contains("randomness")) m_randomness = json.GetFloat("randomness");
             // end if
-            if (json.Contains("fadeOut")) {
-                int fadeOut = (int)json["fadeOut"];
-                m_fadeOut = fadeOut == 0 ? false : true;
-            } // end if
+            if (json.Contains("fadeOut")) m_fadeOut = json.GetBool("fadeOut");
+            // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginScale"] = JTweenUtils.Vector3Json(m_beginScale);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginScale", JTweenUtils.Vector3Json(m_beginScale));
             switch (m_shakeType) {
                 case ShakeTypeEnum.Value:
-                    json["strength"] = m_strength;
+                    json.SetFloat("strength", m_strength);
                     break;
                 case ShakeTypeEnum.Axis:
-                    json["strengthVec"] = JTweenUtils.Vector3Json(m_strengthVec);
+                    json.SetNode("strengthVec", JTweenUtils.Vector3Json(m_strengthVec));
                     break;
                 default:
                     Debug.LogError(GetType().FullName + " ToJson ShakeType is null");
                     break;
             } // end swtich
-            json["vibrato"] = m_vibrato;
-            json["randomness"] = m_randomness;
-            json["fadeOut"] = m_fadeOut ? 1 : 0;
+            json.SetInt("vibrato", m_vibrato);
+            json.SetFloat("randomness", m_randomness);
+            json.SetBool("fadeOut", m_fadeOut);
         }
 
         protected override bool CheckValid(out string errorInfo) {

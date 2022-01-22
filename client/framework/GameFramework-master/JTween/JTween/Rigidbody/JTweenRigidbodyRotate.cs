@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Rigidbody {
     public class JTweenRigidbodyRotate : JTweenBase {
@@ -67,20 +62,20 @@ namespace JTween.Rigidbody {
             m_Rigidbody.rotation = Quaternion.Euler(m_beginRotate);
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginRotate")) BeginRotate = JTweenUtils.JsonToVector3(json["beginRotate"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginRotate")) BeginRotate = JTweenUtils.JsonToVector3(json.GetNode("beginRotate"));
             // end if
-            if (json.Contains("rotate")) m_toRotate = JTweenUtils.JsonToVector3(json["rotate"]);
+            if (json.Contains("rotate")) m_toRotate = JTweenUtils.JsonToVector3(json.GetNode("rotate"));
             // end if
-            if (json.Contains("mode")) m_RotateMode = (RotateMode)(int)json["mode"];
+            if (json.Contains("mode")) m_RotateMode = (RotateMode)(int)json.GetInt("mode");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginRotate"] = JTweenUtils.Vector3Json(m_beginRotate);
-            json["rotate"] = JTweenUtils.Vector3Json(m_toRotate);
-            json["mode"] = (int)m_RotateMode;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginRotate", JTweenUtils.Vector3Json(m_beginRotate));
+            json.SetNode("rotate", JTweenUtils.Vector3Json(m_toRotate));
+            json.SetInt("mode", (int)m_RotateMode);
         }
 
         protected override bool CheckValid(out string errorInfo) {

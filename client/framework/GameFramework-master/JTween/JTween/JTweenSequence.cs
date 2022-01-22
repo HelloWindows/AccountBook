@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using DG.Tweening;
-using LitJson;
+using Json;
 using UnityEngine;
 
 namespace JTween {
@@ -98,20 +94,24 @@ namespace JTween {
             m_onComplete = null;
         }
 
-        public JsonData DoJson() {
-            JsonData json = new JsonData();
+        public IJsonNode DoJson() {
+            IJsonNode json = JsonHelper.CreateNode();
             if (m_tweens != null && m_tweens.Length > 0) {
-                JsonData node;
-                foreach (var tween in m_tweens) {
+                IJsonNode node;
+                for (int i = 0; i < m_tweens.Length; i++)
+                {
+                    JTweenBase tween = m_tweens[i];
                     node = tween.DoJson();
                     string curPath = JTweenUtils.GetTranPath(transform) + "/";
-                    if (tween.Target != transform) {
+                    if (tween.Target != transform)
+                    {
                         string targetPath = JTweenUtils.GetTranPath(tween.Target);
-                        if (!targetPath.StartsWith(curPath)) {
+                        if (!targetPath.StartsWith(curPath))
+                        {
                             Debug.LogErrorFormat("JTweenSequence DoJson target is not child! Path:{0}", targetPath);
                             continue;
                         } // end if
-                        node["_PATH"] = JTweenUtils.GetTranPath(tween.Target).Replace(curPath, "");
+                        node.SetString("_PATH", JTweenUtils.GetTranPath(tween.Target).Replace(curPath, ""));
                     } // end if
                     json.Add(node);
                 }
@@ -119,14 +119,14 @@ namespace JTween {
             return json;
         }
 
-        public void JsonDo(JsonData json) {
+        public void JsonDo(IJsonNode json) {
             Clear();
             KillAll();
             if (json == null || json.Count <= 0) return;
             // end if
             int count = json.Count;
             m_tweens = new JTweenBase[count];
-            JsonData node;
+            IJsonNode node;
             JTweenBase tween;
             string path;
             UnityEngine.Transform trans;
@@ -136,7 +136,7 @@ namespace JTween {
                 tween = JTweenFactory.CreateTween(node);
                 m_tweens[i] = tween;
                 if (node.Contains("_PATH")) {
-                    path = node["_PATH"].ToString();
+                    path = node.GetString("_PATH");
                     if (!pathToTrans.TryGetValue(path, out trans)) {
                         trans = transform.Find(path);
                         if (null != trans) {

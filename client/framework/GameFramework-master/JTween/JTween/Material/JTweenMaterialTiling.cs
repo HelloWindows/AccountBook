@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Material {
     public class JTweenMaterialTiling : JTweenBase {
@@ -90,26 +85,26 @@ namespace JTween.Material {
             } // end if
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginTiling")) BeginTiling = JTweenUtils.JsonToVector2(json["beginTiling"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginTiling")) BeginTiling = JTweenUtils.JsonToVector2(json.GetNode("beginTiling"));
             // end if
-            if (json.Contains("tiling")) m_toTiling = JTweenUtils.JsonToVector2(json["tiling"]);
+            if (json.Contains("tiling")) m_toTiling = JTweenUtils.JsonToVector2(json.GetNode("tiling"));
             // end if
-            if (json.Contains("property")) m_property = (string)json["property"];
+            if (json.Contains("property")) m_property = json.GetString("property");
             // end if
-            if (json.Contains("propertyID")) m_propertyID = (int)json["propertyID"];
+            if (json.Contains("propertyID")) m_propertyID = json.GetInt("propertyID");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginTiling"] = JTweenUtils.Vector2Json(m_beginTiling);
-            json["tiling"] = JTweenUtils.Vector2Json(m_toTiling);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginTiling", JTweenUtils.Vector2Json(m_beginTiling));
+            json.SetNode("tiling", JTweenUtils.Vector2Json(m_toTiling));
             if (!string.IsNullOrEmpty(m_property)) {
-                json["property"] = m_property;
+                json.SetString("property", m_property);
             } // end if
             if (-1 != m_propertyID) {
-                json["propertyID"] = m_propertyID;
+                json.SetInt("propertyID", m_propertyID);
             } // end if
         }
 

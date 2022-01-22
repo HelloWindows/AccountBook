@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
 using UnityEngine;
 
 namespace JTween.Graphic {
@@ -57,17 +52,17 @@ namespace JTween.Graphic {
             m_Graphic.color = m_beginColor;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginColor")) BeginColor = JTweenUtils.JsonToColor(json["beginColor"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginColor")) BeginColor = JTweenUtils.JsonToColor(json.GetNode("beginColor"));
             // end if
-            if (json.Contains("alpha")) m_toAlpha = (float)json["alpha"];
+            if (json.Contains("alpha")) m_toAlpha = json.GetFloat("alpha");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginColor"] = JTweenUtils.ColorJson(m_beginColor);
-            json["alpha"] = m_toAlpha;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginColor", JTweenUtils.ColorJson(m_beginColor));
+            json.SetFloat("alpha", m_toAlpha);
         }
 
         protected override bool CheckValid(out string errorInfo) {

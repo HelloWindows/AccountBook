@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
 using UnityEngine;
 
 namespace JTween.LineRenderer {
@@ -79,23 +74,23 @@ namespace JTween.LineRenderer {
             m_LineRenderer.endColor = m_beginEndColor;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginStartColor")) BeginStartColor = JTweenUtils.JsonToColor(json["beginStartColor"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginStartColor")) BeginStartColor = JTweenUtils.JsonToColor(json.GetNode("beginStartColor"));
             // end if
-            if (json.Contains("beginEndColor")) BeginEndColor = JTweenUtils.JsonToColor(json["beginEndColor"]);
+            if (json.Contains("beginEndColor")) BeginEndColor = JTweenUtils.JsonToColor(json.GetNode("beginEndColor"));
             // end if
-            if (json.Contains("toStartColor")) m_toStartColor = JTweenUtils.JsonToColor(json["toStartColor"]);
+            if (json.Contains("toStartColor")) m_toStartColor = JTweenUtils.JsonToColor(json.GetNode("toStartColor"));
             // end if
-            if (json.Contains("toEndColor")) m_toEndColor = JTweenUtils.JsonToColor(json["toEndColor"]);
+            if (json.Contains("toEndColor")) m_toEndColor = JTweenUtils.JsonToColor(json.GetNode("toEndColor"));
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginStartColor"] = JTweenUtils.ColorJson(m_beginStartColor);
-            json["beginEndColor"] = JTweenUtils.ColorJson(m_beginEndColor);
-            json["toStartColor"] = JTweenUtils.ColorJson(m_toStartColor);
-            json["toEndColor"] = JTweenUtils.ColorJson(m_toEndColor);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginStartColor", JTweenUtils.ColorJson(m_beginStartColor));
+            json.SetNode("beginEndColor", JTweenUtils.ColorJson(m_beginEndColor));
+            json.SetNode("toStartColor", JTweenUtils.ColorJson(m_toStartColor));
+            json.SetNode("toEndColor", JTweenUtils.ColorJson(m_toEndColor));
         }
 
         protected override bool CheckValid(out string errorInfo) {

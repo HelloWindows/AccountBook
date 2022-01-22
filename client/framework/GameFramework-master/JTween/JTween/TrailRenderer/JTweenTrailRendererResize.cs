@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.TrailRenderer {
     public class JTweenTrailRendererResize : JTweenBase {
@@ -79,23 +73,23 @@ namespace JTween.TrailRenderer {
             m_TrailRenderer.endWidth = m_beginEndWidth;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginStartWidth")) BeginStartWidth = (float)json["beginStartWidth"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginStartWidth")) BeginStartWidth = json.GetFloat("beginStartWidth");
             // end if
-            if (json.Contains("beginEndWidth")) BeginEndWidth = (float)json["beginEndWidth"];
+            if (json.Contains("beginEndWidth")) BeginEndWidth = json.GetFloat("beginEndWidth"); 
             // end if
-            if (json.Contains("startWidth")) m_startWidth = (float)json["startWidth"];
+            if (json.Contains("startWidth")) m_startWidth = json.GetFloat("startWidth");
             // end if
-            if (json.Contains("endWidth")) m_endWidth = (float)json["endWidth"];
+            if (json.Contains("endWidth")) m_endWidth = json.GetFloat("endWidth");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginStartWidth"] = m_beginStartWidth;
-            json["beginEndWidth"] = m_beginEndWidth;
-            json["startWidth"] = m_endWidth;
-            json["endWidth"] = m_endWidth;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginStartWidth", m_beginStartWidth);
+            json.SetFloat("beginEndWidth", m_beginEndWidth);
+            json.SetFloat("startWidth", m_startWidth);
+            json.SetFloat("endWidth", m_endWidth);
         }
 
         protected override bool CheckValid(out string errorInfo) {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformPunchPosition : JTweenBase {
@@ -77,23 +72,23 @@ namespace JTween.Transform {
             m_Transform.position = m_beginPosition;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json.GetNode("beginPosition"));
             // end if
-            if (json.Contains("punch")) m_toPunch = JTweenUtils.JsonToVector3(json["punch"]);
+            if (json.Contains("punch")) m_toPunch = JTweenUtils.JsonToVector3(json.GetNode("punch"));
             // end if
-            if (json.Contains("vibrate")) m_vibrate = (int)json["vibrate"];
+            if (json.Contains("vibrate")) m_vibrate = json.GetInt("vibrate");
             // end if
-            if (json.Contains("elasticity")) m_elasticity = (float)json["elasticity"];
+            if (json.Contains("elasticity")) m_elasticity = json.GetFloat("elasticity");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
-            json["punch"] = JTweenUtils.Vector3Json(m_toPunch);
-            json["vibrate"] = m_vibrate;
-            json["elasticity"] = m_elasticity;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginPosition", JTweenUtils.Vector3Json(m_beginPosition));
+            json.SetNode("punch", JTweenUtils.Vector3Json(m_toPunch));
+            json.SetInt("vibrate", m_vibrate);
+            json.SetFloat("elasticity", m_elasticity);
         }
 
         protected override bool CheckValid(out string errorInfo) {

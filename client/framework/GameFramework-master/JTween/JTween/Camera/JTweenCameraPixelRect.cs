@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
 using UnityEngine;
 
 namespace JTween.Camera {
@@ -57,22 +52,22 @@ namespace JTween.Camera {
             m_Camera.pixelRect = m_beginPixelRect;
         }
 
-        protected override void JsonTo(JsonData json) {
+        protected override void JsonTo(IJsonNode json) {
             if (json.Contains("beginPixelRect")) {
-                Vector4 rect = JTweenUtils.JsonToVector4(json["beginPixelRect"]);
-                m_beginPixelRect = new Rect(rect.x, rect.y, rect.z, rect.w);
+                Vector4 rect = JTweenUtils.JsonToVector4(json.GetNode("beginPixelRect"));
+                 m_beginPixelRect = new Rect(rect.x, rect.y, rect.z, rect.w);
             } // end if
             if (json.Contains("pixelRect")) {
-                Vector4 rect = JTweenUtils.JsonToVector4(json["pixelRect"]);
+                Vector4 rect = JTweenUtils.JsonToVector4(json.GetNode("pixelRect"));
                 m_toPixelRect = new Rect(rect.x, rect.y, rect.z, rect.w);
             } // end if
         }
 
-        protected override void ToJson(ref JsonData json) {
+        protected override void ToJson(ref IJsonNode json) {
             Vector4 rect = new Vector4(m_beginPixelRect.x, m_beginPixelRect.y, m_beginPixelRect.width, m_beginPixelRect.height);
-            json["beginPixelRect"] = JTweenUtils.Vector4Json(rect);
+            json.SetNode("beginPixelRect", JTweenUtils.Vector4Json(rect)); 
             rect = new Vector4(m_toPixelRect.x, m_toPixelRect.y, m_toPixelRect.width, m_toPixelRect.height);
-            json["pixelRect"] = JTweenUtils.Vector4Json(rect);
+            json.SetNode("pixelRect", JTweenUtils.Vector4Json(rect));
             Restore();
         }
 

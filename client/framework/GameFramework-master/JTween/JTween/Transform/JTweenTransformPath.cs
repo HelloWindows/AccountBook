@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformPath : JTweenBase {
@@ -65,42 +60,42 @@ namespace JTween.Transform {
             m_Transform.position = m_beginPosition;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json.GetNode("beginPosition"));
             // end if
             if (json.Contains("path")) {
-                JsonData pathJson = json["path"];
+                IJsonNode pathJson = json.GetNode("path");
                 m_toPath = new Vector3[pathJson.Count];
                 for (int i = 0, imax = pathJson.Count; i < imax; ++i) {
                     m_toPath[i] = JTweenUtils.JsonToVector3(pathJson[i]);
                 } // end for
             } // end if
-            if (json.Contains("type")) m_pathType = (PathType)json["type"].ToInt32();
+            if (json.Contains("type")) m_pathType = (PathType)json.GetInt("type");
             // end if
-            if (json.Contains("mode")) m_pathMode = (PathMode)json["mode"].ToInt32();
+            if (json.Contains("mode")) m_pathMode = (PathMode)json.GetInt("mode");
             // end if
-            if (json.Contains("resolution")) m_resolution = json["resolution"].ToInt32();
+            if (json.Contains("resolution")) m_resolution = json.GetInt("resolution");
             // end if
-            if (json.Contains("gizmoColor")) m_gizmoColor = JTweenUtils.JsonToColor(json["gizmoColor"]);
+            if (json.Contains("gizmoColor")) m_gizmoColor = JTweenUtils.JsonToColor(json.GetNode("gizmoColor"));
             // end if
-            if (json.Contains("showGizmo")) m_showGizmo = json["showGizmo"].ToBool();
+            if (json.Contains("showGizmo")) m_showGizmo = json.GetBool("showGizmo");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginPosition", JTweenUtils.Vector3Json(m_beginPosition));
             if (m_toPath == null || m_toPath.Length <= 0) return;
-            JsonData pathJson = new JsonData();
+            IJsonNode pathJson = JsonHelper.CreateNode();
             for (int i = 0; i < m_toPath.Length; ++i) {
                 pathJson.Add(JTweenUtils.Vector3Json(m_toPath[i]));
             } // end for
-            json["path"] = pathJson;
-            json["type"] = (int)m_pathType;
-            json["mode"] = (int)m_pathMode;
-            json["resolution"] = (int)m_resolution;
-            json["gizmoColor"] = JTweenUtils.ColorJson(m_gizmoColor);
-            json["showGizmo"] = m_showGizmo;
+            json.SetNode("path", pathJson);
+            json.SetInt("type", (int)m_pathType);
+            json.SetInt("mode", (int)m_pathMode);
+            json.SetInt("resolution", m_resolution);
+            json.SetNode("gizmoColor", JTweenUtils.ColorJson(m_gizmoColor));
+            json.SetBool("showGizmo", m_showGizmo);
         }
 
         protected override bool CheckValid(out string errorInfo) {

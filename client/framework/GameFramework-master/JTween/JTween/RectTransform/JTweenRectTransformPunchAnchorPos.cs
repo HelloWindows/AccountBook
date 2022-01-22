@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformPunchAnchorPos : JTweenBase {
@@ -84,23 +79,23 @@ namespace JTween.RectTransform {
             m_rectTransform.anchoredPosition = m_beginAnchorPos;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json["beginAnchorPos"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json.GetNode("beginAnchorPos"));
             // end if
-            if (json.Contains("punch")) m_punch = JTweenUtils.JsonToVector2(json["punch"]);
+            if (json.Contains("punch")) m_punch = JTweenUtils.JsonToVector2(json.GetNode("punch")); 
             // end if
-            if (json.Contains("vibrato")) m_vibrato = json["vibrato"].ToInt32();
+            if (json.Contains("vibrato")) m_vibrato = json.GetInt("vibrato"); 
             // end if
-            if (json.Contains("elasticity")) m_elasticity = json["elasticity"].ToInt32();
+            if (json.Contains("elasticity")) m_elasticity = json.GetFloat("elasticity");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginAnchorPos"] = JTweenUtils.Vector2Json(m_beginAnchorPos);
-            json["punch"] = JTweenUtils.Vector2Json(m_punch);
-            json["vibrato"] = m_vibrato;
-            json["elasticity"] = m_elasticity;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginAnchorPos", JTweenUtils.Vector2Json(m_beginAnchorPos));
+            json.SetNode("punch", JTweenUtils.Vector2Json(m_punch));
+            json.SetInt("vibrato", m_vibrato);
+            json.SetFloat("elasticity", m_elasticity);
         }
 
         protected override bool CheckValid(out string errorInfo) {

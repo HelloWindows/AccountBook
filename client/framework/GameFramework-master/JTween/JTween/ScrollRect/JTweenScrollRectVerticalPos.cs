@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.ScrollRect {
     public class JTweenScrollRectVerticalPos : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.ScrollRect {
             m_scrollRect.verticalNormalizedPosition = m_beginVerticalPos;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginVerticalPos")) m_beginVerticalPos = json["beginVerticalPos"].ToFloat();
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginVerticalPos")) m_beginVerticalPos = json.GetFloat("beginVerticalPos");
             // end if
-            if (json.Contains("vertical")) m_toVerticalPos = json["vertical"].ToFloat();
+            if (json.Contains("vertical")) m_toVerticalPos = json.GetFloat("vertical");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginVerticalPos"] = m_beginVerticalPos;
-            json["vertical"] = m_toVerticalPos;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginVerticalPos", m_beginVerticalPos);
+            json.SetFloat("vertical", m_toVerticalPos); 
         }
 
         protected override bool CheckValid(out string errorInfo) {

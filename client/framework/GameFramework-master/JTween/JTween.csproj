@@ -35,9 +35,6 @@
     <Reference Include="DOTween">
       <HintPath>..\Libs\DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="MLitJson">
-      <HintPath>..\Libs\MLitJson.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -75,6 +72,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonHelper\IJsonHelper.cs" />
+    <Compile Include="JsonHelper\IJsonNode.cs" />
+    <Compile Include="JsonHelper\JsonHelper.cs" />
     <Compile Include="JTween\AudioSource\JTweenAudioSourcePitch.cs" />
     <Compile Include="JTween\AudioSource\JTweenAudioSourceFade.cs" />
     <Compile Include="JTween\Camera\JTweenCameraShakeRotation.cs" />
@@ -179,8 +179,6 @@
     <Compile Include="JTween\JTweenUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

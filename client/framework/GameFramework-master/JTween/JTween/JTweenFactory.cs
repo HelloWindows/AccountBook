@@ -1,4 +1,5 @@
-﻿using JTween.AudioSource;
+﻿using Json;
+using JTween.AudioSource;
 using JTween.Camera;
 using JTween.CanvasGroup;
 using JTween.Graphic;
@@ -17,12 +18,11 @@ using JTween.SpriteRenderer;
 using JTween.Text;
 using JTween.TrailRenderer;
 using JTween.Transform;
-using LitJson;
 
 namespace JTween {
     public class JTweenFactory {
 
-        public static JTweenBase CreateTween(JsonData json) {
+        public static JTweenBase CreateTween(IJsonNode json) {
             if (!json.Contains("tweenType")) {
                 UnityEngine.Debug.LogError("JTweenFactory CreateTween json tweenType is error");
                 return null;
@@ -31,8 +31,8 @@ namespace JTween {
                 UnityEngine.Debug.LogError("JTweenFactory CreateTween json tweenElement is error");
                 return null;
             } // end if
-            int tweenType = json["tweenType"].ToInt32();
-            int tweenElement = json["tweenElement"].ToInt32();
+            int tweenType = json.GetInt("tweenType");
+            int tweenElement = json.GetInt("tweenElement");
             return CreateTween(tweenElement, tweenType);
         }
 

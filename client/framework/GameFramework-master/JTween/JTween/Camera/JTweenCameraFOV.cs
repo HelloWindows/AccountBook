@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.Camera {
     public class JTweenCameraFOV : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Camera {
             m_Camera.fieldOfView = m_beginFOV;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginFOV")) m_beginFOV = (float)json["beginFOV"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginFOV")) m_beginFOV = json.GetFloat("beginFOV");
             // end if
-            if (json.Contains("FOV")) m_toFOV = (float)json["FOV"];
+            if (json.Contains("FOV")) m_toFOV = json.GetFloat("FOV"); 
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginFOV"] = m_beginFOV;
-            json["FOV"] = m_toFOV;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginFOV", m_beginFOV);
+            json.SetFloat("FOV", m_toFOV);
         }
 
         protected override bool CheckValid(out string errorInfo) {

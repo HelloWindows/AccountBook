@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformSizeDelta : JTweenBase {
@@ -57,17 +52,17 @@ namespace JTween.RectTransform {
             m_rectTransform.sizeDelta = m_beginSizeDelta;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginSizeDelta")) BeginSizeDelta = JTweenUtils.JsonToVector2(json["beginSizeDelta"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginSizeDelta")) BeginSizeDelta = JTweenUtils.JsonToVector2(json.GetNode("beginSizeDelta"));
             // end if
-            if (json.Contains("size")) m_toSizeDelta = JTweenUtils.JsonToVector2(json["size"]);
+            if (json.Contains("size")) m_toSizeDelta = JTweenUtils.JsonToVector2(json.GetNode("size"));
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginSizeDelta"] = JTweenUtils.Vector2Json(m_beginSizeDelta);
-            json["size"] = JTweenUtils.Vector2Json(m_toSizeDelta);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginSizeDelta", JTweenUtils.Vector2Json(m_beginSizeDelta));
+            json.SetNode("size", JTweenUtils.Vector2Json(m_toSizeDelta));
         }
 
         protected override bool CheckValid(out string errorInfo) {

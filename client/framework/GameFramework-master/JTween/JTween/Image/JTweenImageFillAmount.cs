@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.Image {
     public class JTweenImageFillAmount : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Image {
             m_Image.fillAmount = m_beginAmount;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginAmount")) BeginAmount = (float)json["beginAmount"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginAmount")) BeginAmount = json.GetFloat("beginAmount");
             // end if
-            if (json.Contains("amount")) m_toAmount = (float)json["amount"];
+            if (json.Contains("amount")) m_toAmount = json.GetFloat("beginAamountmount");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginAmount"] = m_beginAmount;
-            json["amount"] = m_toAmount;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginAmount", m_beginAmount);
+            json.SetFloat("amount", m_toAmount);
         }
 
         protected override bool CheckValid(out string errorInfo) {

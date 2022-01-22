@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.AudioSource {
     public class JTweenAudioSourceFade : JTweenBase {
@@ -65,17 +59,17 @@ namespace JTween.AudioSource {
             m_AudioSource.volume = m_beginVolume;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginVolume")) BeginVolume = (float)json["beginVolume"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginVolume")) BeginVolume = json.GetFloat("beginVolume");
             // end if
-            if (json.Contains("volume")) m_toVolume = (float)json["volume"];
+            if (json.Contains("volume")) m_toVolume = json.GetFloat("volume");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginVolume"] = m_beginVolume;
-            json["volume"] = m_toVolume;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginVolume", m_beginVolume);
+            json.SetFloat("volume", m_toVolume);
         }
 
         protected override bool CheckValid(out string errorInfo) {

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.Text {
     public class JTweenTextText : JTweenBase {
@@ -100,26 +94,26 @@ namespace JTween.Text {
             m_text.text = m_beginStr;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginStr")) BeginStr = json["beginStr"].ToString();
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginStr")) BeginStr = json.GetString("beginStr");
             // end if
-            if (json.Contains("str")) m_toStr = json["str"].ToString();
+            if (json.Contains("str")) m_toStr = json.GetString("str");
             // end if
-            if (json.Contains("rich")) m_richTextEnabled = json["rich"].ToBool();
+            if (json.Contains("rich")) m_richTextEnabled = json.GetBool("rich");
             // end if
-            if (json.Contains("mode")) m_scrambleMode = (ScrambleMode)json["mode"].ToInt32();
+            if (json.Contains("mode")) m_scrambleMode = (ScrambleMode)json.GetInt("mode");
             // end if
-            if (json.Contains("char")) m_scrambleChars = json["char"].ToString();
+            if (json.Contains("char")) m_scrambleChars = json.GetString("char");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginStr"] = m_beginStr;
-            json["str"] = m_toStr;
-            json["rich"] = m_richTextEnabled;
-            json["mode"] = (int)m_scrambleMode;
-            json["char"] = m_scrambleChars;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetString("beginStr", m_beginStr);
+            json.SetString("str", m_toStr);
+            json.SetBool("rich", m_richTextEnabled);
+            json.SetInt("mode", (int)m_scrambleMode);
+            json.SetString("char", m_scrambleChars);
         }
 
         protected override bool CheckValid(out string errorInfo) {

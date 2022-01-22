@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformBlendableLocalMove : JTweenBase {
@@ -57,17 +52,17 @@ namespace JTween.Transform {
             m_Transform.localPosition = m_beginPosition;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json.GetNode("beginPosition")); 
             // end if
-            if (json.Contains("move")) m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
+            if (json.Contains("move")) m_toPosition = JTweenUtils.JsonToVector3(json.GetNode("move")); 
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
-            json["move"] = JTweenUtils.Vector3Json(m_toPosition);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginPosition", JTweenUtils.Vector3Json(m_beginPosition));
+            json.SetNode("move", JTweenUtils.Vector3Json(m_toPosition));
         }
 
         protected override bool CheckValid(out string errorInfo) {

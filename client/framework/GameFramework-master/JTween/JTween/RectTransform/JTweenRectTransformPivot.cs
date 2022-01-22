@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformPivot : JTweenBase {
@@ -100,35 +95,35 @@ namespace JTween.RectTransform {
             m_RectTransform.pivot = m_beginPivot;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginPivot")) BeginPivot = JTweenUtils.JsonToVector2(json["beginPivot"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginPivot")) BeginPivot = JTweenUtils.JsonToVector2(json.GetNode("beginPivot")); 
             // end if
             if (json.Contains("pivot")) {
                 m_pivotType = PivotTypeEnum.Pivot;
-                m_toPivot = JTweenUtils.JsonToVector2(json["pivot"]);
+                m_toPivot = JTweenUtils.JsonToVector2(json.GetNode("pivot"));
             } else if (json.Contains("pivotX")) {
                 m_pivotType = PivotTypeEnum.PivotX;
-                m_toPivotX = (float)json["pivotX"];
+                m_toPivotX = json.GetFloat("pivotX"); 
             } else if (json.Contains("pivotY")) {
                 m_pivotType = PivotTypeEnum.PivotY;
-                m_toPivotY = (float)json["pivotY"];
+                m_toPivotY = json.GetFloat("pivotY");
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo PivotType is null");
             } // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginPivot"] = JTweenUtils.Vector2Json(m_beginPivot);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginPivot", JTweenUtils.Vector2Json(m_beginPivot));
             switch (m_pivotType) {
                 case PivotTypeEnum.Pivot:
-                    json["pivot"] = JTweenUtils.Vector2Json(m_toPivot);
+                    json.SetNode("pivot", JTweenUtils.Vector2Json(m_toPivot));
                     break;
                 case PivotTypeEnum.PivotX:
-                    json["pivotX"] = m_toPivotX;
+                    json.SetFloat("pivotX", m_toPivotX);
                     break;
                 case PivotTypeEnum.PivotY:
-                    json["pivotY"] = m_toPivotY;
+                    json.SetFloat("pivotY", m_toPivotY);
                     break;
                 default:
                     Debug.LogError(GetType().FullName + " ToJson PosType is null");

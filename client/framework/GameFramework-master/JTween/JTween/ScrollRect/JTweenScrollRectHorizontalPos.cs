@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.ScrollRect {
     public class JTweenScrollRectHorizontalPos : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.ScrollRect {
             m_scrollRect.horizontalNormalizedPosition = m_beginHorizontalPos;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginHorizontalPos")) BeginHorizontalPos = json["beginHorizontalPos"].ToFloat();
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginHorizontalPos")) BeginHorizontalPos = json.GetFloat("beginHorizontalPos");
             // end if
-            if (json.Contains("horizontal")) m_toHorizontalPos = json["horizontal"].ToFloat();
+            if (json.Contains("horizontal")) m_toHorizontalPos = json.GetFloat("horizontal"); 
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginHorizontalPos"] = m_beginHorizontalPos;
-            json["horizontal"] = m_toHorizontalPos;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginHorizontalPos", m_beginHorizontalPos);
+            json.SetFloat("horizontal", m_toHorizontalPos);
         }
 
         protected override bool CheckValid(out string errorInfo) {

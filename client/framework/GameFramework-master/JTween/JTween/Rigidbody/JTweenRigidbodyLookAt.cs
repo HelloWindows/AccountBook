@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Rigidbody {
     public class JTweenRigidbodyLookAt : JTweenBase {
@@ -76,23 +71,23 @@ namespace JTween.Rigidbody {
             m_Rigidbody.rotation = Quaternion.Euler(m_beginRotate);
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginRotate")) BeginRotate = JTweenUtils.JsonToVector3(json["beginRotate"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginRotate")) BeginRotate = JTweenUtils.JsonToVector3(json.GetNode("beginRotate"));
             // end if
-            if (json.Contains("towards")) m_towards = JTweenUtils.JsonToVector3(json["towards"]);
+            if (json.Contains("towards")) m_towards = JTweenUtils.JsonToVector3(json.GetNode("towards"));
             // end if
-            if (json.Contains("axis")) m_axisConstraint = (AxisConstraint)(int)json["axis"];
+            if (json.Contains("axis")) m_axisConstraint = (AxisConstraint)(int)json.GetInt("axis");
             // end if
-            if (json.Contains("up")) m_up = JTweenUtils.JsonToVector3(json["up"]);
+            if (json.Contains("up")) m_up = JTweenUtils.JsonToVector3(json.GetNode("up")); 
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginRotate"] = JTweenUtils.Vector3Json(m_beginRotate);
-            json["towards"] = JTweenUtils.Vector3Json(m_towards);
-            json["axis"] = (int)m_axisConstraint;
-            json["up"] = JTweenUtils.Vector3Json(m_up);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginRotate", JTweenUtils.Vector3Json(m_beginRotate));
+            json.SetNode("towards", JTweenUtils.Vector3Json(m_towards));
+            json.SetInt("axis", (int)m_axisConstraint);
+            json.SetNode("up", JTweenUtils.Vector3Json(m_up));
         }
 
         protected override bool CheckValid(out string errorInfo) {

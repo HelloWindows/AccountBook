@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformAnchorMax : JTweenBase {
@@ -57,17 +52,17 @@ namespace JTween.RectTransform {
             m_RectTransform.anchorMax = m_beginAnchorMax;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginAnchorMax")) m_beginAnchorMax = JTweenUtils.JsonToVector2(json["beginAnchorMax"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginAnchorMax")) m_beginAnchorMax = JTweenUtils.JsonToVector2(json.GetNode("beginAnchorMax"));
             // end if
-            if (json.Contains("anchorMax")) m_toAnchorMax = JTweenUtils.JsonToVector2(json["anchorMax"]);
+            if (json.Contains("anchorMax")) m_toAnchorMax = JTweenUtils.JsonToVector2(json.GetNode("anchorMax"));
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginAnchorMax"] = JTweenUtils.Vector2Json(m_beginAnchorMax);
-            json["anchorMax"] = JTweenUtils.Vector2Json(m_toAnchorMax);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginAnchorMax", JTweenUtils.Vector2Json(m_beginAnchorMax));
+            json.SetNode("anchorMax", JTweenUtils.Vector2Json(m_toAnchorMax));
         }
 
         protected override bool CheckValid(out string errorInfo) {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformJump : JTweenBase {
@@ -77,23 +72,23 @@ namespace JTween.Transform {
             m_Transform.position = m_beginPosition;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json.GetNode("beginPosition"));
             // end if
-            if (json.Contains("endValue")) m_toPosition = JTweenUtils.JsonToVector3(json["endValue"]);
+            if (json.Contains("endValue")) m_toPosition = JTweenUtils.JsonToVector3(json.GetNode("endValue"));
             // end if
-            if (json.Contains("jumpPower")) m_jumpPower = (float)json["jumpPower"];
+            if (json.Contains("jumpPower")) m_jumpPower = json.GetFloat("jumpPower");
             // end if
-            if (json.Contains("numJumps")) m_numJumps = (int)json["numJumps"];
+            if (json.Contains("numJumps")) m_numJumps = json.GetInt("numJumps");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
-            json["endValue"] = JTweenUtils.Vector3Json(m_toPosition);
-            json["jumpPower"] = m_jumpPower;
-            json["numJumps"] = m_numJumps;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginPosition", JTweenUtils.Vector3Json(m_beginPosition));
+            json.SetNode("endValue", JTweenUtils.Vector3Json(m_toPosition));
+            json.SetFloat("jumpPower", m_jumpPower);
+            json.SetInt("numJumps", m_numJumps);
         }
 
         protected override bool CheckValid(out string errorInfo) {

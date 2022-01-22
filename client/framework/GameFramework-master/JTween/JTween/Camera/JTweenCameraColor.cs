@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
+using Json;
 using UnityEngine;
 
 namespace JTween.Camera {
@@ -57,17 +52,17 @@ namespace JTween.Camera {
             m_Camera.backgroundColor = m_beginColor;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginColor")) m_beginColor = JTweenUtils.JsonToColor(json["beginColor"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginColor")) m_beginColor = JTweenUtils.JsonToColor(json.GetNode("beginColor"));
             // end if
-            if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json["color"]);
+            if (json.Contains("color")) m_toColor = JTweenUtils.JsonToColor(json.GetNode("color"));
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginColor"] = JTweenUtils.ColorJson(m_beginColor);
-            json["color"] = JTweenUtils.ColorJson(m_toColor);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginColor", JTweenUtils.ColorJson(m_beginColor));
+            json.SetNode("color", JTweenUtils.ColorJson(m_toColor));
         }
 
         protected override bool CheckValid(out string errorInfo) {

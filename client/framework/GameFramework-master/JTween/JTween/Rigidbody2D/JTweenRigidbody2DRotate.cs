@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.Rigidbody2D {
     public class JTweenRigidbody2DRotate : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Rigidbody2D {
             m_Rigidbody.rotation = m_beginRotation;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginRotation")) BeginRotation = (float)json["beginRotation"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginRotation")) BeginRotation = json.GetFloat("beginRotation");
             // end if
-            if (json.Contains("angle")) m_toAngle = (float)json["angle"];
+            if (json.Contains("angle")) m_toAngle = json.GetFloat("angle");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginRotation"] = m_beginRotation;
-            json["angle"] = m_toAngle;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginRotation", m_beginRotation);
+            json.SetFloat("angle", m_toAngle);
         }
 
         protected override bool CheckValid(out string errorInfo) {

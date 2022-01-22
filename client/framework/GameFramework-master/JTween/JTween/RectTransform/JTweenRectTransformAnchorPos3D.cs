@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformAnchorPos3D : JTweenBase {
@@ -113,41 +108,41 @@ namespace JTween.RectTransform {
             m_RectTransform.anchoredPosition3D = m_beginAnchorPos;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector3(json["beginAnchorPos"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector3(json.GetNode("beginAnchorPos"));
             // end if
             if (json.Contains("pos")) {
                 m_posType = PosTypeEnum.Pos;
-                m_toAnchorPos = JTweenUtils.JsonToVector3(json["pos"]);
+                m_toAnchorPos = JTweenUtils.JsonToVector3(json.GetNode("pos"));
             } else if (json.Contains("posX")) {
                 m_posType = PosTypeEnum.PosX;
-                m_toAnchorPosX = (float)json["posX"];
+                m_toAnchorPosX = json.GetFloat("posX");
             } else if (json.Contains("posY")) {
                 m_posType = PosTypeEnum.PosY;
-                m_toAnchorPosY = (float)json["posY"];
+                m_toAnchorPosY = json.GetFloat("posY");
             } else if (json.Contains("posZ")) {
                 m_posType = PosTypeEnum.PosZ;
-                m_toAnchorPosZ = (float)json["posZ"];
+                m_toAnchorPosZ = json.GetFloat("posZ");
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo PosType is null");
             } // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginAnchorPos"] = JTweenUtils.Vector3Json(m_beginAnchorPos);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginAnchorPos", JTweenUtils.Vector3Json(BeginAnchorPos));
             switch (m_posType) {
                 case PosTypeEnum.Pos:
-                    json["pos"] = JTweenUtils.Vector3Json(m_toAnchorPos);
+                    json.SetNode("pos", JTweenUtils.Vector3Json(m_toAnchorPos));
                     break;
                 case PosTypeEnum.PosX:
-                    json["posX"] = m_toAnchorPosX;
+                    json.SetFloat("posX", m_toAnchorPosX);
                     break;
                 case PosTypeEnum.PosY:
-                    json["posY"] = m_toAnchorPosY;
+                    json.SetFloat("posY", m_toAnchorPosY);
                     break;
                 case PosTypeEnum.PosZ:
-                    json["posZ"] = m_toAnchorPosZ;
+                    json.SetFloat("posZ", m_toAnchorPosZ);
                     break;
                 default:
                     Debug.LogError(GetType().FullName + " ToJson PosType is null");

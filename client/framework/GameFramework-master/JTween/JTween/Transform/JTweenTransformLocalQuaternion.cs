@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformLocalQuaternion : JTweenBase {
@@ -57,23 +52,23 @@ namespace JTween.Transform {
             m_Transform.localRotation = m_beginRotation;
         }
 
-        protected override void JsonTo(JsonData json) {
+        protected override void JsonTo(IJsonNode json) {
             if (json.Contains("beginRotation")) {
-                Vector4 quaternion = JTweenUtils.JsonToVector4(json["beginRotation"]);
-                BeginRotation = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+                Vector4 quaternion = JTweenUtils.JsonToVector4(json.GetNode("beginRotation"));
+                 BeginRotation = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
             } // end if
             if (json.Contains("quaternion")) {
-                Vector4 quaternion = JTweenUtils.JsonToVector4(json["quaternion"]);
+                Vector4 quaternion = JTweenUtils.JsonToVector4(json.GetNode("quaternion"));
                 m_toRotate = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
             } // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
+        protected override void ToJson(ref IJsonNode json) {
             Vector4 quaternion = new Vector4(m_beginRotation.x, m_beginRotation.y, m_beginRotation.z, m_beginRotation.w);
-            json["beginRotation"] = JTweenUtils.Vector4Json(quaternion);
+            json.SetNode("beginRotation", JTweenUtils.Vector4Json(quaternion));
             quaternion = new Vector4(m_toRotate.x, m_toRotate.y, m_toRotate.z, m_toRotate.w);
-            json["quaternion"] = JTweenUtils.Vector4Json(quaternion);
+            json.SetNode("quaternion", JTweenUtils.Vector4Json(quaternion));
         }
 
         protected override bool CheckValid(out string errorInfo) {

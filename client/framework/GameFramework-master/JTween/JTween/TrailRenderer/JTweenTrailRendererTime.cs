@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.TrailRenderer {
     public class JTweenTrailRendererTime : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.TrailRenderer {
             m_TrailRenderer.time = m_beginTime;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginTime")) BeginTime = (float)json["beginTime"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginTime")) BeginTime = json.GetFloat("beginTime");
             // end if
-            if (json.Contains("time")) m_toTime = (float)json["time"];
+            if (json.Contains("time")) m_toTime = json.GetFloat("time");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginTime"] = m_beginTime;
-            json["time"] = m_toTime;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginTime", m_beginTime);
+            json.SetFloat("time", m_toTime);
         }
 
         protected override bool CheckValid(out string errorInfo) {

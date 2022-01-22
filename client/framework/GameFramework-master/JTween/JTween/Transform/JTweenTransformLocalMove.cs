@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformLocalMove : JTweenBase {
@@ -113,41 +108,41 @@ namespace JTween.Transform {
             m_Transform.localPosition = m_beginPosition;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json["beginPosition"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json.GetNode("beginPosition"));
             // end if
             if (json.Contains("move")) {
                 m_MoveType = MoveTypeEnum.Move;
-                m_toPosition = JTweenUtils.JsonToVector3(json["move"]);
+                m_toPosition = JTweenUtils.JsonToVector3(json.GetNode("move"));
             } else if (json.Contains("moveX")) {
                 m_MoveType = MoveTypeEnum.MoveX;
-                m_toMoveX = (float)json["moveX"];
+                m_toMoveX = json.GetFloat("moveX");
             } else if (json.Contains("moveY")) {
                 m_MoveType = MoveTypeEnum.MoveY;
-                m_toMoveY = (float)json["moveY"];
+                m_toMoveY = json.GetFloat("moveY");
             } else if (json.Contains("moveZ")) {
                 m_MoveType = MoveTypeEnum.MoveZ;
-                m_toMoveZ = (float)json["moveZ"];
+                m_toMoveZ = json.GetFloat("moveZ");
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
             } // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginPosition"] = JTweenUtils.Vector3Json(m_beginPosition);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginPosition", JTweenUtils.Vector3Json(m_beginPosition));
             switch (m_MoveType) {
                 case MoveTypeEnum.Move:
-                    json["move"] = JTweenUtils.Vector3Json(m_toPosition);
+                    json.SetNode("move", JTweenUtils.Vector3Json(m_toPosition));
                     break;
                 case MoveTypeEnum.MoveX:
-                    json["moveX"] = m_toMoveX;
+                    json.SetFloat("moveX", m_toMoveX);
                     break;
                 case MoveTypeEnum.MoveY:
-                    json["moveY"] = m_toMoveY;
+                    json.SetFloat("moveY", m_toMoveY);
                     break;
                 case MoveTypeEnum.MoveZ:
-                    json["moveZ"] = m_toMoveZ;
+                    json.SetFloat("moveZ", m_toMoveZ);
                     break;
                 default:
                     Debug.LogError(GetType().FullName + " ToJson MoveType is null");

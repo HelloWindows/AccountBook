@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.CanvasGroup {
     public class JTweenCanvasGroupFade : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.CanvasGroup {
             m_CanvasGroup.alpha = m_beginAlpha;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginAlpha")) BeginAlpha = (float)json["beginAlpha"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginAlpha")) BeginAlpha = json.GetFloat("beginAlpha");
             // end if
-            if (json.Contains("alpha")) m_toAlpha = (float)json["alpha"];
+            if (json.Contains("alpha")) m_toAlpha = json.GetFloat("alpha");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginAlpha"] = m_beginAlpha;
-            json["alpha"] = m_toAlpha;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginAlpha", m_beginAlpha);
+            json.SetFloat("alpha", m_toAlpha);
         }
 
         protected override bool CheckValid(out string errorInfo) {

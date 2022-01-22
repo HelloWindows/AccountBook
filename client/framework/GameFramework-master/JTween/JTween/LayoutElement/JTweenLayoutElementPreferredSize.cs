@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
 using UnityEngine;
 
 namespace JTween.LayoutElement {
@@ -79,23 +74,23 @@ namespace JTween.LayoutElement {
             m_LayoutElement.minHeight = m_beginHeight;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("width")) m_width = json["width"].ToFloat();
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("width")) m_width = json.GetFloat("width");
             // end if
-            if (json.Contains("height")) m_height = json["height"].ToFloat();
+            if (json.Contains("height")) m_height = json.GetFloat("height");
             // end if
-            if (json.Contains("beginWidth")) BeginWidth = json["beginWidth"].ToFloat();
+            if (json.Contains("beginWidth")) BeginWidth = json.GetFloat("beginWidth");
             // end if
-            if (json.Contains("beginHeight")) BeginHeight = json["beginHeight"].ToFloat();
+            if (json.Contains("beginHeight")) BeginHeight = json.GetFloat("beginHeight");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["width"] = m_width;
-            json["height"] = m_height;
-            json["beginWidth"] = m_beginWidth;
-            json["beginHeight"] = m_beginHeight;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("width", m_width);
+            json.SetFloat("height", m_height);
+            json.SetFloat("beginWidth", BeginWidth);
+            json.SetFloat("beginHeight", BeginHeight);
         }
 
         protected override bool CheckValid(out string errorInfo) {

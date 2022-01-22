@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.ScrollRect {
     public class JTweenScrollRectNormalizedPos : JTweenBase {
@@ -57,17 +52,17 @@ namespace JTween.ScrollRect {
             m_scrollRect.normalizedPosition = m_beginNormalizedPos;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginNormalizedPos")) BeginNormalizedPos = JTweenUtils.JsonToVector2(json["beginNormalizedPos"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginNormalizedPos")) BeginNormalizedPos = JTweenUtils.JsonToVector2(json.GetNode("beginNormalizedPos"));
             // end if
-            if (json.Contains("pos")) m_toNormalizedPos = JTweenUtils.JsonToVector2(json["pos"]);
+            if (json.Contains("pos")) m_toNormalizedPos = JTweenUtils.JsonToVector2(json.GetNode("pos"));
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginNormalizedPos"] = JTweenUtils.Vector2Json(m_beginNormalizedPos);
-            json["pos"] = JTweenUtils.Vector2Json(m_toNormalizedPos);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginNormalizedPos", JTweenUtils.Vector2Json(m_beginNormalizedPos));
+            json.SetNode("pos", JTweenUtils.Vector2Json(m_toNormalizedPos));
         }
 
         protected override bool CheckValid(out string errorInfo) {

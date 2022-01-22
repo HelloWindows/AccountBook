@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.RectTransform {
     public class JTweenRectTransformShakeAnchorPos : JTweenBase {
@@ -130,41 +125,41 @@ namespace JTween.RectTransform {
             m_rectTransform.anchoredPosition = m_beginAnchorPos;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json["beginAnchorPos"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginAnchorPos")) BeginAnchorPos = JTweenUtils.JsonToVector2(json.GetNode("beginAnchorPos"));
             // end if
             if (json.Contains("strength")) {
                 m_shakeType = ShakeTypeEnum.Value;
-                m_strength = json["strength"].ToFloat();
+                m_strength = json.GetFloat("strength");
             } else if (json.Contains("strengthAxis")) {
                 m_shakeType = ShakeTypeEnum.Axis;
-                m_strengthAxis = JTweenUtils.JsonToVector2(json["strengthAxis"]);
+                m_strengthAxis = JTweenUtils.JsonToVector2(json.GetNode("strengthAxis"));
             } // end if
-            if (json.Contains("vibrato")) m_vibrato = json["vibrato"].ToInt32();
+            if (json.Contains("vibrato")) m_vibrato = json.GetInt("vibrato");
             // end if
-            if (json.Contains("randomness")) m_randomness = json["randomness"].ToFloat();
+            if (json.Contains("randomness")) m_randomness = json.GetFloat("randomness");
             // end if
-            if (json.Contains("fadeOut")) m_fadeOut = json["fadeOut"].ToBool();
+            if (json.Contains("fadeOut")) m_fadeOut = json.GetBool("fadeOut");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginAnchorPos"] = JTweenUtils.Vector2Json(m_beginAnchorPos);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginAnchorPos", JTweenUtils.Vector2Json(m_beginAnchorPos));
             switch (m_shakeType) {
                 case ShakeTypeEnum.Value:
-                    json["strength"] = m_strength;
+                    json.SetFloat("strength", m_strength);
                     break;
                 case ShakeTypeEnum.Axis:
-                    json["strengthAxis"] = JTweenUtils.Vector2Json(m_strengthAxis);
+                    json.SetNode("strengthAxis", JTweenUtils.Vector2Json(m_strengthAxis));
                     break;
                 default:
                     Debug.LogError(GetType().FullName + " ToJson ShakeType is null");
                     break;
             } // end swtich
-            json["vibrato"] = m_vibrato;
-            json["randomness"] = m_randomness;
-            json["fadeOut"] = m_fadeOut;
+            json.SetInt("vibrato", m_vibrato);
+            json.SetFloat("randomness", m_randomness);
+            json.SetBool("fadeOut", m_fadeOut);
         }
 
         protected override bool CheckValid(out string errorInfo) {

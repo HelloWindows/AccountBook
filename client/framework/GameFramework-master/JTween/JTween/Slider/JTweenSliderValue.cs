@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
-using UnityEngine;
+﻿using DG.Tweening;
+using Json;
 
 namespace JTween.Slider {
     public class JTweenSliderValue : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Slider {
             m_slider.value = m_beginValue;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginValue")) BeginValue = json["beginValue"].ToFloat();
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginValue")) BeginValue = json.GetFloat("beginValue");
             // end if
-            if (json.Contains("value")) m_toValue = json["value"].ToFloat();
+            if (json.Contains("value")) m_toValue = json.GetFloat("value");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginValue"] = m_beginValue;
-            json["value"] = m_toValue;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginValue", m_beginValue);
+            json.SetFloat("value", m_toValue);
         }
 
         protected override bool CheckValid(out string errorInfo) {

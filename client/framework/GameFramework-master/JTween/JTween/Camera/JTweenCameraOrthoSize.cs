@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.Camera {
     public class JTweenCameraOrthoSize : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Camera {
             m_Camera.farClipPlane = m_beginOrthoSize;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginOrthoSize")) m_beginOrthoSize = (float)json["beginOrthoSize"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginOrthoSize")) m_beginOrthoSize = json.GetFloat("beginOrthoSize");
             // end if
-            if (json.Contains("orthoSize")) m_toOrthoSize = (float)json["orthoSize"];
+            if (json.Contains("orthoSize")) m_toOrthoSize = json.GetFloat("orthoSize");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginOrthoSize"] = m_beginOrthoSize;
-            json["orthoSize"] = m_toOrthoSize;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginOrthoSize", m_beginOrthoSize);
+            json.SetFloat("orthoSize", m_toOrthoSize);
         }
 
         protected override bool CheckValid(out string errorInfo) {

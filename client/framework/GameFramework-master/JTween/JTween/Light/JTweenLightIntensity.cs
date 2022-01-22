@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.Light {
     public class JTweenLightIntensity : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Light {
             m_Light.intensity = m_beginIntensity;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginIntensity")) BeginIntensity = (float)json["beginIntensity"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginIntensity")) BeginIntensity = json.GetFloat("beginIntensity");
             // end if
-            if (json.Contains("intensity")) m_toIntensity = (float)json["intensity"];
+            if (json.Contains("intensity")) m_toIntensity = json.GetFloat("intensity");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginIntensity"] = m_beginIntensity;
-            json["intensity"] = m_toIntensity;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginIntensity", m_beginIntensity);
+            json.SetFloat("intensity", m_toIntensity);
         }
 
         protected override bool CheckValid(out string errorInfo) {

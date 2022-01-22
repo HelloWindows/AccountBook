@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformScale : JTweenBase {
@@ -126,47 +121,47 @@ namespace JTween.Transform {
             m_Transform.localScale = m_beginScale;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json["beginScale"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json.GetNode("beginScale")); 
             // end if
             if (json.Contains("scale")) {
                 m_ScaleType = ScaleTypeEnum.Scale;
-                m_toScale = JTweenUtils.JsonToVector3(json["scale"]);
+                m_toScale = JTweenUtils.JsonToVector3(json.GetNode("scale"));
             } else if (json.Contains("scaleV")) {
                 m_ScaleType = ScaleTypeEnum.ScaleV;
-                m_toScaleV = (float)json["scaleV"];
+                m_toScaleV = json.GetFloat("scaleV");
             } else if (json.Contains("scaleX")) {
                 m_ScaleType = ScaleTypeEnum.ScaleX;
-                m_toScaleX = (float)json["scaleX"];
+                m_toScaleX = json.GetFloat("scaleX");
             } else if (json.Contains("scaleY")) {
                 m_ScaleType = ScaleTypeEnum.ScaleY;
-                m_toScaleY = (float)json["scaleY"];
+                m_toScaleY = json.GetFloat("scaleY");
             } else if (json.Contains("scaleZ")) {
                 m_ScaleType = ScaleTypeEnum.ScaleZ;
-                m_toScaleZ = (float)json["scaleZ"];
+                m_toScaleZ = json.GetFloat("scaleZ");
             } else {
                 Debug.LogError(GetType().FullName + " JsonTo MoveType is null");
             } // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginScale"] = JTweenUtils.Vector3Json(m_beginScale);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginScale", JTweenUtils.Vector3Json(m_beginScale));
             switch (m_ScaleType) {
                 case ScaleTypeEnum.Scale:
-                    json["scale"] = JTweenUtils.Vector3Json(m_toScale);
+                    json.SetNode("scale", JTweenUtils.Vector3Json(m_toScale));
                     break;
                 case ScaleTypeEnum.ScaleV:
-                    json["scaleV"] = m_toScaleV;
+                    json.SetFloat("scaleV", m_toScaleV);
                     break;
                 case ScaleTypeEnum.ScaleX:
-                    json["scaleX"] = m_toScaleX;
+                    json.SetFloat("scaleX", m_toScaleX);
                     break;
                 case ScaleTypeEnum.ScaleY:
-                    json["scaleY"] = m_toScaleY;
+                    json.SetFloat("scaleY", m_toScaleY);
                     break;
                 case ScaleTypeEnum.ScaleZ:
-                    json["scaleZ"] = m_toScaleZ;
+                    json.SetFloat("scaleZ", m_toScaleZ);
                     break;
                 default:
                     Debug.LogError(GetType().FullName + " ToJson MoveType is null");

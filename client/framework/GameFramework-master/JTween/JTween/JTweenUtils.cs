@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using LitJson;
+using Json;
 
 namespace JTween
 {
@@ -143,99 +143,99 @@ namespace JTween
         #endregion
 
         #region JsonTools
-        public static JsonData Vector2Json(Vector2 arg)
+        public static IJsonNode Vector2Json(Vector2 arg)
         {
-            JsonData ret = new JsonData();
-            ret["x"] = System.Math.Round(arg.x, 4);
-            ret["y"] = System.Math.Round(arg.y, 4);
+            IJsonNode ret = JsonHelper.CreateNode();
+            ret.SetDouble("x", System.Math.Round(arg.x, 4));
+            ret.SetDouble("y", System.Math.Round(arg.y, 4));
             return ret;
         }
 
-        public static JsonData Vector3Json(Vector3 arg)
+        public static IJsonNode Vector3Json(Vector3 arg)
         {
-            JsonData ret = new JsonData();
-            ret["x"] = System.Math.Round(arg.x, 4);
-            ret["y"] = System.Math.Round(arg.y, 4);
-            ret["z"] = System.Math.Round(arg.z, 4);
+            IJsonNode ret = JsonHelper.CreateNode();
+            ret.SetDouble("x", System.Math.Round(arg.x, 4));
+            ret.SetDouble("y", System.Math.Round(arg.y, 4));
+            ret.SetDouble("z", System.Math.Round(arg.z, 4));
             return ret;
         }
 
-        public static JsonData Vector4Json(Vector4 arg)
+        public static IJsonNode Vector4Json(Vector4 arg)
         {
-            JsonData ret = new JsonData();
-            ret["x"] = System.Math.Round(arg.x, 4);
-            ret["y"] = System.Math.Round(arg.y, 4);
-            ret["z"] = System.Math.Round(arg.z, 4);
-            ret["w"] = System.Math.Round(arg.w, 4);
+            IJsonNode ret = JsonHelper.CreateNode();
+            ret.SetDouble("x", System.Math.Round(arg.x, 4));
+            ret.SetDouble("y", System.Math.Round(arg.y, 4));
+            ret.SetDouble("z", System.Math.Round(arg.z, 4));
+            ret.SetDouble("w", System.Math.Round(arg.w, 4));
             return ret;
         }
 
-        public static JsonData ColorJson(Color arg)
+        public static IJsonNode ColorJson(Color arg)
         {
-            JsonData ret = new JsonData();
-            ret["r"] = System.Math.Round(arg.r, 4);
-            ret["g"] = System.Math.Round(arg.g, 4);
-            ret["b"] = System.Math.Round(arg.b, 4);
-            ret["a"] = System.Math.Round(arg.a, 4);
+            IJsonNode ret = JsonHelper.CreateNode();
+            ret.SetDouble("r", System.Math.Round(arg.r, 4));
+            ret.SetDouble("g", System.Math.Round(arg.g, 4));
+            ret.SetDouble("b", System.Math.Round(arg.b, 4));
+            ret.SetDouble("a", System.Math.Round(arg.a, 4));
             return ret;
         }
 
-        public static JsonData AnimationCurveJson(AnimationCurve arg)
+        public static IJsonNode AnimationCurveJson(AnimationCurve arg)
         {
-            JsonData ret = new JsonData();
-            JsonData jsonKeys = new JsonData();
+            IJsonNode ret = JsonHelper.CreateNode();
+            IJsonNode jsonKeys = JsonHelper.CreateNode();
             Keyframe[] keys = arg.keys;
             for (int i = 0, imax = keys.Length; i < imax; ++i)
             {
                 Keyframe k = keys[i];
-                JsonData oneKey = new JsonData();
-                oneKey["T"] = System.Math.Round(k.time, 4);
-                oneKey["V"] = System.Math.Round(k.value, 4);
-                oneKey["I"] = System.Math.Round(k.inTangent, 4);
-                oneKey["O"] = System.Math.Round(k.outTangent, 4);
-                oneKey["M"] = k.tangentMode;
+                IJsonNode oneKey = JsonHelper.CreateNode();
+                ret.SetDouble("T", System.Math.Round(k.time, 4));
+                ret.SetDouble("V", System.Math.Round(k.value, 4));
+                ret.SetDouble("I", System.Math.Round(k.inTangent, 4));
+                ret.SetDouble("O", System.Math.Round(k.outTangent, 4));
+                ret.SetInt("M", k.tangentMode);
                 jsonKeys.Add(oneKey);
             }
-            ret["keys"] = jsonKeys;
-            ret["pre"] = (int)arg.preWrapMode;
-            ret["post"] = (int)arg.postWrapMode;
+            ret.SetNode("keys", jsonKeys);
+            ret.SetInt("pre", (int)arg.preWrapMode);
+            ret.SetInt("post", (int)arg.postWrapMode);
             return ret;
         }
 
-        public static Vector2 JsonToVector2(JsonData json)
+        public static Vector2 JsonToVector2(IJsonNode json)
         {
-            return new Vector2(json["x"].ToFloat(), json["y"].ToFloat());
+            return new Vector2(json.GetFloat("x"), json.GetFloat("y"));
         }
 
-        public static Vector3 JsonToVector3(JsonData json)
+        public static Vector3 JsonToVector3(IJsonNode json)
         {
-            return new Vector3(json["x"].ToFloat(), json["y"].ToFloat(), json["z"].ToFloat());
+            return new Vector3(json.GetFloat("x"), json.GetFloat("y"), json.GetFloat("z"));
         }
 
-        public static Vector4 JsonToVector4(JsonData json)
+        public static Vector4 JsonToVector4(IJsonNode json)
         {
-            return new Vector4(json["x"].ToFloat(), json["y"].ToFloat(), json["z"].ToFloat(), json["w"].ToFloat());
+            return new Vector4(json.GetFloat("x"), json.GetFloat("y"), json.GetFloat("z"), json.GetFloat("w"));
         }
 
-        public static Color JsonToColor(JsonData json)
+        public static Color JsonToColor(IJsonNode json)
         {
-            return new Color(json["r"].ToFloat(), json["g"].ToFloat(), json["b"].ToFloat(), json["a"].ToFloat());
+            return new Color(json.GetFloat("r"), json.GetFloat("g"), json.GetFloat("b"), json.GetFloat("a"));
         }
 
-        public static AnimationCurve JsonAnimationCurve(JsonData json)
+        public static AnimationCurve JsonAnimationCurve(IJsonNode json)
         {
-            JsonData jsonKeys = json["keys"];
+            IJsonNode jsonKeys = json.GetNode("keys");
             int count = jsonKeys.Count;
             Keyframe[] keys = new Keyframe[count];
             for (int i = 0; i < count; ++i)
             {
-                JsonData oneKey = jsonKeys[i];
-                keys[i] = new Keyframe(oneKey["T"].ToFloat(), oneKey["V"].ToFloat(), oneKey["I"].ToFloat(), oneKey["O"].ToFloat());
-                keys[i].tangentMode = oneKey["M"].ToInt32();
+                IJsonNode oneKey = jsonKeys[i];
+                keys[i] = new Keyframe(oneKey.GetFloat("T"), oneKey.GetFloat("V"), oneKey.GetFloat("I"), oneKey.GetFloat("O"));
+                keys[i].tangentMode = oneKey.GetInt("M");
             }
             AnimationCurve ret = new AnimationCurve(keys);
-            ret.preWrapMode = (WrapMode)json["pre"].ToInt32();
-            ret.postWrapMode = (WrapMode)json["post"].ToInt32();
+            ret.preWrapMode = (WrapMode)json.GetInt("pre");
+            ret.postWrapMode = (WrapMode)json.GetInt("post");
             return ret;
         }
 

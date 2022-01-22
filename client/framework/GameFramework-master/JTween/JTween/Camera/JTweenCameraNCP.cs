@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.Camera {
     public class JTweenCameraNCP : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Camera {
             m_Camera.nearClipPlane = m_beginNCP;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginNCP")) m_beginNCP = (float)json["beginNCP"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginNCP")) m_beginNCP = json.GetFloat("beginNCP"); 
             // end if
-            if (json.Contains("NCP")) m_toNCP = (float)json["NCP"];
+            if (json.Contains("NCP")) m_toNCP = json.GetFloat("NCP");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginNCP"] = m_beginNCP;
-            json["NCP"] = m_toNCP;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginNCP", m_beginNCP);
+            json.SetFloat("NCP", m_toNCP);
         }
 
         protected override bool CheckValid(out string errorInfo) {

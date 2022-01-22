@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DG.Tweening;
-using LitJson;
+﻿using DG.Tweening;
 using UnityEngine;
+using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformBlendableScale : JTweenBase {
@@ -57,17 +52,17 @@ namespace JTween.Transform {
             m_Transform.localScale = m_beginScale;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json["beginScale"]);
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json.GetNode("beginScale"));
             // end if
-            if (json.Contains("scale")) m_toScale = JTweenUtils.JsonToVector3(json["scale"]);
+            if (json.Contains("scale")) m_toScale = JTweenUtils.JsonToVector3(json.GetNode("scale"));
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginScale"] = JTweenUtils.Vector3Json(m_beginScale);
-            json["scale"] = JTweenUtils.Vector3Json(m_toScale);
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetNode("beginScale", JTweenUtils.Vector3Json(m_beginScale));
+            json.SetNode("scale", JTweenUtils.Vector3Json(m_toScale));
         }
 
         protected override bool CheckValid(out string errorInfo) {

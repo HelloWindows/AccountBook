@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.AudioSource {
     public class JTweenAudioSourcePitch : JTweenBase {
@@ -66,17 +60,17 @@ namespace JTween.AudioSource {
             m_AudioSource.volume = m_beginPitch;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginPitch")) BeginPitch = (float)json["beginPitch"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginPitch")) BeginPitch = json.GetFloat("beginPitch");
             // end if
-            if (json.Contains("pitch")) m_toPitch = (float)json["pitch"];
+            if (json.Contains("pitch")) m_toPitch = json.GetFloat("pitch");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginPitch"] = m_beginPitch;
-            json["pitch"] = m_toPitch;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginPitch", m_beginPitch);
+            json.SetFloat("pitch", m_toPitch);
         }
 
         protected override bool CheckValid(out string errorInfo) {

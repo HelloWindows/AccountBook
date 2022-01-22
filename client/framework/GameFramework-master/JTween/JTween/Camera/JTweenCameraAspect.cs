@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Json;
 using DG.Tweening;
-using LitJson;
-using UnityEngine;
 
 namespace JTween.Camera {
     public class JTweenCameraAspect : JTweenBase {
@@ -57,17 +51,17 @@ namespace JTween.Camera {
             m_Camera.aspect = m_beginAspect;
         }
 
-        protected override void JsonTo(JsonData json) {
-            if (json.Contains("beginAspect")) BeginAspect = (float)json["beginAspect"];
+        protected override void JsonTo(IJsonNode json) {
+            if (json.Contains("beginAspect")) BeginAspect = json.GetFloat("beginAspect");
             // end if
-            if (json.Contains("aspect")) m_toAspect = (float)json["aspect"];
+            if (json.Contains("aspect")) m_toAspect = json.GetFloat("aspect");
             // end if
             Restore();
         }
 
-        protected override void ToJson(ref JsonData json) {
-            json["beginAspect"] = m_beginAspect;
-            json["aspect"] = m_toAspect;
+        protected override void ToJson(ref IJsonNode json) {
+            json.SetFloat("beginAspect", m_beginAspect);
+            json.SetFloat("aspect", m_toAspect);
         }
 
         protected override bool CheckValid(out string errorInfo) {
