@@ -215,7 +215,7 @@ namespace JTween {
             if (!string.IsNullOrEmpty(m_name)) json.SetString("name", m_name);
              // end if
             json.SetDouble("duration", Math.Round(m_duration, 4));
-            if (m_delay > 0.01f) json.SetDouble("delay", Math.Round(m_duration, 4));
+            if (m_delay > 0.00009f) json.SetDouble("delay", Math.Round(m_delay, 4));
             // end if
             json.SetBool("snapping", m_isSnapping);
             if (m_animCurve != null && m_animCurve.keys != null && m_animCurve.keys.Length > 0) {
@@ -240,6 +240,8 @@ namespace JTween {
             if (json.Contains("tweenElement")) m_tweenElement = (JTweenElement)json.GetInt("tweenElement");
             // end if
             if (json.Contains("name")) m_name = json.GetString("name");
+            // end if
+            if (json.Contains("delay")) m_delay = json.GetFloat("delay");
             // end if
             if (json.Contains("duration")) m_duration = json.GetFloat("duration");
             // end if
