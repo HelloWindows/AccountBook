@@ -4,30 +4,19 @@ using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformBlendableRotate : JTweenBase {
-        private Vector3 m_beginRotation = Vector3.zero;
-        private Vector3 m_toRotate = Vector3.zero;
+        private Vector3 m_byRotate = Vector3.zero;
         private UnityEngine.Transform m_Transform;
 
         public JTweenTransformBlendableRotate() {
             m_tweenType = (int)JTweenTransform.BlendableRotate;
             m_tweenElement = JTweenElement.Transform;
         }
-
-        public Vector3 BeginRotation {
+        public Vector3 ByRotate {
             get {
-                return m_beginRotation;
+                return m_byRotate;
             }
             set {
-                m_beginRotation = value;
-            }
-        }
-
-        public Vector3 ToRotate {
-            get {
-                return m_toRotate;
-            }
-            set {
-                m_toRotate = value;
+                m_byRotate = value;
             }
         }
 
@@ -35,34 +24,26 @@ namespace JTween.Transform {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
-            if (null == m_Transform) return;
-            // end if
-            m_beginRotation = m_Transform.eulerAngles;
         }
 
         protected override Tween DOPlay() {
             if (null == m_Transform) return null;
             // end if
-            return m_Transform.DOBlendableRotateBy(m_toRotate, m_duration);
+            return m_Transform.DOBlendableRotateBy(m_byRotate, m_duration);
         }
 
         public override void Restore() {
-            if (null == m_Transform) return;
-            // end if
-            m_Transform.eulerAngles = m_beginRotation;
+
         }
 
         protected override void JsonTo(IJsonNode json) {
-            if (json.Contains("beginRotation")) BeginRotation = JTweenUtils.JsonToVector3(json.GetNode("beginRotation"));
-            // end if
-            if (json.Contains("rotate")) m_toRotate = JTweenUtils.JsonToVector3(json.GetNode("rotate"));
+            if (json.Contains("rotate")) m_byRotate = JTweenUtils.JsonToVector3(json.GetNode("rotate"));
             // end if
             Restore();
         }
 
         protected override void ToJson(ref IJsonNode json) {
-            json.SetNode("beginRotation", JTweenUtils.Vector3Json(m_beginRotation));
-            json.SetNode("rotate", JTweenUtils.Vector3Json(m_toRotate));
+            json.SetNode("rotate", JTweenUtils.Vector3Json(m_byRotate));
         }
 
         protected override bool CheckValid(out string errorInfo) {

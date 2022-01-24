@@ -14,15 +14,6 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
-        public Vector3 BeginRotation {
-            get {
-                return m_beginRotation;
-            }
-            set {
-                m_beginRotation = value;
-            }
-        }
-
         public Vector3 ToRotate {
             get {
                 return m_toRotate;
@@ -63,8 +54,6 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(IJsonNode json) {
-            if (json.Contains("beginRotation")) BeginRotation = JTweenUtils.JsonToVector3(json.GetNode("beginRotation"));
-            // end if
             if (json.Contains("rotate")) m_toRotate = JTweenUtils.JsonToVector3(json.GetNode("rotate"));
             // end if
             if (json.Contains("mode")) m_RotateMode = (RotateMode)json.GetInt("mode");
@@ -73,7 +62,6 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref IJsonNode json) {
-            json.SetNode("beginRotation", JTweenUtils.Vector3Json(m_beginRotation));
             json.SetNode("rotate", JTweenUtils.Vector3Json(m_toRotate));
             json.SetInt("mode", (int)m_RotateMode);
         }

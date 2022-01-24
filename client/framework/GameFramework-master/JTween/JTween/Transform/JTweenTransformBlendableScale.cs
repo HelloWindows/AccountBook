@@ -4,8 +4,7 @@ using Json;
 
 namespace JTween.Transform {
     public class JTweenTransformBlendableScale : JTweenBase {
-        private Vector3 m_beginScale = Vector3.zero;
-        private Vector3 m_toScale = Vector3.zero;
+        private Vector3 m_byScale = Vector3.zero;
         private UnityEngine.Transform m_Transform;
 
         public JTweenTransformBlendableScale() {
@@ -13,21 +12,12 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
-        public Vector3 BeginScale {
+        public Vector3 ByScale {
             get {
-                return m_beginScale;
+                return m_byScale;
             }
             set {
-                m_beginScale = value;
-            }
-        }
-
-        public Vector3 ToScale {
-            get {
-                return m_toScale;
-            }
-            set {
-                m_toScale = value;
+                m_byScale = value;
             }
         }
 
@@ -35,34 +25,25 @@ namespace JTween.Transform {
             if (null == m_target) return;
             // end if
             m_Transform = m_target.GetComponent<UnityEngine.Transform>();
-            if (null == m_Transform) return;
-            // end if
-            m_beginScale = m_Transform.localScale;
         }
 
         protected override Tween DOPlay() {
             if (null == m_Transform) return null;
             // end if
-            return m_Transform.DOBlendableScaleBy(m_toScale, m_duration);
+            return m_Transform.DOBlendableScaleBy(m_byScale, m_duration);
         }
 
         public override void Restore() {
-            if (null == m_Transform) return;
-            // end if
-            m_Transform.localScale = m_beginScale;
         }
 
         protected override void JsonTo(IJsonNode json) {
-            if (json.Contains("beginScale")) BeginScale = JTweenUtils.JsonToVector3(json.GetNode("beginScale"));
-            // end if
-            if (json.Contains("scale")) m_toScale = JTweenUtils.JsonToVector3(json.GetNode("scale"));
+            if (json.Contains("scale")) m_byScale = JTweenUtils.JsonToVector3(json.GetNode("scale"));
             // end if
             Restore();
         }
 
         protected override void ToJson(ref IJsonNode json) {
-            json.SetNode("beginScale", JTweenUtils.Vector3Json(m_beginScale));
-            json.SetNode("scale", JTweenUtils.Vector3Json(m_toScale));
+            json.SetNode("scale", JTweenUtils.Vector3Json(m_byScale));
         }
 
         protected override bool CheckValid(out string errorInfo) {

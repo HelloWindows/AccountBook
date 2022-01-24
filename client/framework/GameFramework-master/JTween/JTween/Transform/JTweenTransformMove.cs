@@ -23,15 +23,6 @@ namespace JTween.Transform {
             m_tweenElement = JTweenElement.Transform;
         }
 
-        public Vector3 BeginPosition {
-            get {
-                return m_beginPosition;
-            }
-            set {
-                m_beginPosition = value;
-            }
-        }
-
         public MoveTypeEnum MoveType {
             get {
                 return m_MoveType;
@@ -109,8 +100,6 @@ namespace JTween.Transform {
         }
 
         protected override void JsonTo(IJsonNode json) {
-            if (json.Contains("beginPosition")) BeginPosition = JTweenUtils.JsonToVector3(json.GetNode("beginPosition"));
-            // end if
             if (json.Contains("move")) {
                 m_MoveType = MoveTypeEnum.Move;
                 m_toPosition = JTweenUtils.JsonToVector3(json.GetNode("move"));
@@ -130,7 +119,6 @@ namespace JTween.Transform {
         }
 
         protected override void ToJson(ref IJsonNode json) {
-            json.SetNode("beginPosition", JTweenUtils.Vector3Json(m_beginPosition));
             switch (m_MoveType) {
                 case MoveTypeEnum.Move:
                     json.SetNode("move", JTweenUtils.Vector3Json(m_toPosition));
